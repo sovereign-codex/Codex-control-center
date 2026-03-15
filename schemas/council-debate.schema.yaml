@@ -1,6 +1,166 @@
-
+schema: council-debate/v0.1
 type: object
 required:
+  - id
   - repo_id
+  - trigger
   - question
+  - context_refs
+  - roles
   - synthesis
+  - recommended_action
+  - confidence
+  - opened_at
+properties:
+  id:
+    type: string
+  repo_id:
+    type: string
+  trigger:
+    type: object
+    required: [event_type, event_ref]
+    properties:
+      event_type:
+        type: string
+      event_ref:
+        type: string
+      initiated_by:
+        type: string
+  question:
+    type: string
+    description: Central question the council is resolving
+  context_refs:
+    type: array
+    items: { type: string }
+  roles:
+    type: array
+    minItems: 3
+    items:
+      type: object
+      required: [name, position, findings]
+      properties:
+        name:
+          type: string
+          enum:
+            - Archivist
+            - Builder
+            - Skeptic
+            - Integrator
+            - Steward
+        position:
+          type: string
+        findings:
+          type: array
+          items: { type: string }
+        concerns:
+          type: array
+          items: { type: string }
+        proposed_next_step:
+          type: string
+  synthesis:
+    type: object
+    required:
+      - summary
+      - agreement_points
+      - unresolved_questions
+      - contradiction_flags
+    properties:
+      summary:
+        type: string
+      agreement_points:
+        type: array
+        items: { type: string }
+      unresolved_questions:
+        type: array
+        items: { type: string }
+      contradiction_flags:
+        type: array
+        items: { type: string }
+  recommended_action:
+    type: object
+    required: [type, target, payload_ref]
+    properties:
+      type:
+        type: string
+        enum:
+          - comment_only
+          - open_issue
+          - open_pr
+          - update_profile
+          - park_repo
+          - promote_repo
+          - merge_recommendation
+      target:
+        type: string
+      payload_ref:
+        type: string
+  confidence:
+    type: number
+    description: 0-1 score
+  human_review_required:
+    type: boolean
+  final_decision:
+    type: string
+    enum:
+      - pending
+      - accepted
+      - rejected
+      - postponed
+      - superseded
+  opened_at:
+    type: string
+  closed_at:
+    type: string
+example:
+  id: debate.codex-control-center.2026-03-07.001
+  repo_id: repo.codex-control-center
+  trigger:
+    event_type: issues.labeled
+    event_ref: github:event:123456789
+    initiated_by: label:needs-council
+  question: What is the smallest end-to-end implementation slice that proves governance value for codex-control-center?
+  context_refs:
+    - registry/repos/codex-control-center.yaml
+    - docs/FIRST_MVP_SEQUENCE.md
+  roles:
+    - name: Archivist
+      position: The repository has consistently been framed as the governance layer rather than merely another UI app.
+      findings:
+        - Prior strategy emphasizes one narrow implementation slice first.
+        - Governance and observability are the durable purpose.
+      concerns:
+        - UI scope may obscure control-center identity.
+      proposed_next_step: Lock repo identity and event scope before broader UI work.
+    - name: Builder
+      position: The smallest viable slice is webhook intake plus a single recommendation comment and markdown PR.
+      findings:
+        - Needs only one tracked repo.
+        - Requires limited GitHub permissions.
+      concerns:
+        - Avoid multi-repo ingestion initially.
+      proposed_next_step: Implement issue label trigger and markdown output path.
+    - name: Skeptic
+      position: Current repo may still be too concept-heavy and under-specified for implementation.
+      findings:
+        - Boundaries with codex-net-app remain blurry.
+      concerns:
+        - Drift into dashboard work before event reliability.
+      proposed_next_step: Create explicit architectural separation doc.
+  synthesis:
+    summary: Begin with a single labeled issue flow, keep codex-net-app subordinate to governance runtime, and defer graph UI until after recommendation artifacts are proven.
+    agreement_points:
+      - prove one repo loop first
+      - keep state auditable
+      - separate governance from interface concerns
+    unresolved_questions:
+      - whether state stays file-backed or moves to a small database in v1.1
+    contradiction_flags:
+      - UI ambition exceeds current implementation needs
+  recommended_action:
+    type: open_pr
+    target: codex-control-center
+    payload_ref: state/debates/2026-03-07/debate.codex-control-center.2026-03-07.001.md
+  confidence: 0.91
+  human_review_required: true
+  final_decision: pending
+  opened_at: 2026-03-07T00:00:00Z
