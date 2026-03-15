@@ -1,0 +1,21 @@
+name: standard
+version: "0.1.0"
+
+max_roles: 3
+requires_conflict_detection: true
+default_writeback: comment
+requires_memory_update: true
+
+allowed_resolutions:
+  - consensus
+  - qualified_consensus
+  - escalation
+
+role_output_fields:
+  - role
+  - stance
+  - observations
+  - risks
+  - recommendations
+  - confidence
+  - priority
