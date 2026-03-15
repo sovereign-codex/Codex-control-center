@@ -1,0 +1,51 @@
+id: repo.codex-control-center
+name: codex-control-center
+symbolic_name: Codex Control Center
+repo_url: https://github.com/sovereign-codex/codex-control-center
+category: foundation
+status: incubating
+mission: Governance and observability layer for the Codex-Net repository ecosystem.
+operational_role: Receive GitHub events, maintain structured repo profiles, run council debates, record decisions, and dispatch implementation suggestions back into GitHub.
+public_narrative: A living governance hub that helps the Codex lattice understand itself and choose its next leverage point.
+intended_purpose: Become the constitutional runtime and observability layer for multi-repo coordination across the Sovereign Intelligence ecosystem.
+current_implementation: Build specification bundle and initial architectural definitions only.
+current_capabilities:
+  - schema definitions
+  - governance design
+  - mvp event loop specification
+proposed_capabilities:
+  - github app webhook intake
+  - issue label based council execution
+  - markdown recommendation artifacts
+  - profile update PR generation
+  - contradiction logging
+primary_outputs:
+  - issue comments
+  - debate markdown files
+  - repo profile updates
+owned_by:
+  council: codex-governance-council
+  avots:
+    - Scrollkeeper
+    - Oran
+dependencies:
+  - github-app-registration
+  - hosted-webhook-service
+  - repo-profile-schema
+  - council-debate-schema
+downstream_effects:
+  - repo classification
+  - strategic prioritization
+  - cross-repo coherence
+evidence_status: speculative
+contradictions:
+  - Boundary with codex-net-app must remain clear so governance logic is not swallowed by UI ambitions.
+known_risks:
+  - event flood before routing discipline
+  - ambiguous ontology across older repos
+  - strategic truth fragmented across chat and GitHub
+priority_score: 0.98
+next_leverage_point: Prove the first needs-council issue flow on one repository and store an auditable recommendation artifact.
+human_override_state: none
+last_council_decision_ref: ""
+updated_at: 2026-03-07T00:00:00Z
