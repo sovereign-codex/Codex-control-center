@@ -1,7 +1,169 @@
-
+schema: repo-profile/v0.1
 type: object
 required:
   - id
   - name
+  - repo_url
   - category
+  - status
   - mission
+  - operational_role
+  - current_capabilities
+  - proposed_capabilities
+  - primary_outputs
+  - owned_by
+  - dependencies
+  - known_risks
+  - next_leverage_point
+properties:
+  id:
+    type: string
+    description: Stable internal identifier, e.g. repo.codex-control-center
+  name:
+    type: string
+  symbolic_name:
+    type: string
+    description: Optional poetic or public-facing name
+  repo_url:
+    type: string
+  category:
+    type: string
+    enum:
+      - foundation
+      - interface
+      - agent
+      - experiment
+      - archive
+      - schema
+      - ops
+      - prototype
+      - publication
+  status:
+    type: string
+    enum:
+      - seed
+      - incubating
+      - active
+      - blocked
+      - stabilizing
+      - parked
+      - archived
+      - canonical
+  mission:
+    type: string
+    description: Why this repository exists at a high level
+  operational_role:
+    type: string
+    description: Concrete engineering function in the ecosystem
+  public_narrative:
+    type: string
+    description: Optional public explanation distinct from operational role
+  intended_purpose:
+    type: string
+    description: Long-range intention or expected destination
+  current_implementation:
+    type: string
+    description: What is actually implemented now
+  current_capabilities:
+    type: array
+    items: { type: string }
+  proposed_capabilities:
+    type: array
+    items: { type: string }
+  primary_outputs:
+    type: array
+    items: { type: string }
+  owned_by:
+    type: object
+    required: [council, avots]
+    properties:
+      council:
+        type: string
+      avots:
+        type: array
+        items: { type: string }
+  dependencies:
+    type: array
+    items: { type: string }
+  downstream_effects:
+    type: array
+    items: { type: string }
+  evidence_status:
+    type: string
+    enum:
+      - undefined
+      - speculative
+      - prototype-backed
+      - operational
+      - published
+  contradictions:
+    type: array
+    items: { type: string }
+  known_risks:
+    type: array
+    items: { type: string }
+  priority_score:
+    type: number
+    description: Optional 0-1 score for scheduling and investment
+  next_leverage_point:
+    type: string
+  human_override_state:
+    type: string
+    enum:
+      - none
+      - accepted
+      - rejected
+      - postponed
+      - merged
+  last_council_decision_ref:
+    type: string
+  updated_at:
+    type: string
+    description: ISO timestamp
+example:
+  id: repo.codex-control-center
+  name: codex-control-center
+  symbolic_name: Codex Control Center
+  repo_url: https://github.com/sovereign-codex/codex-control-center
+  category: foundation
+  status: incubating
+  mission: Governance and observability layer for the Codex-Net repository ecosystem.
+  operational_role: Receives events, profiles repos, runs council debates, records recommendations, and dispatches implementation suggestions.
+  public_narrative: The living governance hub of the Codex lattice.
+  intended_purpose: Host the constitutional runtime for multi-repo coordination.
+  current_implementation: Repository blueprint and schemas only.
+  current_capabilities:
+    - repo registry
+    - council specifications
+  proposed_capabilities:
+    - github webhook intake
+    - repo analysis
+    - recommendation PR generation
+    - contradiction detection
+  primary_outputs:
+    - issue comments
+    - markdown analyses
+    - recommendation pull requests
+  owned_by:
+    council: codex-governance-council
+    avots:
+      - Scrollkeeper
+      - Oran
+  dependencies:
+    - github-app
+    - repo-profile-schema
+    - council-debate-schema
+  downstream_effects:
+    - repo governance
+    - cross-repo prioritization
+  evidence_status: prototype-backed
+  contradictions:
+    - Potential overlap with codex-net-app if UI and governance boundaries are not kept clear.
+  known_risks:
+    - ambiguous repo ontology
+    - event flooding
+  priority_score: 0.94
+  next_leverage_point: Prove a single-repo needs-council loop end-to-end.
+  human_override_state: none
+  last_council_decision_ref: decision/2026-03-07/repo-codex-control-center-001
+  updated_at: 2026-03-07T00:00:00Z
