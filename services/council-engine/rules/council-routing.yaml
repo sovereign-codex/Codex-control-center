@@ -1,0 +1,71 @@
+version: "0.1.0"
+
+default:
+  template: light
+  roles:
+    - archivist
+  writeback: none
+
+routes:
+  repository.created:
+    template: heavy
+    roles:
+      - archivist
+      - integrator
+      - builder
+      - steward
+    writeback: issue
+
+  pull_request.opened:
+    template: standard
+    when:
+      any_changed_file_matches:
+        - "^schemas/"
+        - "^registry/"
+        - "^services/"
+        - "^docs/"
+    roles:
+      - archivist
+      - integrator
+      - builder
+    writeback: comment
+
+  pull_request.synchronize:
+    template: light
+    when:
+      any_changed_file_matches:
+        - "^schemas/"
+        - "^services/"
+    roles:
+      - archivist
+      - builder
+    writeback: comment
+
+  issues.opened:
+    template: standard
+    when:
+      title_or_body_matches_any:
+        - "architecture"
+        - "schema"
+        - "orchestrator"
+        - "registry"
+        - "council"
+        - "avot"
+        - "cross-repo"
+    roles:
+      - archivist
+      - integrator
+      - steward
+    writeback: comment
+
+  push:
+    template: light
+    when:
+      any_changed_file_matches:
+        - "^schemas/"
+        - "^registry/"
+        - "^services/council-engine/"
+    roles:
+      - archivist
+      - skeptic
+    writeback: none
