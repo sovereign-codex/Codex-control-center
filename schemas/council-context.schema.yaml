@@ -1,0 +1,110 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: CouncilContext
+type: object
+required:
+  - debate_id
+  - event_id
+  - event_type
+  - repository
+  - severity
+  - context
+properties:
+  debate_id:
+    type: string
+    pattern: "^debate_[A-Za-z0-9._-]+$"
+
+  event_id:
+    type: string
+    pattern: "^evt_[A-Za-z0-9._-]+$"
+
+  event_type:
+    type: string
+    examples:
+      - pull_request.opened
+      - pull_request.synchronize
+      - issues.opened
+      - repository.created
+      - push
+
+  repository:
+    type: string
+    minLength: 1
+
+  severity:
+    type: string
+    enum:
+      - low
+      - medium
+      - high
+      - critical
+
+  trigger:
+    type: string
+
+  context:
+    type: object
+    properties:
+      changed_files:
+        type: array
+        items:
+          type: string
+
+      repo_profile:
+        oneOf:
+          - type: string
+          - type: object
+
+      related_threads:
+        type: array
+        items:
+          type: string
+
+      prior_decisions:
+        type: array
+        items:
+          type: string
+
+      issue_number:
+        type: integer
+
+      pr_number:
+        type: integer
+
+      branch:
+        type: string
+
+      commit_sha:
+        type: string
+
+      notes:
+        type: array
+        items:
+          type: string
+
+    additionalProperties: true
+
+  requested_outcomes:
+    type: array
+    items:
+      type: string
+
+  selected_roles:
+    type: array
+    items:
+      type: string
+
+  metadata:
+    type: object
+    properties:
+      source:
+        type: string
+        enum:
+          - github
+          - manual
+          - scheduled
+      created_at:
+        type: string
+        format: date-time
+    additionalProperties: true
+
+additionalProperties: false
