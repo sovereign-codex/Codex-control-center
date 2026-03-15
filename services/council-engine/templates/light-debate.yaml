@@ -1,0 +1,19 @@
+name: light
+version: "0.1.0"
+
+max_roles: 2
+requires_conflict_detection: false
+default_writeback: none
+requires_memory_update: false
+
+allowed_resolutions:
+  - observation_only
+  - consensus
+  - qualified_consensus
+
+role_output_fields:
+  - role
+  - stance
+  - observations
+  - recommendations
+  - confidence
