@@ -1,0 +1,29 @@
+version: "0.1.0"
+
+minimum_roles:
+  light: 1
+  standard: 2
+  heavy: 3
+
+resolution_rules:
+  consensus:
+    min_average_confidence: 0.75
+    max_objecting_roles: 0
+
+  qualified_consensus:
+    min_average_confidence: 0.55
+    max_objecting_roles: 1
+
+  escalation:
+    conditions:
+      - missing_context
+      - governance_conflict
+      - average_confidence_below_0_55
+      - two_or_more_objecting_roles
+
+priority_bumps:
+  - if_repository_matches:
+      - codex-control-center
+      - codex-net-index
+      - avot-engine
+    set_minimum_priority: medium
