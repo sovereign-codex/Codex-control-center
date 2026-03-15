@@ -1,0 +1,13 @@
+
+name: Deploy Control Center
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo "Build placeholder"
