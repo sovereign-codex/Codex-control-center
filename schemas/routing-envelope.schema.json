@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Codex Routing Envelope",
+  "type": "object",
+  "required": [
+    "routing_id",
+    "trace_id",
+    "source_event_id",
+    "created_at",
+    "destination",
+    "action"
+  ],
+  "properties": {
+    "routing_id": { "type": "string" },
+    "trace_id": { "type": "string" },
+    "source_event_id": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+
+    "destination": {
+      "type": "object",
+      "required": ["repo"],
+      "properties": {
+        "repo": { "type": "string" },
+        "workflow": { "type": ["string", "null"] },
+        "avot": { "type": ["string", "null"] }
+      }
+    },
+
+    "action": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "dispatch",
+            "validate",
+            "index",
+            "publish"
+          ]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "notes": { "type": "string" }
+      }
+    },
+
+    "status": {
+      "type": "object",
+      "properties": {
+        "state": { "type": "string" },
+        "error": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
