@@ -1,0 +1,44 @@
+name: Codex Control Center
+
+on:
+  push:
+    paths:
+      - 'outputs/**/*.md'
+
+permissions:
+  contents: write
+
+jobs:
+  control-center:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Process outputs
+        run: |
+          echo "=== CONTROL CENTER START ==="
+
+          for file in outputs/**/*.md; do
+            [ -e "$file" ] || continue
+
+            echo "Reading $file"
+
+            DEST=$(grep "Routed to:" "$file" | awk '{print $3}')
+
+            echo "Detected route: $DEST"
+
+            # Phase 1: Just log
+            echo "Handled by Control Center at $(date -u)" >> "$file"
+
+          done
+
+      - name: Commit updates
+        run: |
+          git config user.name "codex-control"
+          git config user.email "actions@github.com"
+
+          git add outputs/
+          git commit -m "Control Center processed outputs" || echo "No changes"
+          git push
