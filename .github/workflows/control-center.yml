@@ -13,12 +13,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
+
+      - name: Pull latest changes (IMPORTANT)
+        run: |
+          git pull origin main
 
       - name: Process outputs
         run: |
           echo "=== CONTROL CENTER START ==="
+
+          shopt -s globstar nullglob
 
           for file in outputs/**/*.md; do
             [ -e "$file" ] || continue
@@ -29,8 +35,9 @@ jobs:
 
             echo "Detected route: $DEST"
 
-            # Phase 1: Just log
-            echo "Handled by Control Center at $(date -u)" >> "$file"
+            echo "" >> "$file"
+            echo "---" >> "$file"
+            echo "Handled by Control Center at $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$file"
 
           done
 
@@ -40,5 +47,7 @@ jobs:
           git config user.email "actions@github.com"
 
           git add outputs/
+
           git commit -m "Control Center processed outputs" || echo "No changes"
+
           git push
