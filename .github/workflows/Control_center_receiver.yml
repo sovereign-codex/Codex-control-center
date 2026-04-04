@@ -1,0 +1,22 @@
+name: Control Center Receiver
+
+on:
+  push:
+    paths:
+      - 'incoming/*.json'
+
+jobs:
+  handle-signal:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Process incoming signals
+        run: |
+          echo "Control Center Activated"
+
+          for file in incoming/*.json; do
+            [ -e "$file" ] || continue
+            echo "Processing $file"
+          done
