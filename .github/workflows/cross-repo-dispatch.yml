@@ -16,9 +16,17 @@ jobs:
       - name: Checkout Control Center
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CODEX_APP_ID }}
+          private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
+          owner: sovereign-codex
+
       - name: Dispatch events to external repos
         env:
-          GH_TOKEN: ${{ secrets.CODEX_APP_TOKEN }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           shopt -s nullglob
 
@@ -28,12 +36,10 @@ jobs:
             ROUTE=$(jq -r '.execution.route' "$file")
             TRACE=$(jq -r '.trace_id' "$file")
 
-            echo "Dispatching $file → $ROUTE"
-
             TARGET_REPO=""
 
             if [ "$ROUTE" = "avot-core" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-CORE"
+              TARGET_REPO="sovereign-codex/AVOT-engine-core-"
             elif [ "$ROUTE" = "avot-research" ]; then
               TARGET_REPO="sovereign-codex/AVOT-RESEARCH"
             elif [ "$ROUTE" = "avot-guardian" ]; then
@@ -41,8 +47,10 @@ jobs:
             fi
 
             if [ -n "$TARGET_REPO" ]; then
+              echo "Dispatching to $TARGET_REPO"
+
               curl -X POST \
-                -H "Authorization: token $GH_TOKEN" \
+                -H "Authorization: Bearer $GH_TOKEN" \
                 -H "Accept: application/vnd.github+json" \
                 https://api.github.com/repos/$TARGET_REPO/dispatches \
                 -d "{
