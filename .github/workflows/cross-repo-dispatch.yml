@@ -46,12 +46,12 @@ jobs:
 
             TARGET_REPO=""
 
-            if [ "$ROUTE" = "avot-core" ]; then
+            if [ "$ROUTE" = "AVOT-engine-core-" ]; then
               TARGET_REPO="sovereign-codex/AVOT-engine-core-"
-            elif [ "$ROUTE" = "avot-research" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-RESEARCH"
-            elif [ "$ROUTE" = "avot-guardian" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-GUARDIAN"
+            elif [ "$ROUTE" = "AVOT-ARCHIVIST" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
+            elif [ "$ROUTE" = "Codex-control-center" ]; then
+              TARGET_REPO="sovereign-codex/Codex-control-center"
             fi
 
             if [ -n "$TARGET_REPO" ]; then
