@@ -5,5 +5,5 @@
     "type": "signal",
     "title": "Test Signal 7"
   },
-  "status": "completed"
+  "status": "queued"
 }

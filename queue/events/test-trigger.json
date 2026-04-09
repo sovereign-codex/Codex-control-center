@@ -1,16 +1,16 @@
 {
-  "handoff_id": "handoff_interlink-test",
-  "trace_id": "trc_interlink-test",
+  "handoff_id": "handoff_test-trigger",
+  "trace_id": "trc_test-trigger",
   "event_type": "decision.proposed",
   "source": {
     "repo": "AVOT-ARCHIVIST",
     "workflow": "AVOT Engine Runner",
-    "signal_file": "interlink-test.json"
+    "signal_file": "test-trigger.json"
   },
   "payload": {
     "type": "research",
-    "title": "Inter-Repo Activation Test AVOT engine",
-    "summary": "Testing Archivist → Engine → Control Center handoff",
+    "title": "Engine Trigger Validation",
+    "summary": "Testing workflow_run chain from Archivist → Engine",
     "priority": "medium"
   },
   "routing": {

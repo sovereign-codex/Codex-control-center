@@ -3,7 +3,7 @@
   "decision": {
     "route": "avot-research",
     "type": "research",
-    "title": "Inter-Repo Activation Test 5"
+    "title": "Inter-Repo Activation Test AVOT engine"
   },
-  "status": "completed"
+  "status": "queued"
 }
