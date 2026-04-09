@@ -37,8 +37,8 @@ jobs:
 
             echo "Processing $file"
 
-            # ✅ FIXED PATH
-            ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
+            # ✅ FIXED TO MATCH ROUTER OUTPUT
+            ROUTE=$(jq -r '.decision.route // "unknown"' "$file")
             TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
 
             echo "Route: $ROUTE"
@@ -68,6 +68,10 @@ jobs:
                     \"source\": \"control-center\"
                   }
                 }"
+
+              # ✅ move after dispatch
+              mkdir -p queue/dispatched
+              mv "$file" queue/dispatched/
 
             else
               echo "No target repo for route: $ROUTE"
