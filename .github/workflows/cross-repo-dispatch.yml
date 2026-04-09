@@ -1,0 +1,57 @@
+name: Cross Repo Dispatcher
+
+on:
+  push:
+    paths:
+      - 'queue/results/*.json'
+
+permissions:
+  contents: read
+
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Control Center
+        uses: actions/checkout@v4
+
+      - name: Dispatch events to external repos
+        env:
+          GH_TOKEN: ${{ secrets.CODEX_APP_TOKEN }}
+        run: |
+          shopt -s nullglob
+
+          for file in queue/results/*.json; do
+            [ -f "$file" ] || continue
+
+            ROUTE=$(jq -r '.execution.route' "$file")
+            TRACE=$(jq -r '.trace_id' "$file")
+
+            echo "Dispatching $file → $ROUTE"
+
+            TARGET_REPO=""
+
+            if [ "$ROUTE" = "avot-core" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-CORE"
+            elif [ "$ROUTE" = "avot-research" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-RESEARCH"
+            elif [ "$ROUTE" = "avot-guardian" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-GUARDIAN"
+            fi
+
+            if [ -n "$TARGET_REPO" ]; then
+              curl -X POST \
+                -H "Authorization: token $GH_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                https://api.github.com/repos/$TARGET_REPO/dispatches \
+                -d "{
+                  \"event_type\": \"avot_execution\",
+                  \"client_payload\": {
+                    \"trace_id\": \"$TRACE\",
+                    \"source\": \"control-center\"
+                  }
+                }"
+            fi
+
+          done
