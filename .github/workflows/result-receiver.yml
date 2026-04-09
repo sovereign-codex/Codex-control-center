@@ -1,4 +1,4 @@
-name: Result Receiver
+name: Control Center Result Receiver
 
 on:
   repository_dispatch:
@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Log incoming result
+        run: |
+          echo "=== RESULT RECEIVED ==="
+          echo "Trace ID: ${{ github.event.client_payload.trace_id }}"
+          echo "Status: ${{ github.event.client_payload.status }}"
+          echo "Source: ${{ github.event.client_payload.source }}"
+
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -24,23 +31,24 @@ jobs:
           TRACE="${{ github.event.client_payload.trace_id }}"
           STATUS="${{ github.event.client_payload.status }}"
           SOURCE="${{ github.event.client_payload.source }}"
+          TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
           FILE="queue/results/${TRACE}.json"
-
-          echo "Writing result: $FILE"
 
           echo '{' > $FILE
           echo '  "trace_id": "'$TRACE'",' >> $FILE
           echo '  "status": "'$STATUS'",' >> $FILE
-          echo '  "source": "'$SOURCE'"' >> $FILE
+          echo '  "source": "'$SOURCE'",' >> $FILE
+          echo '  "received_at": "'$TIME'"' >> $FILE
           echo '}' >> $FILE
+
+          echo "Saved result to $FILE"
 
       - name: Commit result
         run: |
-          git config user.name "result-receiver"
+          git config user.name "codex-results"
           git config user.email "actions@github.com"
 
           git add queue/results/
           git commit -m "Result received for ${{ github.event.client_payload.trace_id }}" || echo "No changes"
-
           git push
