@@ -3,7 +3,7 @@
   "decision": {
     "route": "avot-core",
     "type": "signal",
-    "title": "Control Center Test"
+    "title": "Control Center avot Test"
   },
   "status": "queued"
 }
