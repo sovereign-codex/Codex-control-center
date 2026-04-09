@@ -9,7 +9,7 @@
   },
   "payload": {
     "type": "research",
-    "title": "Inter-Repo Activation Test 5",
+    "title": "Inter-Repo Activation Test AVOT engine",
     "summary": "Testing Archivist → Engine → Control Center handoff",
     "priority": "medium"
   },
