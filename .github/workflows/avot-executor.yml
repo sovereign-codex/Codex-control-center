@@ -1,0 +1,96 @@
+name: AVOT Executor
+
+on:
+  push:
+    paths:
+      - 'queue/events/*.json'
+
+permissions:
+  contents: write
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Control Center
+        uses: actions/checkout@v4
+
+      - name: Ensure directories
+        run: |
+          mkdir -p queue/results
+          mkdir -p logs/execution
+
+      - name: Execute AVOT actions
+        run: |
+          shopt -s nullglob
+
+          for file in queue/events/*.json; do
+            [ -f "$file" ] || continue
+
+            echo "Executing $file"
+
+            ROUTE=$(jq -r '.routing.route' "$file")
+            TITLE=$(jq -r '.payload.title' "$file")
+            SUMMARY=$(jq -r '.payload.summary' "$file")
+            TRACE=$(jq -r '.trace_id' "$file")
+
+            BASENAME=$(basename "$file")
+
+            RESULT_FILE="queue/results/${BASENAME}"
+
+            RESPONSE=""
+
+            if [ "$ROUTE" = "avot-core" ]; then
+              RESPONSE="Core processing initialized"
+            elif [ "$ROUTE" = "avot-research" ]; then
+              RESPONSE="Research analysis queued"
+            elif [ "$ROUTE" = "avot-guardian" ]; then
+              RESPONSE="Guardian escalation triggered"
+            else
+              RESPONSE="Fallback processing"
+            fi
+
+            jq -n \
+              --arg trace "$TRACE" \
+              --arg route "$ROUTE" \
+              --arg title "$TITLE" \
+              --arg summary "$SUMMARY" \
+              --arg response "$RESPONSE" \
+              '{
+                trace_id: $trace,
+                execution: {
+                  route: $route,
+                  title: $title,
+                  summary: $summary,
+                  response: $response
+                },
+                status: "completed"
+              }' > "$RESULT_FILE"
+
+            echo "Result written: $RESULT_FILE"
+
+            # Move processed event
+            mv "$file" "logs/execution/${BASENAME}"
+
+          done
+
+      - name: Update decisions to completed
+        run: |
+          shopt -s nullglob
+
+          for file in queue/decisions/*.json; do
+            [ -f "$file" ] || continue
+
+            jq '.status = "completed"' "$file" > tmp.json && mv tmp.json "$file"
+          done
+
+      - name: Commit execution results
+        run: |
+          git config user.name "codex-executor"
+          git config user.email "actions@github.com"
+
+          git add queue/ logs/
+          git commit -m "AVOT execution completed" || echo "No changes"
+
+          git push
