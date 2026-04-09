@@ -24,6 +24,8 @@ jobs:
 
       - name: Process incoming handoffs
         run: |
+          echo "=== ROUTER START ==="
+
           shopt -s nullglob
 
           for file in incoming/*.json; do
@@ -31,22 +33,24 @@ jobs:
 
             echo "Processing $file"
 
-            ROUTE=$(jq -r '.routing.route' "$file")
-            TYPE=$(jq -r '.payload.type' "$file")
-            TITLE=$(jq -r '.payload.title' "$file")
-            TRACE=$(jq -r '.trace_id' "$file")
+            ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
+            TYPE=$(jq -r '.payload.type // "unknown"' "$file")
+            TITLE=$(jq -r '.payload.title // "Untitled"' "$file")
+            TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
 
             BASENAME=$(basename "$file")
 
             EVENT_FILE="queue/events/${BASENAME}"
-
-            cp "$file" "$EVENT_FILE"
-
-            echo "Routed to queue/events"
-
-            # Create decision record
             DECISION_FILE="queue/decisions/${BASENAME}"
 
+            echo "Route detected: $ROUTE"
+            echo "Trace: $TRACE"
+
+            # Copy raw event
+            cp "$file" "$EVENT_FILE"
+            echo "Copied to queue/events"
+
+            # Create decision file (FIXED STRUCTURE)
             jq -n \
               --arg trace "$TRACE" \
               --arg route "$ROUTE" \
@@ -54,18 +58,25 @@ jobs:
               --arg title "$TITLE" \
               '{
                 trace_id: $trace,
-                decision: {
-                  route: $route,
+                routing: {
+                  route: $route
+                },
+                payload: {
                   type: $type,
                   title: $title
                 },
                 status: "queued"
               }' > "$DECISION_FILE"
 
-            # Move processed file
+            echo "Created decision file: $DECISION_FILE"
+
+            # Move processed file to logs
             mv "$file" "logs/router/${BASENAME}"
+            echo "Archived original to logs/router"
 
           done
+
+          echo "=== ROUTER END ==="
 
       - name: Commit routing results
         run: |
