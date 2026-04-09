@@ -1,0 +1,10 @@
+{
+  "trace_id": "trc_test-signal",
+  "execution": {
+    "route": "avot-core",
+    "title": "Test Signal 7",
+    "summary": "Testing ingestion pipeline",
+    "response": "Core processing initialized"
+  },
+  "status": "completed"
+}

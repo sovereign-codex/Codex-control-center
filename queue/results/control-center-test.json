@@ -1,0 +1,10 @@
+{
+  "trace_id": "trc_control-center-test",
+  "execution": {
+    "route": "avot-core",
+    "title": "Control Center Test",
+    "summary": "Testing full pipeline",
+    "response": "Core processing initialized"
+  },
+  "status": "completed"
+}

@@ -1,0 +1,10 @@
+{
+  "trace_id": "trc_test-trigger",
+  "execution": {
+    "route": "avot-research",
+    "title": "Engine Trigger Validation",
+    "summary": "Testing workflow_run chain from Archivist → Engine",
+    "response": "Research analysis queued"
+  },
+  "status": "completed"
+}
