@@ -1,0 +1,46 @@
+name: Result Receiver
+
+on:
+  repository_dispatch:
+    types: [avot_result]
+
+permissions:
+  contents: write
+
+jobs:
+  receive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Ensure results directory
+        run: |
+          mkdir -p queue/results
+
+      - name: Write result file
+        run: |
+          TRACE="${{ github.event.client_payload.trace_id }}"
+          STATUS="${{ github.event.client_payload.status }}"
+          SOURCE="${{ github.event.client_payload.source }}"
+
+          FILE="queue/results/${TRACE}.json"
+
+          echo "Writing result: $FILE"
+
+          echo '{' > $FILE
+          echo '  "trace_id": "'$TRACE'",' >> $FILE
+          echo '  "status": "'$STATUS'",' >> $FILE
+          echo '  "source": "'$SOURCE'"' >> $FILE
+          echo '}' >> $FILE
+
+      - name: Commit result
+        run: |
+          git config user.name "result-receiver"
+          git config user.email "actions@github.com"
+
+          git add queue/results/
+          git commit -m "Result received for ${{ github.event.client_payload.trace_id }}" || echo "No changes"
+
+          git push
