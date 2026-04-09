@@ -1,50 +1,80 @@
-- name: Dispatch events to external repos
-  env:
-    GH_TOKEN: ${{ steps.app-token.outputs.token }}
-  run: |
-    echo "=== DISPATCHER START ==="
+name: Cross Repo Dispatcher
 
-    shopt -s nullglob
+on:
+  push:
+    paths:
+      - 'queue/decisions/*.json'
 
-    for file in queue/decisions/*.json; do
-      [ -f "$file" ] || continue
+  pull_request:
+    paths:
+      - 'queue/decisions/*.json'
 
-      echo "Processing $file"
+permissions:
+  contents: read
 
-      ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
-      TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
 
-      echo "Route: $ROUTE"
-      echo "Trace: $TRACE"
+    steps:
+      - name: Checkout Control Center
+        uses: actions/checkout@v4
 
-      TARGET_REPO=""
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CODEX_APP_ID }}
+          private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
+          owner: sovereign-codex
 
-      if [ "$ROUTE" = "avot-core" ]; then
-        TARGET_REPO="sovereign-codex/AVOT-engine-core-"
-      elif [ "$ROUTE" = "avot-research" ]; then
-        TARGET_REPO="sovereign-codex/AVOT-RESEARCH"
-      elif [ "$ROUTE" = "avot-guardian" ]; then
-        TARGET_REPO="sovereign-codex/AVOT-GUARDIAN"
-      fi
+      - name: Dispatch events to external repos
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          echo "=== DISPATCHER START ==="
 
-      if [ -n "$TARGET_REPO" ]; then
-        echo "Dispatching to $TARGET_REPO"
+          shopt -s nullglob
 
-        curl -X POST \
-          -H "Authorization: Bearer $GH_TOKEN" \
-          -H "Accept: application/vnd.github+json" \
-          https://api.github.com/repos/$TARGET_REPO/dispatches \
-          -d "{
-            \"event_type\": \"avot_execution\",
-            \"client_payload\": {
-              \"trace_id\": \"$TRACE\",
-              \"source\": \"control-center\"
-            }
-          }"
-      else
-        echo "No target repo for route: $ROUTE"
-      fi
+          for file in queue/decisions/*.json; do
+            [ -f "$file" ] || continue
 
-    done
+            echo "Processing $file"
 
-    echo "=== DISPATCHER END ==="
+            ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
+            TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
+
+            echo "Route: $ROUTE"
+            echo "Trace: $TRACE"
+
+            TARGET_REPO=""
+
+            if [ "$ROUTE" = "avot-core" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-engine-core-"
+            elif [ "$ROUTE" = "avot-research" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-RESEARCH"
+            elif [ "$ROUTE" = "avot-guardian" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-GUARDIAN"
+            fi
+
+            if [ -n "$TARGET_REPO" ]; then
+              echo "Dispatching to $TARGET_REPO"
+
+              curl -X POST \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                https://api.github.com/repos/$TARGET_REPO/dispatches \
+                -d "{
+                  \"event_type\": \"avot_execution\",
+                  \"client_payload\": {
+                    \"trace_id\": \"$TRACE\",
+                    \"source\": \"control-center\"
+                  }
+                }"
+            else
+              echo "No target repo for route: $ROUTE"
+            fi
+
+          done
+
+          echo "=== DISPATCHER END ==="
