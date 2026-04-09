@@ -1,7 +1,9 @@
 {
   "trace_id": "trc_test-signal",
-  "decision": {
-    "route": "avot-core",
+  "routing": {
+    "route": "avot-core"
+  },
+  "payload": {
     "type": "signal",
     "title": "Test Signal 7"
   },

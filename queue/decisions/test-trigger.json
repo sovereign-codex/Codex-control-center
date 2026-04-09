@@ -1,7 +1,9 @@
 {
-  "trace_id": "trc_test-engine-trigger",
-  "decision": {
-    "route": "avot-research",
+  "trace_id": "trc_test-trigger",
+  "routing": {
+    "route": "avot-research"
+  },
+  "payload": {
     "type": "research",
     "title": "Engine Trigger Validation"
   },
