@@ -1,0 +1,20 @@
+{
+  "handoff_id": "handoff_interlink-test",
+  "trace_id": "trc_interlink-test",
+  "event_type": "decision.proposed",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "workflow": "AVOT Engine Runner",
+    "signal_file": "interlink-test.json"
+  },
+  "payload": {
+    "type": "research",
+    "title": "Inter-Repo Activation Test 5",
+    "summary": "Testing Archivist → Engine → Control Center handoff",
+    "priority": "medium"
+  },
+  "routing": {
+    "route": "avot-research",
+    "target_repo": "Codex-control-center"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_test-signal",
+  "decision": {
+    "route": "avot-core",
+    "type": "signal",
+    "title": "Test Signal 7"
+  },
+  "status": "queued"
+}

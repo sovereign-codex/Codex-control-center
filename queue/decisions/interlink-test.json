@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_interlink-test",
+  "decision": {
+    "route": "avot-research",
+    "type": "research",
+    "title": "Inter-Repo Activation Test 5"
+  },
+  "status": "queued"
+}

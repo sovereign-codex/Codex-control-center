@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_test-trigger",
+  "decision": {
+    "route": "avot-research",
+    "type": "research",
+    "title": "Engine Trigger Validation"
+  },
+  "status": "queued"
+}

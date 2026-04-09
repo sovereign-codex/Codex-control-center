@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_research-quantum-mapping",
+  "decision": {
+    "route": "avot-guardian",
+    "type": "research",
+    "title": "Quantum Field Mapping"
+  },
+  "status": "queued"
+}

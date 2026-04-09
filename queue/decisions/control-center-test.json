@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_control-center-test",
+  "decision": {
+    "route": "avot-core",
+    "type": "signal",
+    "title": "Control Center Test"
+  },
+  "status": "queued"
+}

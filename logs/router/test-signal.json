@@ -1,0 +1,20 @@
+{
+  "handoff_id": "handoff_test-signal",
+  "trace_id": "trc_test-signal",
+  "event_type": "decision.proposed",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "workflow": "AVOT Engine Runner",
+    "signal_file": "test-signal.json"
+  },
+  "payload": {
+    "type": "signal",
+    "title": "Test Signal 7",
+    "summary": "Testing ingestion pipeline",
+    "priority": "low"
+  },
+  "routing": {
+    "route": "avot-core",
+    "target_repo": "Codex-control-center"
+  }
+}
