@@ -5,10 +5,6 @@ on:
     paths:
       - 'queue/decisions/*.json'
 
-  pull_request:
-    paths:
-      - 'queue/decisions/*.json'
-
 permissions:
   contents: read
 
@@ -41,6 +37,7 @@ jobs:
 
             echo "Processing $file"
 
+            # ✅ FIXED PATH
             ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
             TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
 
@@ -71,6 +68,7 @@ jobs:
                     \"source\": \"control-center\"
                   }
                 }"
+
             else
               echo "No target repo for route: $ROUTE"
             fi
