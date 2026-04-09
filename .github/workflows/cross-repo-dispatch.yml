@@ -3,7 +3,7 @@ name: Cross Repo Dispatcher
 on:
   push:
     paths:
-      - 'queue/results/*.json'
+      - 'queue/decisions/*.json'
 
 permissions:
   contents: read
@@ -28,13 +28,25 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          echo "=== DISPATCHER START ==="
+
           shopt -s nullglob
 
-          for file in queue/results/*.json; do
-            [ -f "$file" ] || continue
+          FILES=(queue/decisions/*.json)
 
-            ROUTE=$(jq -r '.execution.route' "$file")
-            TRACE=$(jq -r '.trace_id' "$file")
+          if [ ${#FILES[@]} -eq 0 ]; then
+            echo "No decision files found"
+            exit 0
+          fi
+
+          for file in "${FILES[@]}"; do
+            echo "Processing $file"
+
+            ROUTE=$(jq -r '.routing.route // "unknown"' "$file")
+            TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
+
+            echo "Route: $ROUTE"
+            echo "Trace: $TRACE"
 
             TARGET_REPO=""
 
@@ -46,20 +58,26 @@ jobs:
               TARGET_REPO="sovereign-codex/AVOT-GUARDIAN"
             fi
 
-            if [ -n "$TARGET_REPO" ]; then
-              echo "Dispatching to $TARGET_REPO"
-
-              curl -X POST \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                https://api.github.com/repos/$TARGET_REPO/dispatches \
-                -d "{
-                  \"event_type\": \"avot_execution\",
-                  \"client_payload\": {
-                    \"trace_id\": \"$TRACE\",
-                    \"source\": \"control-center\"
-                  }
-                }"
+            if [ -z "$TARGET_REPO" ]; then
+              echo "No target repo for route: $ROUTE"
+              continue
             fi
 
+            echo "Dispatching to $TARGET_REPO"
+
+            curl -X POST \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              https://api.github.com/repos/$TARGET_REPO/dispatches \
+              -d "{
+                \"event_type\": \"avot_execution\",
+                \"client_payload\": {
+                  \"trace_id\": \"$TRACE\",
+                  \"source\": \"control-center\"
+                }
+              }"
+
+            echo "Dispatch complete for $file"
           done
+
+          echo "=== DISPATCHER END ==="
