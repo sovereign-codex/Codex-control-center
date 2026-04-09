@@ -1,0 +1,20 @@
+{
+  "handoff_id": "handoff_research-quantum-mapping",
+  "trace_id": "trc_research-quantum-mapping",
+  "event_type": "decision.proposed",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "workflow": "AVOT Engine Runner",
+    "signal_file": "research quantum mapping.JSON"
+  },
+  "payload": {
+    "type": "research",
+    "title": "Quantum Field Mapping",
+    "summary": "Exploring resonance fields",
+    "priority": "high"
+  },
+  "routing": {
+    "route": "avot-guardian",
+    "target_repo": "Codex-control-center"
+  }
+}

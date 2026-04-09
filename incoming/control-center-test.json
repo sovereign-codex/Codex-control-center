@@ -1,0 +1,20 @@
+{
+  "handoff_id": "handoff_control-center-test",
+  "trace_id": "trc_control-center-test",
+  "event_type": "decision.proposed",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "workflow": "AVOT Engine Runner",
+    "signal_file": "control center test.json"
+  },
+  "payload": {
+    "type": "signal",
+    "title": "Control Center Test",
+    "summary": "Testing full pipeline",
+    "priority": "low"
+  },
+  "routing": {
+    "route": "avot-core",
+    "target_repo": "Codex-control-center"
+  }
+}
