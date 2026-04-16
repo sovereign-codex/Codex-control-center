@@ -1,15 +1,17 @@
 name: Cross Repo Dispatcher
 
 on:
-  push:
-    paths:
-      - 'queue/decisions/*.json'
+  workflow_run:
+    workflows: ["AVOT Engine Runner"]
+    types:
+      - completed
 
 permissions:
   contents: read
 
 jobs:
   dispatch:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -24,21 +26,22 @@ jobs:
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
 
-      # 🔥 TRACE: dispatcher start
       - name: Emit trace (dispatcher start)
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          curl -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+            -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
-            -d '{
-              "event_type": "trace_log",
-              "client_payload": {
-                "trace_id": "${{ github.run_id }}",
-                "repo": "${{ github.repository }}",
-                "workflow": "Cross Repo Dispatcher",
-                "status": "dispatcher_started"
+            -d "{
+              \"event_type\": \"trace_log\",
+              \"client_payload\": {
+                \"trace_id\": \"dispatcher_${GITHUB_RUN_ID}\",
+                \"repo\": \"${GITHUB_REPOSITORY}\",
+                \"workflow\": \"Cross Repo Dispatcher\",
+                \"status\": \"dispatcher_started\"
               }
-            }'
+            }"
 
       - name: Dispatch events to external repos
         env:
@@ -48,6 +51,9 @@ jobs:
 
           shopt -s nullglob
 
+          mkdir -p queue/dispatched
+          mkdir -p queue/failed
+
           for file in queue/decisions/*.json; do
             [ -f "$file" ] || continue
 
@@ -56,9 +62,8 @@ jobs:
             ROUTE=$(jq -r '.decision.route // "unknown"' "$file")
             TRACE=$(jq -r '.trace_id // empty' "$file")
 
-            # 🔥 fallback to run_id if missing
             if [ -z "$TRACE" ]; then
-              TRACE="${GITHUB_RUN_ID}"
+              TRACE="dispatcher_${GITHUB_RUN_ID}"
             fi
 
             echo "Route: $ROUTE"
@@ -72,6 +77,12 @@ jobs:
               TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
             elif [ "$ROUTE" = "Codex-control-center" ]; then
               TARGET_REPO="sovereign-codex/Codex-control-center"
+            elif [ "$ROUTE" = "AVOT-TRACE" ]; then
+              TARGET_REPO="sovereign-codex/AVOT-TRACE"
+            elif [ "$ROUTE" = "Codex-interface-" ]; then
+              TARGET_REPO="sovereign-codex/Codex-interface-"
+            elif [ "$ROUTE" = "Codex-net-index" ]; then
+              TARGET_REPO="sovereign-codex/Codex-net-index"
             fi
 
             if [ -n "$TARGET_REPO" ]; then
@@ -85,56 +96,62 @@ jobs:
                   \"event_type\": \"avot_execution\",
                   \"client_payload\": {
                     \"trace_id\": \"$TRACE\",
-                    \"source\": \"control-center\"
+                    \"source\": \"control-center\",
+                    \"route\": \"$ROUTE\"
                   }
                 }")
 
               echo "HTTP Status: $RESPONSE"
-              cat response.txt
+              cat response.txt || true
 
               if [ "$RESPONSE" = "204" ]; then
-                echo "✅ Dispatch success"
-
+                echo "Dispatch success"
                 STATUS="dispatched"
-
-                mkdir -p queue/dispatched
                 mv "$file" queue/dispatched/
               else
-                echo "❌ Dispatch failed"
+                echo "Dispatch failed"
                 STATUS="dispatch_failed"
+                mv "$file" queue/failed/
               fi
 
-              # 🔥 TRACE EMIT PER FILE
-              curl -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+              curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
                 -H "Authorization: Bearer $GH_TOKEN" \
                 -H "Accept: application/vnd.github+json" \
                 -d "{
                   \"event_type\": \"trace_log\",
                   \"client_payload\": {
                     \"trace_id\": \"$TRACE\",
-                    \"repo\": \"$GITHUB_REPOSITORY\",
+                    \"repo\": \"${GITHUB_REPOSITORY}\",
                     \"workflow\": \"dispatcher\",
                     \"status\": \"$STATUS\"
                   }
                 }"
-
             else
               echo "No target repo for route: $ROUTE"
+              mv "$file" queue/failed/
 
-              curl -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+              curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
                 -H "Authorization: Bearer $GH_TOKEN" \
                 -H "Accept: application/vnd.github+json" \
                 -d "{
                   \"event_type\": \"trace_log\",
                   \"client_payload\": {
                     \"trace_id\": \"$TRACE\",
-                    \"repo\": \"$GITHUB_REPOSITORY\",
+                    \"repo\": \"${GITHUB_REPOSITORY}\",
                     \"workflow\": \"dispatcher\",
                     \"status\": \"no_route_found\"
                   }
                 }"
             fi
-
           done
 
           echo "=== DISPATCHER END ==="
+
+      - name: Commit dispatcher queue changes
+        run: |
+          git config user.name "codex-dispatcher"
+          git config user.email "actions@github.com"
+
+          git add queue/dispatched/ queue/failed/
+          git commit -m "Dispatcher processed decision queue" || echo "No changes"
+          git push
