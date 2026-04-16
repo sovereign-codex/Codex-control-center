@@ -1,11 +1,6 @@
 {
   "trace_id": "trc_interlink-test",
-  "routing": {
-    "route": "avot-research"
-  },
-  "payload": {
-    "type": "research",
-    "title": "Inter-Repo Activation Test 2 AVOT engine"
-  },
-  "status": "queued"
+  "decision": {
+    "route": "Codex-control-center"
+  }
 }

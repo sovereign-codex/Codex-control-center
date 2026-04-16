@@ -1,11 +1,6 @@
 {
-  "trace_id": "trc_control-center-test",
-  "routing": {
-    "route": "avot-core"
-  },
-  "payload": {
-    "type": "signal",
-    "title": "Control Center avot Test 2"
-  },
-  "status": "queued"
+  "trace_id": "trc_control center test",
+  "decision": {
+    "route": "AVOT-engine-core-"
+  }
 }

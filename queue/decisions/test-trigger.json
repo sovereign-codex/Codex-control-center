@@ -1,11 +1,6 @@
 {
   "trace_id": "trc_test-trigger",
-  "routing": {
-    "route": "avot-research"
-  },
-  "payload": {
-    "type": "research",
-    "title": "Engine Trigger Validation"
-  },
-  "status": "queued"
+  "decision": {
+    "route": "Codex-control-center"
+  }
 }

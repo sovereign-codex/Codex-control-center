@@ -1,11 +1,6 @@
 {
   "trace_id": "trc_test-signal",
-  "routing": {
-    "route": "avot-core"
-  },
-  "payload": {
-    "type": "signal",
-    "title": "Test Signal 7"
-  },
-  "status": "queued"
+  "decision": {
+    "route": "AVOT-engine-core-"
+  }
 }

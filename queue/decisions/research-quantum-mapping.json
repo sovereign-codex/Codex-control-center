@@ -1,11 +1,6 @@
 {
-  "trace_id": "trc_research-quantum-mapping",
-  "routing": {
-    "route": "avot-guardian"
-  },
-  "payload": {
-    "type": "research",
-    "title": "Quantum Field Mapping test2"
-  },
-  "status": "queued"
+  "trace_id": "trc_research quantum mapping",
+  "decision": {
+    "route": "Codex-control-center"
+  }
 }
