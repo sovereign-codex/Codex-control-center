@@ -2,7 +2,8 @@ name: Control Center Result Receiver
 
 on:
   repository_dispatch:
-    types: [avot_result]
+    types:
+      - avot_result
 
 permissions:
   contents: write
@@ -22,25 +23,69 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CODEX_APP_ID }}
+          private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
+          owner: sovereign-codex
+
+      - name: Set runtime variables
+        run: |
+          TRACE="${{ github.event.client_payload.trace_id }}"
+          STATUS="${{ github.event.client_payload.status }}"
+          SOURCE="${{ github.event.client_payload.source }}"
+
+          if [ -z "$TRACE" ]; then
+            TRACE="trace_${GITHUB_RUN_ID}"
+          fi
+
+          if [ -z "$STATUS" ]; then
+            STATUS="unknown"
+          fi
+
+          if [ -z "$SOURCE" ]; then
+            SOURCE="unknown"
+          fi
+
+          echo "TRACE_ID=$TRACE" >> $GITHUB_ENV
+          echo "RESULT_STATUS=$STATUS" >> $GITHUB_ENV
+          echo "SOURCE_REPO=$SOURCE" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+
+      # 🔥 TRACE: result received
+      - name: Emit trace (result received)
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{
+              \"event_type\": \"trace_log\",
+              \"client_payload\": {
+                \"trace_id\": \"$TRACE_ID\",
+                \"repo\": \"${GITHUB_REPOSITORY}\",
+                \"workflow\": \"Control Center Result Receiver\",
+                \"status\": \"result_received\"
+              }
+            }"
+
       - name: Ensure results directory
         run: |
           mkdir -p queue/results
 
       - name: Write result file
         run: |
-          TRACE="${{ github.event.client_payload.trace_id }}"
-          STATUS="${{ github.event.client_payload.status }}"
-          SOURCE="${{ github.event.client_payload.source }}"
-          TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          FILE="queue/results/${TRACE_ID}.json"
 
-          FILE="queue/results/${TRACE}.json"
-
-          echo '{' > $FILE
-          echo '  "trace_id": "'$TRACE'",' >> $FILE
-          echo '  "status": "'$STATUS'",' >> $FILE
-          echo '  "source": "'$SOURCE'",' >> $FILE
-          echo '  "received_at": "'$TIME'"' >> $FILE
-          echo '}' >> $FILE
+          echo '{' > "$FILE"
+          echo '  "trace_id": "'"$TRACE_ID"'",' >> "$FILE"
+          echo '  "status": "'"$RESULT_STATUS"'",' >> "$FILE"
+          echo '  "source": "'"$SOURCE_REPO"'",' >> "$FILE"
+          echo '  "received_at": "'"$TIMESTAMP"'"' >> "$FILE"
+          echo '}' >> "$FILE"
 
           echo "Saved result to $FILE"
 
@@ -50,5 +95,23 @@ jobs:
           git config user.email "actions@github.com"
 
           git add queue/results/
-          git commit -m "Result received for ${{ github.event.client_payload.trace_id }}" || echo "No changes"
+          git commit -m "Result received for ${TRACE_ID}" || echo "No changes"
           git push
+
+      # 🔥 TRACE: result stored
+      - name: Emit trace (result stored)
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{
+              \"event_type\": \"trace_log\",
+              \"client_payload\": {
+                \"trace_id\": \"$TRACE_ID\",
+                \"repo\": \"${GITHUB_REPOSITORY}\",
+                \"workflow\": \"Control Center Result Receiver\",
+                \"status\": \"result_stored\"
+              }
+            }"
