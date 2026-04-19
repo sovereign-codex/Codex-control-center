@@ -1,0 +1,10 @@
+{
+  "trace_id": "trc_test-signal",
+  "decision": {
+    "route": "AVOT-engine-core-"
+  },
+  "source": {
+    "repo": "sovereign-codex/AVOT-ARCHIVIST",
+    "file": "test-signal.json"
+  }
+}
