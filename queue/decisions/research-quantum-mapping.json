@@ -2,5 +2,9 @@
   "trace_id": "trc_research quantum mapping",
   "decision": {
     "route": "Codex-control-center"
+  },
+  "source": {
+    "repo": "sovereign-codex/AVOT-ARCHIVIST",
+    "file": "research quantum mapping.JSON"
   }
 }
