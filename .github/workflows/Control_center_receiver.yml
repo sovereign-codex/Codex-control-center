@@ -5,18 +5,51 @@ on:
     paths:
       - 'incoming/*.json'
 
+permissions:
+  contents: write
+
 jobs:
   handle-signal:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Control Center
+        uses: actions/checkout@v4
+
+      - name: Ensure directories
+        run: |
+          mkdir -p incoming
+          mkdir -p logs/receiver
 
       - name: Process incoming signals
         run: |
-          echo "Control Center Activated"
+          echo "=== CONTROL CENTER RECEIVER START ==="
+
+          shopt -s nullglob
 
           for file in incoming/*.json; do
-            [ -e "$file" ] || continue
+            [ -f "$file" ] || continue
+
             echo "Processing $file"
+
+            TRACE=$(jq -r '.trace_id // "no-trace"' "$file")
+            ROUTE=$(jq -r '.routing.route // .decision.route // "unknown"' "$file")
+            TYPE=$(jq -r '.payload.type // "unknown"' "$file")
+
+            echo "Trace: $TRACE"
+            echo "Route: $ROUTE"
+            echo "Type: $TYPE"
+
+            mv "$file" "logs/receiver/$(basename "$file")"
           done
+
+          echo "=== CONTROL CENTER RECEIVER END ==="
+
+      - name: Commit receiver log updates
+        run: |
+          git config user.name "codex-receiver"
+          git config user.email "actions@github.com"
+
+          git add logs/receiver/
+          git commit -m "Receiver processed incoming signals" || echo "No changes"
+          git push
