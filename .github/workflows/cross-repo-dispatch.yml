@@ -1,17 +1,14 @@
 name: Cross Repo Dispatcher
 
 on:
-  workflow_run:
-    workflows: ["AVOT Engine Runner"]
-    types:
-      - completed
+  repository_dispatch:
+    types: [engine_handoff]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   dispatch:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -30,16 +27,18 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          TRACE="dispatcher_${GITHUB_RUN_ID}"
+
           curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -d "{
               \"event_type\": \"trace_log\",
               \"client_payload\": {
-                \"trace_id\": \"dispatcher_${GITHUB_RUN_ID}\",
+                \"trace_id\": \"$TRACE\",
                 \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"Cross Repo Dispatcher\",
-                \"status\": \"dispatcher_started\"
+                \"workflow\": \"dispatcher\",
+                \"status\": \"started\"
               }
             }"
 
@@ -71,19 +70,26 @@ jobs:
 
             TARGET_REPO=""
 
-            if [ "$ROUTE" = "AVOT-engine-core-" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-engine-core-"
-            elif [ "$ROUTE" = "AVOT-ARCHIVIST" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
-            elif [ "$ROUTE" = "Codex-control-center" ]; then
-              TARGET_REPO="sovereign-codex/Codex-control-center"
-            elif [ "$ROUTE" = "AVOT-TRACE" ]; then
-              TARGET_REPO="sovereign-codex/AVOT-TRACE"
-            elif [ "$ROUTE" = "Codex-interface-" ]; then
-              TARGET_REPO="sovereign-codex/Codex-interface-"
-            elif [ "$ROUTE" = "Codex-net-index" ]; then
-              TARGET_REPO="sovereign-codex/Codex-net-index"
-            fi
+            case "$ROUTE" in
+              "AVOT-engine-core-")
+                TARGET_REPO="sovereign-codex/AVOT-engine-core-"
+                ;;
+              "AVOT-ARCHIVIST")
+                TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
+                ;;
+              "Codex-control-center")
+                TARGET_REPO="sovereign-codex/Codex-control-center"
+                ;;
+              "AVOT-TRACE")
+                TARGET_REPO="sovereign-codex/AVOT-TRACE"
+                ;;
+              "Codex-interface-")
+                TARGET_REPO="sovereign-codex/Codex-interface-"
+                ;;
+              "Codex-net-index")
+                TARGET_REPO="sovereign-codex/Codex-net-index"
+                ;;
+            esac
 
             if [ -n "$TARGET_REPO" ]; then
               echo "Dispatching to $TARGET_REPO"
@@ -114,35 +120,26 @@ jobs:
                 mv "$file" queue/failed/
               fi
 
-              curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                -d "{
-                  \"event_type\": \"trace_log\",
-                  \"client_payload\": {
-                    \"trace_id\": \"$TRACE\",
-                    \"repo\": \"${GITHUB_REPOSITORY}\",
-                    \"workflow\": \"dispatcher\",
-                    \"status\": \"$STATUS\"
-                  }
-                }"
             else
               echo "No target repo for route: $ROUTE"
+              STATUS="no_route_found"
               mv "$file" queue/failed/
-
-              curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-                -H "Authorization: Bearer $GH_TOKEN" \
-                -H "Accept: application/vnd.github+json" \
-                -d "{
-                  \"event_type\": \"trace_log\",
-                  \"client_payload\": {
-                    \"trace_id\": \"$TRACE\",
-                    \"repo\": \"${GITHUB_REPOSITORY}\",
-                    \"workflow\": \"dispatcher\",
-                    \"status\": \"no_route_found\"
-                  }
-                }"
             fi
+
+            # 🔥 TRACE PER FILE
+            curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -d "{
+                \"event_type\": \"trace_log\",
+                \"client_payload\": {
+                  \"trace_id\": \"$TRACE\",
+                  \"repo\": \"${GITHUB_REPOSITORY}\",
+                  \"workflow\": \"dispatcher\",
+                  \"status\": \"$STATUS\"
+                }
+              }"
+
           done
 
           echo "=== DISPATCHER END ==="
