@@ -1,6 +1,6 @@
 {
   "trace_id": "trc_test-signal",
   "status": "completed",
-  "source": "AVOT-engine-core-",
-  "received_at": "2026-04-19T06:02:30Z"
+  "source": "avot-engine",
+  "received_at": "2026-05-02T17:24:25Z"
 }
