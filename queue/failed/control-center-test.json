@@ -1,0 +1,10 @@
+{
+  "trace_id": "trc_control center test",
+  "decision": {
+    "route": "AVOT-engine-core-"
+  },
+  "source": {
+    "repo": "sovereign-codex/AVOT-ARCHIVIST",
+    "file": "control center test.json"
+  }
+}

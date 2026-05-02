@@ -1,0 +1,11 @@
+{
+  "trace_id": "trc_interlink-test",
+  "decision": {
+    "route": "control-center"
+  },
+  "payload": {
+    "type": "research",
+    "priority": "medium"
+  },
+  "status": "queued"
+}
