@@ -2,7 +2,8 @@ name: Cross Repo Dispatcher
 
 on:
   repository_dispatch:
-    types: [engine_handoff]
+    types:
+      - engine_handoff
 
 permissions:
   contents: write
@@ -22,6 +23,14 @@ jobs:
           app-id: ${{ secrets.CODEX_APP_ID }}
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
+          repositories: |
+            AVOT-TRACE
+            Codex-control-center
+            avot-engine
+            avot-forge
+            AVOT-ARCHIVIST
+            Codex-interface-
+            Codex-net-index
 
       - name: Emit trace (dispatcher start)
         env:
@@ -37,12 +46,12 @@ jobs:
               \"client_payload\": {
                 \"trace_id\": \"$TRACE\",
                 \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"dispatcher\",
+                \"workflow\": \"cross-repo-dispatcher\",
                 \"status\": \"started\"
               }
             }"
 
-      - name: Dispatch events to external repos
+      - name: Dispatch queued decisions
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
@@ -71,22 +80,25 @@ jobs:
             TARGET_REPO=""
 
             case "$ROUTE" in
-              "AVOT-engine-core-")
-                TARGET_REPO="sovereign-codex/AVOT-engine-core-"
+              "avot-engine")
+                TARGET_REPO="sovereign-codex/avot-engine"
                 ;;
-              "AVOT-ARCHIVIST")
+              "avot-forge")
+                TARGET_REPO="sovereign-codex/avot-forge"
+                ;;
+              "avot-archivist")
                 TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
                 ;;
-              "Codex-control-center")
+              "control-center")
                 TARGET_REPO="sovereign-codex/Codex-control-center"
                 ;;
-              "AVOT-TRACE")
+              "trace")
                 TARGET_REPO="sovereign-codex/AVOT-TRACE"
                 ;;
-              "Codex-interface-")
+              "interface")
                 TARGET_REPO="sovereign-codex/Codex-interface-"
                 ;;
-              "Codex-net-index")
+              "index")
                 TARGET_REPO="sovereign-codex/Codex-net-index"
                 ;;
             esac
@@ -113,20 +125,18 @@ jobs:
               if [ "$RESPONSE" = "204" ]; then
                 echo "Dispatch success"
                 STATUS="dispatched"
-                mv "$file" queue/dispatched/
+                mv "$file" "queue/dispatched/$(basename "$file")"
               else
                 echo "Dispatch failed"
                 STATUS="dispatch_failed"
-                mv "$file" queue/failed/
+                mv "$file" "queue/failed/$(basename "$file")"
               fi
-
             else
               echo "No target repo for route: $ROUTE"
               STATUS="no_route_found"
-              mv "$file" queue/failed/
+              mv "$file" "queue/failed/$(basename "$file")"
             fi
 
-            # 🔥 TRACE PER FILE
             curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
               -H "Authorization: Bearer $GH_TOKEN" \
               -H "Accept: application/vnd.github+json" \
@@ -135,11 +145,10 @@ jobs:
                 \"client_payload\": {
                   \"trace_id\": \"$TRACE\",
                   \"repo\": \"${GITHUB_REPOSITORY}\",
-                  \"workflow\": \"dispatcher\",
+                  \"workflow\": \"cross-repo-dispatcher\",
                   \"status\": \"$STATUS\"
                 }
               }"
-
           done
 
           echo "=== DISPATCHER END ==="
@@ -149,6 +158,11 @@ jobs:
           git config user.name "codex-dispatcher"
           git config user.email "actions@github.com"
 
+          git pull origin main --rebase || echo "No remote changes"
+
           git add queue/dispatched/ queue/failed/
           git commit -m "Dispatcher processed decision queue" || echo "No changes"
-          git push
+
+          git pull origin main --rebase || echo "No remote changes"
+
+          git push origin main
