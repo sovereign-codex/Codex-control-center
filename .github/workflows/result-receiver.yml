@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: control-center-result-receiver
+  cancel-in-progress: false
+
 jobs:
   receive:
     runs-on: ubuntu-latest
@@ -20,7 +24,7 @@ jobs:
           echo "Status: ${{ github.event.client_payload.status }}"
           echo "Source: ${{ github.event.client_payload.source }}"
 
-      - name: Checkout repo
+      - name: Checkout Control Center
         uses: actions/checkout@v4
 
       - name: Generate GitHub App token
@@ -30,6 +34,9 @@ jobs:
           app-id: ${{ secrets.CODEX_APP_ID }}
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
+          repositories: |
+            AVOT-TRACE
+            Codex-control-center
 
       - name: Set runtime variables
         run: |
@@ -49,12 +56,11 @@ jobs:
             SOURCE="unknown"
           fi
 
-          echo "TRACE_ID=$TRACE" >> $GITHUB_ENV
-          echo "RESULT_STATUS=$STATUS" >> $GITHUB_ENV
-          echo "SOURCE_REPO=$SOURCE" >> $GITHUB_ENV
-          echo "TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> $GITHUB_ENV
+          echo "TRACE_ID=$TRACE" >> "$GITHUB_ENV"
+          echo "RESULT_STATUS=$STATUS" >> "$GITHUB_ENV"
+          echo "SOURCE_REPO=$SOURCE" >> "$GITHUB_ENV"
+          echo "TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_ENV"
 
-      # 🔥 TRACE: result received
       - name: Emit trace (result received)
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -67,7 +73,7 @@ jobs:
               \"client_payload\": {
                 \"trace_id\": \"$TRACE_ID\",
                 \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"Control Center Result Receiver\",
+                \"workflow\": \"control-center-result-receiver\",
                 \"status\": \"result_received\"
               }
             }"
@@ -80,12 +86,17 @@ jobs:
         run: |
           FILE="queue/results/${TRACE_ID}.json"
 
-          echo '{' > "$FILE"
-          echo '  "trace_id": "'"$TRACE_ID"'",' >> "$FILE"
-          echo '  "status": "'"$RESULT_STATUS"'",' >> "$FILE"
-          echo '  "source": "'"$SOURCE_REPO"'",' >> "$FILE"
-          echo '  "received_at": "'"$TIMESTAMP"'"' >> "$FILE"
-          echo '}' >> "$FILE"
+          jq -n \
+            --arg trace_id "$TRACE_ID" \
+            --arg status "$RESULT_STATUS" \
+            --arg source "$SOURCE_REPO" \
+            --arg received_at "$TIMESTAMP" \
+            '{
+              trace_id: $trace_id,
+              status: $status,
+              source: $source,
+              received_at: $received_at
+            }' > "$FILE"
 
           echo "Saved result to $FILE"
 
@@ -94,11 +105,15 @@ jobs:
           git config user.name "codex-results"
           git config user.email "actions@github.com"
 
+          git pull origin main --rebase || echo "No remote changes"
+
           git add queue/results/
           git commit -m "Result received for ${TRACE_ID}" || echo "No changes"
-          git push
 
-      # 🔥 TRACE: result stored
+          git pull origin main --rebase || echo "No remote changes"
+
+          git push origin main
+
       - name: Emit trace (result stored)
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -111,7 +126,7 @@ jobs:
               \"client_payload\": {
                 \"trace_id\": \"$TRACE_ID\",
                 \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"Control Center Result Receiver\",
+                \"workflow\": \"control-center-result-receiver\",
                 \"status\": \"result_stored\"
               }
             }"
