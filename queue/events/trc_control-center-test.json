@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_control-center-test",
+  "type": "signal",
+  "priority": "low",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "file": "control-center-test.json"
+  }
+}

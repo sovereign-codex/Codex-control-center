@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_test-signal",
+  "type": "signal",
+  "priority": "low",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "file": "test-signal.json"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_interlink-test",
+  "type": "research",
+  "priority": "medium",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "file": "interlink-test.json"
+  }
+}

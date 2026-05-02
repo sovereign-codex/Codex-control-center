@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_test-trigger",
+  "type": "research",
+  "priority": "medium",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "file": "test-trigger.json"
+  }
+}

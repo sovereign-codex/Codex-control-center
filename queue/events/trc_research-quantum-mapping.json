@@ -1,0 +1,9 @@
+{
+  "trace_id": "trc_research-quantum-mapping",
+  "type": "research",
+  "priority": "high",
+  "source": {
+    "repo": "AVOT-ARCHIVIST",
+    "file": "research-quantum-mapping.json"
+  }
+}
