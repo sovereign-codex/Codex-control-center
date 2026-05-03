@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Trace Contract v1",
+  "type": "object",
+  "required": ["trace_id", "source", "workflow", "status", "timestamp"],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "description": "Unique identifier for a trace across the system"
+    },
+    "event_id": {
+      "type": "string",
+      "description": "Optional unique event identifier"
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin repository"
+    },
+    "workflow": {
+      "type": "string",
+      "description": "Workflow emitting the event"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "started",
+        "received",
+        "normalized",
+        "decision_created",
+        "route_selected",
+        "dispatched",
+        "execution_started",
+        "execution_completed",
+        "result_sent",
+        "result_received",
+        "result_stored",
+        "trace_stored",
+        "no_route_found",
+        "failed"
+      ]
+    },
+    "route": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "thread": { "type": "string" },
+        "avot": { "type": "string" },
+        "topic": { "type": "string" }
+      }
+    },
+    "ontology": {
+      "type": "object",
+      "properties": {
+        "domain": { "type": "string" },
+        "signal": { "type": "string" },
+        "phase": { "type": "string" }
+      }
+    }
+  }
+}
