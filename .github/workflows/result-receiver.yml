@@ -2,131 +2,93 @@ name: Control Center Result Receiver
 
 on:
   repository_dispatch:
-    types:
-      - avot_result
+    types: [routed-event]
 
 permissions:
   contents: write
-
-concurrency:
-  group: control-center-result-receiver
-  cancel-in-progress: false
 
 jobs:
   receive:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Log incoming result
-        run: |
-          echo "=== RESULT RECEIVED ==="
-          echo "Trace ID: ${{ github.event.client_payload.trace_id }}"
-          echo "Status: ${{ github.event.client_payload.status }}"
-          echo "Source: ${{ github.event.client_payload.source }}"
-
-      - name: Checkout Control Center
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate GitHub App token
-        id: app-token
-        uses: actions/create-github-app-token@v2
+      # -------------------------
+      # 1. VALIDATE + NORMALIZE
+      # -------------------------
+      - name: Validate Incoming Result
+        id: validate
+        run: node scripts/validate_trace_event.js
+        env:
+          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+
+      - name: Reject Invalid Result
+        if: steps.validate.outputs.valid != 'true'
+        run: |
+          echo "Invalid result event rejected"
+          echo '${{ steps.validate.outputs.event }}'
+          exit 1
+
+      # -------------------------
+      # 2. PARSE EVENT
+      # -------------------------
+      - name: Parse Result
+        id: parse
+        run: |
+          echo '${{ steps.validate.outputs.event }}' > event.json
+
+          TRACE_ID=$(jq -r '.trace_id' event.json)
+          STATUS=$(jq -r '.status' event.json)
+          RESULT=$(jq -r '.result' event.json)
+
+          echo "trace_id=$TRACE_ID" >> $GITHUB_OUTPUT
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >> $GITHUB_OUTPUT
+
+      # -------------------------
+      # 3. ENRICH RESULT EVENT
+      # -------------------------
+      - name: Enrich Result Event
+        id: enrich
+        run: |
+          EVENT='${{ steps.validate.outputs.event }}'
+
+          echo "$EVENT" | jq '
+            .status = "result_received" |
+            .context.received_by = "control-center-result-receiver" |
+            .ontology.phase = "result_processing"
+          ' > enriched.json
+
+          echo "event=$(cat enriched.json)" >> $GITHUB_OUTPUT
+
+      # -------------------------
+      # 4. STORE TRACE (SOURCE OF TRUTH)
+      # -------------------------
+      - name: Store Result Trace
+        uses: peter-evans/repository-dispatch@v3
         with:
-          app-id: ${{ secrets.CODEX_APP_ID }}
-          private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
-          owner: sovereign-codex
-          repositories: |
-            AVOT-TRACE
-            Codex-control-center
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: sovereign-codex/AVOT-TRACE
+          event-type: trace-event
+          client-payload: ${{ steps.enrich.outputs.event }}
 
-      - name: Set runtime variables
-        run: |
-          TRACE="${{ github.event.client_payload.trace_id }}"
-          STATUS="${{ github.event.client_payload.status }}"
-          SOURCE="${{ github.event.client_payload.source }}"
-
-          if [ -z "$TRACE" ]; then
-            TRACE="trace_${GITHUB_RUN_ID}"
-          fi
-
-          if [ -z "$STATUS" ]; then
-            STATUS="unknown"
-          fi
-
-          if [ -z "$SOURCE" ]; then
-            SOURCE="unknown"
-          fi
-
-          echo "TRACE_ID=$TRACE" >> "$GITHUB_ENV"
-          echo "RESULT_STATUS=$STATUS" >> "$GITHUB_ENV"
-          echo "SOURCE_REPO=$SOURCE" >> "$GITHUB_ENV"
-          echo "TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> "$GITHUB_ENV"
-
-      - name: Emit trace (result received)
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"control-center-result-receiver\",
-                \"status\": \"result_received\"
-              }
-            }"
-
-      - name: Ensure results directory
-        run: |
-          mkdir -p queue/results
-
-      - name: Write result file
-        run: |
-          FILE="queue/results/${TRACE_ID}.json"
-
-          jq -n \
-            --arg trace_id "$TRACE_ID" \
-            --arg status "$RESULT_STATUS" \
-            --arg source "$SOURCE_REPO" \
-            --arg received_at "$TIMESTAMP" \
-            '{
-              trace_id: $trace_id,
-              status: $status,
-              source: $source,
-              received_at: $received_at
-            }' > "$FILE"
-
-          echo "Saved result to $FILE"
-
-      - name: Commit result
-        run: |
-          git config user.name "codex-results"
-          git config user.email "actions@github.com"
-
-          git pull origin main --rebase || echo "No remote changes"
-
-          git add queue/results/
-          git commit -m "Result received for ${TRACE_ID}" || echo "No changes"
-
-          git pull origin main --rebase || echo "No remote changes"
-
-          git push origin main
-
-      - name: Emit trace (result stored)
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d "{
-              \"event_type\": \"trace_log\",
-              \"client_payload\": {
-                \"trace_id\": \"$TRACE_ID\",
-                \"repo\": \"${GITHUB_REPOSITORY}\",
-                \"workflow\": \"control-center-result-receiver\",
-                \"status\": \"result_stored\"
-              }
-            }"
+      # -------------------------
+      # 5. CLOSE LOOP (CRITICAL)
+      # -------------------------
+      - name: Emit Completion Event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: sovereign-codex/Codex-control-center
+          event-type: trace-event
+          client-payload: >
+            {
+              "trace_id": "${{ steps.parse.outputs.trace_id }}",
+              "status": "execution_completed",
+              "result": "${{ steps.parse.outputs.result }}",
+              "source": "control-center-result-receiver",
+              "workflow": "result_receiver",
+              "timestamp": "${{ github.event.head_commit.timestamp }}"
+            }
