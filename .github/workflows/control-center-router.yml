@@ -2,11 +2,7 @@ name: Control Center Router
 
 on:
   repository_dispatch:
-    types:
-      - engine_signal
-  push:
-    paths:
-      - 'incoming/*.json'
+    types: [trace-event, routed-event]
 
 permissions:
   contents: write
@@ -16,172 +12,107 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Control Center
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate GitHub App token
-        id: app-token
-        uses: actions/create-github-app-token@v2
-        with:
-          app-id: ${{ secrets.CODEX_APP_ID }}
-          private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
-          owner: sovereign-codex
-          repositories: |
-            AVOT-TRACE
-            Codex-control-center
-
-      - name: Ensure directories
-        run: |
-          mkdir -p queue/events
-          mkdir -p queue/decisions
-          mkdir -p logs/router
-
-      # 🔥 CORE ROUTING LOGIC (single source of truth)
-      - name: Route signal
+      # -------------------------
+      # 1. VALIDATION GATE
+      # -------------------------
+      - name: Validate + Normalize Event
+        id: validate
+        run: node scripts/validate_trace_event.js
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
+
+      - name: Reject Invalid Event
+        if: steps.validate.outputs.valid != 'true'
         run: |
-          echo "=== ROUTER START ==="
+          echo "Event rejected at validation layer"
+          echo '${{ steps.validate.outputs.event }}'
+          exit 1
 
-          process_signal () {
-            TRACE="$1"
-            TYPE="$2"
-            PRIORITY="$3"
-            SOURCE_REPO="$4"
-            SOURCE_FILE="$5"
-            BASENAME="$6"
+      # -------------------------
+      # 2. PARSE NORMALIZED EVENT
+      # -------------------------
+      - name: Parse Event
+        id: parse
+        run: |
+          echo '${{ steps.validate.outputs.event }}' > event.json
 
-            if [ -z "$TRACE" ]; then
-              TRACE="trc_${BASENAME%.*}"
-            fi
+          TRACE_ID=$(jq -r '.trace_id' event.json)
+          STATUS=$(jq -r '.status' event.json)
+          WORKFLOW=$(jq -r '.workflow' event.json)
 
-            if [ -z "$TYPE" ]; then
-              TYPE="unknown"
-            fi
+          echo "trace_id=$TRACE_ID" >> $GITHUB_OUTPUT
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "workflow=$WORKFLOW" >> $GITHUB_OUTPUT
 
-            if [ -z "$PRIORITY" ]; then
-              PRIORITY="low"
-            fi
+      # -------------------------
+      # 3. ROUTING LOGIC
+      # -------------------------
+      - name: Determine Route
+        id: route
+        run: |
+          STATUS="${{ steps.parse.outputs.status }}"
 
-            ROUTE="control-center"
+          TARGET=""
 
-            if [ "$TYPE" = "signal" ]; then
-              ROUTE="avot-engine"
-            elif [ "$TYPE" = "archival" ]; then
-              ROUTE="avot-archivist"
-            fi
+          if [[ "$STATUS" == "decision_created" ]]; then
+            TARGET="sovereign-codex/Codex-control-center"
 
-            echo "Trace: $TRACE"
-            echo "Type: $TYPE"
-            echo "Priority: $PRIORITY"
-            echo "Route: $ROUTE"
+          elif [[ "$STATUS" == "route_selected" ]]; then
+            TARGET="sovereign-codex/Cross-repo-dispatcher"
 
-            SAFE_NAME=$(echo "$TRACE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9._-]/-/g')
+          elif [[ "$STATUS" == "dispatched" ]]; then
+            TARGET="sovereign-codex/AVOT-engine"
 
-            EVENT_FILE="queue/events/${SAFE_NAME}.json"
-            DECISION_FILE="queue/decisions/${SAFE_NAME}.json"
+          elif [[ "$STATUS" == "result_sent" ]]; then
+            TARGET="sovereign-codex/Control-center-result-receiver"
 
-            # Store event
-            jq -n \
-              --arg trace_id "$TRACE" \
-              --arg type "$TYPE" \
-              --arg priority "$PRIORITY" \
-              --arg source_repo "$SOURCE_REPO" \
-              --arg source_file "$SOURCE_FILE" \
-              '{
-                trace_id: $trace_id,
-                type: $type,
-                priority: $priority,
-                source: {
-                  repo: $source_repo,
-                  file: $source_file
-                }
-              }' > "$EVENT_FILE"
+          elif [[ "$STATUS" == "failed" ]]; then
+            TARGET="sovereign-codex/AVOT-TRACE"
 
-            # Create decision
-            jq -n \
-              --arg trace_id "$TRACE" \
-              --arg route "$ROUTE" \
-              --arg type "$TYPE" \
-              --arg priority "$PRIORITY" \
-              '{
-                trace_id: $trace_id,
-                decision: {
-                  route: $route
-                },
-                payload: {
-                  type: $type,
-                  priority: $priority
-                },
-                status: "queued"
-              }' > "$DECISION_FILE"
-
-            # 🔥 TRACE
-            curl -s -X POST https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              -d "{
-                \"event_type\": \"trace_log\",
-                \"client_payload\": {
-                  \"trace_id\": \"$TRACE\",
-                  \"repo\": \"${GITHUB_REPOSITORY}\",
-                  \"workflow\": \"control-center-router\",
-                  \"status\": \"decision_created:$ROUTE\"
-                }
-              }"
-          }
-
-          # 🔁 Handle repository dispatch (new system)
-          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
-            process_signal \
-              "${{ github.event.client_payload.trace_id }}" \
-              "${{ github.event.client_payload.type }}" \
-              "${{ github.event.client_payload.priority }}" \
-              "${{ github.event.client_payload.source_repo }}" \
-              "${{ github.event.client_payload.file }}" \
-              "${{ github.run_id }}"
+          else
+            TARGET="sovereign-codex/AVOT-TRACE"
           fi
 
-          # 🔁 Handle legacy incoming files
-          shopt -s nullglob
-          for file in incoming/*.json; do
-            [ -f "$file" ] || continue
+          echo "target=$TARGET" >> $GITHUB_OUTPUT
 
-            BASENAME=$(basename "$file")
+          echo "Routing decision:"
+          echo "$STATUS → $TARGET"
 
-            process_signal \
-              "$(jq -r '.trace_id // empty' "$file")" \
-              "$(jq -r '.type // .payload.type // "unknown"' "$file")" \
-              "$(jq -r '.priority // .payload.priority // "low"' "$file")" \
-              "$(jq -r '.source.repo // "unknown"' "$file")" \
-              "$(jq -r '.source.file // "'"$BASENAME"'"' "$file")" \
-              "$BASENAME"
-
-            mv "$file" "logs/router/${BASENAME}"
-          done
-
-          echo "=== ROUTER END ==="
-
-      - name: Commit routing results
+      # -------------------------
+      # 4. TRACE ENRICHMENT
+      # -------------------------
+      - name: Enrich Event with Route
+        id: enrich
         run: |
-          git config user.name "codex-router"
-          git config user.email "actions@github.com"
+          EVENT='${{ steps.validate.outputs.event }}'
 
-          git pull origin main --rebase || echo "No remote changes"
+          echo "$EVENT" | jq --arg target "${{ steps.route.outputs.target }}" '
+            .target = $target
+          ' > enriched.json
 
-          git add queue/ logs/
-          git commit -m "Router created decisions" || echo "No changes"
+          echo "event=$(cat enriched.json)" >> $GITHUB_OUTPUT
 
-          git pull origin main --rebase || echo "No remote changes"
+      # -------------------------
+      # 5. DISPATCH
+      # -------------------------
+      - name: Dispatch to Target Repo
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ steps.route.outputs.target }}
+          event-type: routed-event
+          client-payload: ${{ steps.enrich.outputs.event }}
 
-          git push
-
-      - name: Trigger Dispatcher
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          curl -s -X POST \
-            https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H "Accept: application/vnd.github+json" \
-            -d '{"event_type":"engine_handoff"}'
+      # -------------------------
+      # 6. STORE TRACE (ALWAYS)
+      # -------------------------
+      - name: Store Trace Event
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: sovereign-codex/AVOT-TRACE
+          event-type: trace-event
+          client-payload: ${{ steps.enrich.outputs.event }}
