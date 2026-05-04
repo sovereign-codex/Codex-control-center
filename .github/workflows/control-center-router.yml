@@ -2,7 +2,7 @@ name: Control Center Router
 
 on:
   repository_dispatch:
-    types: [trace-event, routed-event]
+    types: [trace-event]
 
 permissions:
   contents: write
@@ -15,104 +15,112 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # -------------------------
-      # 1. VALIDATION GATE
-      # -------------------------
-      - name: Validate + Normalize Event
-        id: validate
-        run: node scripts/validate_trace_event.js
-        env:
-          CLIENT_PAYLOAD: ${{ toJson(github.event.client_payload) }}
-
-      - name: Reject Invalid Event
-        if: steps.validate.outputs.valid != 'true'
+      # -----------------------------
+      # 1. LOAD EVENT
+      # -----------------------------
+      - name: Load payload
+        id: payload
         run: |
-          echo "Event rejected at validation layer"
-          echo '${{ steps.validate.outputs.event }}'
-          exit 1
+          echo '${{ toJson(github.event.client_payload) }}' > event.json
 
-      # -------------------------
-      # 2. PARSE NORMALIZED EVENT
-      # -------------------------
-      - name: Parse Event
-        id: parse
-        run: |
-          echo '${{ steps.validate.outputs.event }}' > event.json
-
-          TRACE_ID=$(jq -r '.trace_id' event.json)
-          STATUS=$(jq -r '.status' event.json)
-          WORKFLOW=$(jq -r '.workflow' event.json)
+          TRACE_ID=$(jq -r '.trace_id // empty' event.json)
+          WORKFLOW=$(jq -r '.workflow // empty' event.json)
+          REPO=$(jq -r '.repo // empty' event.json)
+          STATUS=$(jq -r '.status // "unknown"' event.json)
+          TIMESTAMP=$(jq -r '.timestamp // empty' event.json)
 
           echo "trace_id=$TRACE_ID" >> $GITHUB_OUTPUT
-          echo "status=$STATUS" >> $GITHUB_OUTPUT
           echo "workflow=$WORKFLOW" >> $GITHUB_OUTPUT
+          echo "repo=$REPO" >> $GITHUB_OUTPUT
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
 
-      # -------------------------
-      # 3. ROUTING LOGIC
-      # -------------------------
-      - name: Determine Route
+      # -----------------------------
+      # 2. VALIDATION (HARD GATE)
+      # -----------------------------
+      - name: Validate event
+        run: |
+          if [ -z "${{ steps.payload.outputs.trace_id }}" ] || \
+             [ -z "${{ steps.payload.outputs.workflow }}" ] || \
+             [ -z "${{ steps.payload.outputs.repo }}" ]; then
+            echo "❌ Invalid event payload"
+            exit 1
+          fi
+
+      # -----------------------------
+      # 3. ROUTE DECISION ENGINE
+      # -----------------------------
+      - name: Determine route
         id: route
         run: |
-          STATUS="${{ steps.parse.outputs.status }}"
+          WORKFLOW="${{ steps.payload.outputs.workflow }}"
+          STATUS="${{ steps.payload.outputs.status }}"
 
-          TARGET=""
+          TARGET="none"
 
-          if [[ "$STATUS" == "decision_created" ]]; then
-            TARGET="sovereign-codex/Codex-control-center"
+          if [[ "$WORKFLOW" == *"control-center"* ]]; then
+            TARGET="control-center-result-receiver"
 
-          elif [[ "$STATUS" == "route_selected" ]]; then
-            TARGET="sovereign-codex/Cross-repo-dispatcher"
+          elif [[ "$WORKFLOW" == *"avot-engine"* ]]; then
+            TARGET="avot-engine-receiver"
 
-          elif [[ "$STATUS" == "dispatched" ]]; then
-            TARGET="sovereign-codex/AVOT-engine"
+          elif [[ "$WORKFLOW" == *"dispatch"* ]]; then
+            TARGET="cross-repo-dispatcher"
 
-          elif [[ "$STATUS" == "result_sent" ]]; then
-            TARGET="sovereign-codex/Control-center-result-receiver"
-
-          elif [[ "$STATUS" == "failed" ]]; then
-            TARGET="sovereign-codex/AVOT-TRACE"
+          elif [[ "$STATUS" == *"fail"* ]] || [[ "$STATUS" == *"error"* ]]; then
+            TARGET="control-center-recovery"
 
           else
-            TARGET="sovereign-codex/AVOT-TRACE"
+            TARGET="control-center-result-receiver"
           fi
 
           echo "target=$TARGET" >> $GITHUB_OUTPUT
 
-          echo "Routing decision:"
-          echo "$STATUS → $TARGET"
-
-      # -------------------------
-      # 4. TRACE ENRICHMENT
-      # -------------------------
-      - name: Enrich Event with Route
-        id: enrich
+      # -----------------------------
+      # 4. EMIT DECISION ARTIFACT
+      # -----------------------------
+      - name: Save decision
         run: |
-          EVENT='${{ steps.validate.outputs.event }}'
+          mkdir -p decisions
 
-          echo "$EVENT" | jq --arg target "${{ steps.route.outputs.target }}" '
-            .target = $target
-          ' > enriched.json
+          jq -n \
+            --arg trace_id "${{ steps.payload.outputs.trace_id }}" \
+            --arg from "${{ steps.payload.outputs.workflow }}" \
+            --arg to "${{ steps.route.outputs.target }}" \
+            --arg timestamp "${{ steps.payload.outputs.timestamp }}" \
+            '{
+              trace_id: $trace_id,
+              from: $from,
+              to: $to,
+              decision: "route",
+              timestamp: $timestamp
+            }' > decisions/${{ steps.payload.outputs.trace_id }}.json
 
-          echo "event=$(cat enriched.json)" >> $GITHUB_OUTPUT
+      # -----------------------------
+      # 5. DISPATCH TO TARGET
+      # -----------------------------
+      - name: Forward event
+        run: |
+          TARGET="${{ steps.route.outputs.target }}"
 
-      # -------------------------
-      # 5. DISPATCH
-      # -------------------------
-      - name: Dispatch to Target Repo
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ steps.route.outputs.target }}
-          event-type: routed-event
-          client-payload: ${{ steps.enrich.outputs.event }}
+          echo "➡️ Routing to $TARGET"
 
-      # -------------------------
-      # 6. STORE TRACE (ALWAYS)
-      # -------------------------
-      - name: Store Trace Event
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          repository: sovereign-codex/AVOT-TRACE
-          event-type: trace-event
-          client-payload: ${{ steps.enrich.outputs.event }}
+          curl -X POST https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -d "{
+              \"event_type\": \"$TARGET\",
+              \"client_payload\": $(cat event.json)
+            }"
+
+      # -----------------------------
+      # 6. COMMIT DECISION TRACE
+      # -----------------------------
+      - name: Commit decision log
+        run: |
+          git config user.name "codex-bot"
+          git config user.email "actions@github.com"
+
+          git add decisions
+          git commit -m "Routing decision for ${{ steps.payload.outputs.trace_id }}" || echo "No changes"
+          git push
