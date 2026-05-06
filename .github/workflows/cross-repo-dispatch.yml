@@ -1,22 +1,22 @@
-name: Control Center Router
+name: Cross Repo Dispatcher
 
 on:
   repository_dispatch:
     types:
-      - route-event
+      - engine_handoff
 
 permissions:
   contents: write
 
 jobs:
-  route:
+  dispatch:
     runs-on: ubuntu-latest
 
     steps:
       # -----------------------------
       # 0. CHECKOUT
       # -----------------------------
-      - name: Checkout
+      - name: Checkout Control Center
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -24,162 +24,162 @@ jobs:
       # -----------------------------
       # 1. GENERATE GITHUB APP TOKEN
       # -----------------------------
-      - name: Generate GitHub App Token
+      - name: Generate GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.CODEX_APP_ID }}
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
+          repositories: |
+            AVOT-TRACE
+            Codex-control-center
+            AVOT-engine
+            AVOT-forge
+            AVOT-ARCHIVIST
+            Codex-interface-
+            Codex-net-index
 
       # -----------------------------
-      # 2. LOAD EVENT
+      # 2. LOAD HANDOFF EVENT
       # -----------------------------
-      - name: Load payload
+      - name: Load handoff payload
         id: payload
         run: |
-          echo '${{ toJson(github.event.client_payload) }}' > event.json
+          echo '${{ toJson(github.event.client_payload) }}' > handoff.json
 
-          echo "==== RAW EVENT ===="
-          cat event.json
+          echo "==== RAW HANDOFF ===="
+          cat handoff.json
 
-          # Support nested payloads
-          if jq -e '.event' event.json >/dev/null 2>&1; then
-            EVENT_PATH=".event"
-          else
-            EVENT_PATH="."
-          fi
+          TARGET=$(jq -r '.target // "unknown"' handoff.json)
 
-          TRACE_ID=$(jq -r "${EVENT_PATH}.trace_id // empty" event.json)
-          WORKFLOW=$(jq -r "${EVENT_PATH}.workflow // empty" event.json)
-          REPO=$(jq -r "${EVENT_PATH}.repo // empty" event.json)
-          STATUS=$(jq -r "${EVENT_PATH}.status // \"unknown\"" event.json)
-          TIMESTAMP=$(jq -r "${EVENT_PATH}.timestamp // empty" event.json)
+          TRACE_ID=$(jq -r '.event.trace_id // empty' handoff.json)
+          WORKFLOW=$(jq -r '.event.workflow // empty' handoff.json)
+          REPO=$(jq -r '.event.repo // empty' handoff.json)
+          STATUS=$(jq -r '.event.status // "unknown"' handoff.json)
+          TIMESTAMP=$(jq -r '.event.timestamp // empty' handoff.json)
 
-          SOURCE=$(jq -r '.source // "unknown"' event.json)
-          TARGET=$(jq -r '.target // "none"' event.json)
-
+          echo "target=$TARGET" >> $GITHUB_OUTPUT
           echo "trace_id=$TRACE_ID" >> $GITHUB_OUTPUT
           echo "workflow=$WORKFLOW" >> $GITHUB_OUTPUT
           echo "repo=$REPO" >> $GITHUB_OUTPUT
           echo "status=$STATUS" >> $GITHUB_OUTPUT
           echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
-          echo "source=$SOURCE" >> $GITHUB_OUTPUT
-          echo "target=$TARGET" >> $GITHUB_OUTPUT
 
       # -----------------------------
-      # 3. VALIDATION
+      # 3. EMIT TRACE START
       # -----------------------------
-      - name: Validate event
-        run: |
-          if [ -z "${{ steps.payload.outputs.trace_id }}" ] || \
-             [ -z "${{ steps.payload.outputs.workflow }}" ] || \
-             [ -z "${{ steps.payload.outputs.repo }}" ]; then
-            echo "❌ Invalid payload"
-            exit 1
-          fi
-
-          echo "✅ Payload valid"
-
-      # -----------------------------
-      # 4. ROUTE DECISION ENGINE
-      # -----------------------------
-      - name: Determine route
-        id: route
-        run: |
-          WORKFLOW="${{ steps.payload.outputs.workflow }}"
-          STATUS="${{ steps.payload.outputs.status }}"
-
-          TARGET="control-center-result-receiver"
-
-          # FAILURE ROUTING
-          if [[ "$STATUS" == *"fail"* ]] || \
-             [[ "$STATUS" == *"error"* ]]; then
-
-            TARGET="control-center-recovery"
-
-          # ENGINE EVENTS
-          elif [[ "$WORKFLOW" == *"engine"* ]]; then
-
-            TARGET="avot-engine-runner"
-
-          # DISPATCH EVENTS
-          elif [[ "$WORKFLOW" == *"dispatch"* ]]; then
-
-            TARGET="cross-repo-dispatcher"
-
-          # CONTROL CENTER EVENTS
-          elif [[ "$WORKFLOW" == *"control-center"* ]]; then
-
-            TARGET="control-center-result-receiver"
-
-          fi
-
-          echo "target=$TARGET" >> $GITHUB_OUTPUT
-
-          echo "==== ROUTE DECISION ===="
-          echo "Workflow: $WORKFLOW"
-          echo "Status: $STATUS"
-          echo "Target: $TARGET"
-
-      # -----------------------------
-      # 5. SAVE DECISION TRACE
-      # -----------------------------
-      - name: Save decision
-        run: |
-          mkdir -p decisions
-          mkdir -p queue/decisions
-
-          jq -n \
-            --arg trace_id "${{ steps.payload.outputs.trace_id }}" \
-            --arg from "${{ steps.payload.outputs.workflow }}" \
-            --arg to "${{ steps.route.outputs.target }}" \
-            --arg status "${{ steps.payload.outputs.status }}" \
-            --arg timestamp "${{ steps.payload.outputs.timestamp }}" \
-            '{
-              trace_id: $trace_id,
-              from: $from,
-              target: $to,
-              status: $status,
-              decision: "route",
-              timestamp: $timestamp
-            }' > decisions/${{ steps.payload.outputs.trace_id }}.json
-
-          # CRITICAL:
-          # write queue artifact for dispatcher
-          jq -n \
-            --arg target "${{ steps.route.outputs.target }}" \
-            --slurpfile payload event.json \
-            '{
-              target: $target,
-              event: $payload[0]
-            }' > queue/decisions/${{ steps.payload.outputs.trace_id }}.json
-
-          echo "==== SAVED DECISION ===="
-          cat decisions/${{ steps.payload.outputs.trace_id }}.json
-
-          echo "==== QUEUED EVENT ===="
-          cat queue/decisions/${{ steps.payload.outputs.trace_id }}.json
-
-      # -----------------------------
-      # 6. FORWARD EVENT
-      # -----------------------------
-      - name: Forward event
+      - name: Emit trace (dispatcher start)
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-          TARGET="${{ steps.route.outputs.target }}"
+          TRACE="${{ steps.payload.outputs.trace_id }}"
 
-          echo "➡️ Routing to $TARGET"
+          if [ -z "$TRACE" ]; then
+            TRACE="dispatcher_${GITHUB_RUN_ID}"
+          fi
+
+          curl -s -X POST \
+            https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{
+              \"event_type\": \"trace_log\",
+              \"client_payload\": {
+                \"trace_id\": \"$TRACE\",
+                \"repo\": \"${GITHUB_REPOSITORY}\",
+                \"workflow\": \"cross-repo-dispatcher\",
+                \"status\": \"started\"
+              }
+            }"
+
+      # -----------------------------
+      # 4. DETERMINE TARGET REPO
+      # -----------------------------
+      - name: Determine target repository
+        id: target
+        run: |
+          TARGET="${{ steps.payload.outputs.target }}"
+
+          TARGET_REPO=""
+
+          case "$TARGET" in
+            "avot-engine-runner")
+              TARGET_REPO="sovereign-codex/AVOT-engine"
+              ;;
+            "avot-forge")
+              TARGET_REPO="sovereign-codex/AVOT-forge"
+              ;;
+            "avot-archivist")
+              TARGET_REPO="sovereign-codex/AVOT-ARCHIVIST"
+              ;;
+            "control-center-result-receiver")
+              TARGET_REPO="sovereign-codex/Codex-control-center"
+              ;;
+            "cross-repo-dispatcher")
+              TARGET_REPO="sovereign-codex/Codex-control-center"
+              ;;
+            "control-center-recovery")
+              TARGET_REPO="sovereign-codex/Codex-control-center"
+              ;;
+            "trace")
+              TARGET_REPO="sovereign-codex/AVOT-TRACE"
+              ;;
+            "interface")
+              TARGET_REPO="sovereign-codex/Codex-interface-"
+              ;;
+            "index")
+              TARGET_REPO="sovereign-codex/Codex-net-index"
+              ;;
+          esac
+
+          echo "target_repo=$TARGET_REPO" >> $GITHUB_OUTPUT
+
+          echo "==== TARGET RESOLUTION ===="
+          echo "Target: $TARGET"
+          echo "Resolved Repo: $TARGET_REPO"
+
+      # -----------------------------
+      # 5. VALIDATE TARGET
+      # -----------------------------
+      - name: Validate target
+        run: |
+          if [ -z "${{ steps.target.outputs.target_repo }}" ]; then
+            echo "❌ No target repository resolved"
+            exit 1
+          fi
+
+          echo "✅ Target repository valid"
+
+      # -----------------------------
+      # 6. DISPATCH EVENT
+      # -----------------------------
+      - name: Dispatch routed event
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          TARGET_REPO="${{ steps.target.outputs.target_repo }}"
+          TARGET="${{ steps.payload.outputs.target }}"
+          TRACE="${{ steps.payload.outputs.trace_id }}"
+
+          echo "==== DISPATCHING EVENT ===="
+          echo "Target Repo: $TARGET_REPO"
+          echo "Target Workflow: $TARGET"
 
           BODY=$(jq -n \
-            --arg target "$TARGET" \
-            --slurpfile payload event.json \
+            --arg trace_id "${{ steps.payload.outputs.trace_id }}" \
+            --arg workflow "${{ steps.payload.outputs.workflow }}" \
+            --arg repo "${{ steps.payload.outputs.repo }}" \
+            --arg status "${{ steps.payload.outputs.status }}" \
+            --arg timestamp "${{ steps.payload.outputs.timestamp }}" \
             '{
-              event_type: "engine_handoff",
+              event_type: "avot_execution",
               client_payload: {
-                target: $target,
-                event: $payload[0]
+                trace_id: $trace_id,
+                workflow: $workflow,
+                repo: $repo,
+                status: $status,
+                timestamp: $timestamp
               }
             }')
 
@@ -187,35 +187,102 @@ jobs:
           echo "$BODY"
 
           RESPONSE=$(curl -s -o response.txt -w "%{http_code}" \
-            -X POST https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches \
-            -H "Accept: application/vnd.github+json" \
+            -X POST \
+            https://api.github.com/repos/$TARGET_REPO/dispatches \
             -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
             -d "$BODY")
 
           echo "HTTP Status: $RESPONSE"
 
           echo "==== RESPONSE ===="
-          cat response.txt
+          cat response.txt || true
 
-          if [ "$RESPONSE" != "204" ]; then
-            echo "❌ Dispatch failed"
+          if [ "$RESPONSE" = "204" ]; then
+            echo "Dispatch success"
+            STATUS_RESULT="dispatched"
+          else
+            echo "Dispatch failed"
+            STATUS_RESULT="dispatch_failed"
             exit 1
           fi
 
-          echo "✅ Dispatch succeeded"
+          echo "status_result=$STATUS_RESULT" >> $GITHUB_ENV
 
       # -----------------------------
-      # 7. COMMIT DECISION TRACE
+      # 7. SAVE DISPATCH TRACE
       # -----------------------------
-      - name: Commit decision log
+      - name: Save dispatcher trace
         run: |
-          git config user.name "codex-bot"
+          mkdir -p dispatch-log
+
+          jq -n \
+            --arg trace_id "${{ steps.payload.outputs.trace_id }}" \
+            --arg workflow "${{ steps.payload.outputs.workflow }}" \
+            --arg repo "${{ steps.payload.outputs.repo }}" \
+            --arg target "${{ steps.payload.outputs.target }}" \
+            --arg status "${{ env.status_result }}" \
+            --arg timestamp "${{ steps.payload.outputs.timestamp }}" \
+            '{
+              trace_id: $trace_id,
+              workflow: $workflow,
+              repo: $repo,
+              target: $target,
+              status: $status,
+              timestamp: $timestamp
+            }' > dispatch-log/${{ steps.payload.outputs.trace_id }}.json
+
+          echo "==== SAVED TRACE ===="
+          cat dispatch-log/${{ steps.payload.outputs.trace_id }}.json
+
+      # -----------------------------
+      # 8. EMIT TRACE RESULT
+      # -----------------------------
+      - name: Emit dispatcher result
+        if: always()
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          TRACE="${{ steps.payload.outputs.trace_id }}"
+
+          if [ -z "$TRACE" ]; then
+            TRACE="dispatcher_${GITHUB_RUN_ID}"
+          fi
+
+          STATUS_RESULT="${{ env.status_result }}"
+
+          if [ -z "$STATUS_RESULT" ]; then
+            STATUS_RESULT="unknown"
+          fi
+
+          curl -s -X POST \
+            https://api.github.com/repos/sovereign-codex/AVOT-TRACE/dispatches \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            -d "{
+              \"event_type\": \"trace_log\",
+              \"client_payload\": {
+                \"trace_id\": \"$TRACE\",
+                \"repo\": \"${GITHUB_REPOSITORY}\",
+                \"workflow\": \"cross-repo-dispatcher\",
+                \"status\": \"$STATUS_RESULT\"
+              }
+            }"
+
+      # -----------------------------
+      # 9. COMMIT LOGS
+      # -----------------------------
+      - name: Commit dispatcher logs
+        run: |
+          git config user.name "codex-dispatcher"
           git config user.email "actions@github.com"
 
-          git add decisions
-          git add queue/decisions
+          git pull origin main --rebase || echo "No remote changes"
 
-          git commit -m "Routing decision for ${{ steps.payload.outputs.trace_id }}" || echo "No changes"
+          git add dispatch-log/
 
-          git pull --rebase origin main || true
-          git push
+          git commit -m "Dispatcher processed ${{ steps.payload.outputs.trace_id }}" || echo "No changes"
+
+          git pull origin main --rebase || echo "No remote changes"
+
+          git push origin main
