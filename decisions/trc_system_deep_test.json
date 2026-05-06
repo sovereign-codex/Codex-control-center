@@ -1,0 +1,8 @@
+{
+  "trace_id": "trc_system_deep_test",
+  "from": "engine-runner",
+  "to": "avot-engine-runner",
+  "status": "started",
+  "decision": "route",
+  "timestamp": "2026-05-03T08:45:00Z"
+}
