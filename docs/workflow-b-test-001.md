@@ -1,6 +1,6 @@
 # Workflow B Test 001
 
-Purpose: Validate the governed Request  Attempt  Ledger  Repository lineage for Workflow B.
+Purpose: Validate the governed Request → Attempt → Ledger → Repository lineage for Workflow B.
 
 Status: Diagnostic write only.
 
