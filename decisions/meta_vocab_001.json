@@ -1,0 +1,8 @@
+{
+  "trace_id": "meta_vocab_001",
+  "from": "office-vocabulary-evolution",
+  "to": "control-center-result-receiver",
+  "status": "experimental",
+  "decision": "route",
+  "timestamp": "2026-08-12T02:45:00Z"
+}
