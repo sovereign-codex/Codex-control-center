@@ -1,0 +1,8 @@
+{
+  "trace_id": "META-CIRCULATION-003",
+  "from": "archivist-ingest",
+  "to": "control-center-result-receiver",
+  "status": "capability_probe",
+  "decision": "route",
+  "timestamp": "2026-08-12T04:44:00Z"
+}
