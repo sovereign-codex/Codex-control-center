@@ -1,0 +1,8 @@
+{
+  "trace_id": "META-CIRCULATION-004",
+  "from": "archivist-ingest",
+  "to": "control-center-result-receiver",
+  "status": "downstream_continuity_probe",
+  "decision": "route",
+  "timestamp": "2026-08-12T04:52:00Z"
+}
