@@ -1,0 +1,8 @@
+{
+  "trace_id": "meta_circulation_002",
+  "from": "institutional-event-circulation",
+  "to": "control-center-result-receiver",
+  "status": "experimental",
+  "decision": "route",
+  "timestamp": "2026-08-12T03:29:11Z"
+}
