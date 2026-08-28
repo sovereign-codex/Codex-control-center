@@ -51,14 +51,14 @@ class HallCoreTests(unittest.TestCase):
         self.assertEqual(event["state"]["execution_state"], "not_started")
 
     def test_idempotency_mismatch_and_append_only(self) -> None:
-        first = self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(), self.payload)
-        second = self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(), self.payload)
+        first = self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(), self.raw)
+        second = self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(), self.raw)
         self.assertEqual(first["status"], "accepted")
         self.assertEqual(second["status"], "duplicate")
         changed = dict(self.payload, action="closed")
         raw = app.canonical(changed).encode()
         with self.assertRaises(app.ReplayMismatch):
-            self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(raw=raw, payload=changed), changed)
+            self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(raw=raw, payload=changed), raw)
         self.assertEqual(self.store.snapshot()["event_count"], 1)
         db = sqlite3.connect(self.store.path)
         try:

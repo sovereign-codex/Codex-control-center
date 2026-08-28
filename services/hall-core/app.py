@@ -166,7 +166,7 @@ class Store:
                     body_hash TEXT NOT NULL,
                     accepted_at TEXT NOT NULL,
                     envelope TEXT NOT NULL,
-                    raw_payload TEXT NOT NULL,
+                    raw_payload BLOB NOT NULL,
                     UNIQUE(adapter_id, delivery_id)
                 );
                 CREATE TRIGGER IF NOT EXISTS events_no_update BEFORE UPDATE ON events
@@ -181,7 +181,7 @@ class Store:
         db.execute("PRAGMA busy_timeout=10000")
         return db
 
-    def ingest(self, adapter_id: str, delivery: str, envelope: dict[str, Any], payload: dict[str, Any]) -> dict[str, Any]:
+    def ingest(self, adapter_id: str, delivery: str, envelope: dict[str, Any], raw_body: bytes) -> dict[str, Any]:
         event = envelope["hall_event"]
         digest = event["payload"]["content_hash"]
         with self.connect() as db:
@@ -196,7 +196,7 @@ class Store:
                 return {"status": "duplicate", "sequence": existing["sequence"], "event_id": existing["event_id"]}
             cursor = db.execute(
                 "INSERT INTO events(event_id,adapter_id,delivery_id,body_hash,accepted_at,envelope,raw_payload) VALUES(?,?,?,?,?,?,?)",
-                (event["event_id"], adapter_id, delivery, digest, event["accepted_at"], canonical(envelope), canonical(payload)),
+                (event["event_id"], adapter_id, delivery, digest, event["accepted_at"], canonical(envelope), sqlite3.Binary(raw_body)),
             )
             return {"status": "accepted", "sequence": cursor.lastrowid, "event_id": event["event_id"]}
 
@@ -246,7 +246,9 @@ class Runtime:
         return ready, {
             "status": "ready" if ready else "degraded", "node_id": self.node_id,
             "runtime_version": VERSION, "build_commit": self.commit,
-            "missing_configuration": missing, **snapshot,
+            "missing_configuration": missing,
+            "database_integrity": snapshot["database_integrity"],
+            "append_only_triggers": snapshot["append_only_triggers"],
         }
 
 
@@ -285,7 +287,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def authorized(self) -> bool:
         bearer = self.headers.get("Authorization", "")
-        token = bearer[7:] if bearer.startswith("Bearer ") else self.headers.get("X-Hall-Read-Token", "")
+        token = bearer[7:] if bearer.startswith("Bearer ") else ""
         return bool(self.runtime.read_token and token and hmac.compare_digest(token, self.runtime.read_token))
 
     def do_GET(self) -> None:  # noqa: N802
@@ -333,7 +335,7 @@ class Handler(BaseHTTPRequestHandler):
             event_name = self.headers.get("X-GitHub-Event", "").strip()
             payload = json.loads(raw.decode())
             envelope = normalize(delivery, event_name, payload, raw, self.runtime.adapter_id, self.runtime.node_id)
-            result = self.runtime.store.ingest(self.runtime.adapter_id, delivery, envelope, payload)
+            result = self.runtime.store.ingest(self.runtime.adapter_id, delivery, envelope, raw)
             self.send_json(202 if result["status"] == "accepted" else 200, {
                 **result, "authority_posture": "observe", "institutional_effect": "accepted_event_only",
                 "next_valid_action": "route_or_review_under_separate_hall_gate",

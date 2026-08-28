@@ -77,9 +77,10 @@ This is an event-memory and orchestration foundation, not a model-inference mach
 1. Add an SSH public key to DigitalOcean.
 2. Create the Ubuntu 24.04 Droplet and paste `deploy/hall-core-0/cloud-init.yaml` into
    user data.
-3. Apply a DigitalOcean Cloud Firewall: TCP 22 from a trusted path where practical;
+3. Enable DigitalOcean automated Droplet backups as a substrate-level recovery layer.
+4. Apply a DigitalOcean Cloud Firewall: TCP 22 from a trusted path where practical;
    TCP 80 and TCP/UDP 443 from the internet.
-4. Point `core.tymehall.org` to the Droplet.
+5. Point `core.tymehall.org` to the Droplet.
 
 Cloud-init hardens and prepares the substrate but deliberately does not activate Hall
 Core. Runtime activation remains a separate gate.
@@ -156,7 +157,7 @@ sudo /opt/tyme/Codex-control-center/deploy/hall-core-0/restore.sh \
   --yes /var/lib/tyme/hall-core-backups/<backup>.sqlite3
 ```
 
-Local retention is not geographic redundancy. Encrypted off-node backup becomes a later
+The local SQLite backups complement, rather than replace, DigitalOcean Droplet backups. Local retention is not geographic redundancy. Encrypted off-node backup becomes a later
 bounded capability after the first restore rehearsal succeeds.
 
 ## Acceptance evidence

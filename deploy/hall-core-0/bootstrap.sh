@@ -15,9 +15,9 @@ COMPOSE=${SCRIPT_DIR}/docker-compose.yml
 for command in git docker openssl python3; do command -v "$command" >/dev/null || { echo "Missing $command" >&2; exit 2; }; done
 docker compose version >/dev/null
 
-git -C "${REPO_DIR}" fetch --depth 1 origin "${REF}"
-git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
-COMMIT="$(git -C "${REPO_DIR}" rev-parse HEAD)"
+runuser -u tyme -- git -C "${REPO_DIR}" fetch --depth 1 origin "${REF}"
+runuser -u tyme -- git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
+COMMIT="$(runuser -u tyme -- git -C "${REPO_DIR}" rev-parse HEAD)"
 install -d -o root -g tyme -m 0750 "${ENV_DIR}"
 install -d -o 10001 -g 10001 -m 0700 "${DATA_DIR}"
 install -d -o root -g root -m 0700 "${BACKUP_DIR}"

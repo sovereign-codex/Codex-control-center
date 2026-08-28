@@ -55,6 +55,7 @@ runcmd:
   - [bash, -lc, "if [ -f /root/.ssh/authorized_keys ]; then install -d -o tyme -g tyme -m 0700 /home/tyme/.ssh; install -o tyme -g tyme -m 0600 /root/.ssh/authorized_keys /home/tyme/.ssh/authorized_keys; fi"]
   - [bash, -lc, "git clone --depth 1 https://github.com/sovereign-codex/Codex-control-center.git /opt/tyme/Codex-control-center"]
   - [bash, -lc, "chown -R tyme:tyme /opt/tyme/Codex-control-center"]
+  - [bash, -lc, "systemctl reload ssh || systemctl reload sshd"]
   - [bash, -lc, "date -u +%FT%TZ > /var/lib/tyme/cloud-init.complete"]
 final_message: |
   Hall Core 0 substrate is prepared; no Hall runtime was automatically activated.
