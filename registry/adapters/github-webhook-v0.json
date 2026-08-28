@@ -1,0 +1,45 @@
+{
+  "hall_adapter": {
+    "contract_version": "0.1",
+    "adapter_id": "github-webhook-v0",
+    "surface_type": "github",
+    "implementation_ref": "services/hall-core/app.py#/v0/webhooks/github",
+    "identity": {
+      "service_identity": "github-webhook-delivery",
+      "credential_binding": "HMAC-SHA256 over exact request bytes via X-Hub-Signature-256"
+    },
+    "capabilities": {
+      "observe": ["repository_event_delivery"],
+      "propose": [],
+      "review": [],
+      "execute": [],
+      "return_evidence": ["delivery_id", "payload_hash", "source_coordinates"]
+    },
+    "authority": {
+      "ceiling": "observe",
+      "requires_gate_for": ["routing", "work_promotion", "participant_binding", "execution", "integration"],
+      "prohibited_actions": ["repository_mutation", "workflow_dispatch", "work_promotion", "participant_binding", "execution_authorization", "canon_promotion"]
+    },
+    "event_contract": {
+      "ingress_event_types": ["github_webhook"],
+      "egress_event_types": ["hall_event_envelope.v0.1"],
+      "hall_event_envelope_version": "0.1"
+    },
+    "reliability": {
+      "idempotency_key": "X-GitHub-Delivery",
+      "offline_behavior": "unavailable",
+      "replay_supported": true,
+      "deduplication_supported": true
+    },
+    "evidence": {
+      "evidence_types": ["verified_delivery", "payload_hash", "github_coordinates"],
+      "immutable_source_refs": true,
+      "return_required": true
+    },
+    "lifecycle": {
+      "health_state": "experimental",
+      "revocation_path": "disable webhook and remove secret without deleting accepted Hall events",
+      "replacement_path": "register another adapter without rewriting Hall identity, gates, or history"
+    }
+  }
+}

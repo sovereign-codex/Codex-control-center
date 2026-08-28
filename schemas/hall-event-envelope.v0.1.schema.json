@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tymehall.org/schemas/hall-event-envelope.v0.1.schema.json",
+  "title": "Hall Event Envelope v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["hall_event"],
+  "properties": {
+    "hall_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["envelope_version", "event_id", "event_type", "occurred_at", "accepted_at", "lineage", "identity", "provenance", "authority", "payload", "state", "return"],
+      "properties": {
+        "envelope_version": {"const": "0.1"},
+        "event_id": {"type": "string", "minLength": 1},
+        "event_type": {"type": "string", "minLength": 1},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "accepted_at": {"type": "string", "format": "date-time"},
+        "lineage": {
+          "type": "object", "additionalProperties": false,
+          "required": ["lineage_id", "parent_event_id", "correlation_id"],
+          "properties": {
+            "lineage_id": {"type": "string", "minLength": 1},
+            "parent_event_id": {"type": ["string", "null"]},
+            "correlation_id": {"type": "string", "minLength": 1}
+          }
+        },
+        "identity": {
+          "type": "object", "additionalProperties": false,
+          "required": ["actor_id", "actor_type", "adapter_id"],
+          "properties": {
+            "actor_id": {"type": "string", "minLength": 1},
+            "actor_type": {"enum": ["human", "agent", "workflow", "service", "external", "system"]},
+            "adapter_id": {"type": "string", "minLength": 1}
+          }
+        },
+        "provenance": {
+          "type": "object", "additionalProperties": false,
+          "required": ["source_surface", "source_record", "artifact_ids", "evidence_links"],
+          "properties": {
+            "source_surface": {"type": "string", "minLength": 1},
+            "source_record": {"type": "string", "minLength": 1},
+            "artifact_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "evidence_links": {"type": "array", "items": {"type": "string", "format": "uri"}, "uniqueItems": true}
+          }
+        },
+        "authority": {
+          "type": "object", "additionalProperties": false,
+          "required": ["posture", "authorization_basis", "authorized_actions", "prohibited_actions", "gate_id"],
+          "properties": {
+            "posture": {"enum": ["observe", "propose", "review", "authorized", "denied", "expired", "unknown"]},
+            "authorization_basis": {"type": "string"},
+            "authorized_actions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "prohibited_actions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "gate_id": {"type": "string"}
+          }
+        },
+        "payload": {
+          "type": "object", "additionalProperties": false,
+          "required": ["summary", "content_ref", "content_hash"],
+          "properties": {
+            "summary": {"type": "string", "minLength": 1},
+            "content_ref": {"type": "string", "minLength": 1},
+            "content_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+          }
+        },
+        "state": {
+          "type": "object", "additionalProperties": false,
+          "required": ["recorded_state", "current_resolution", "execution_state", "verification_state"],
+          "properties": {
+            "recorded_state": {"type": "string"},
+            "current_resolution": {"type": "string"},
+            "execution_state": {"enum": ["not_started", "attempted", "in_progress", "done", "blocked", "failed", "partial", "skipped", "unknown"]},
+            "verification_state": {"enum": ["unverified", "verified", "reviewed", "needs_review", "blocked", "failed", "partial", "not_applicable", "unknown"]}
+          }
+        },
+        "return": {
+          "type": "object", "additionalProperties": false,
+          "required": ["evidence_ids", "return_event_ids", "next_valid_action"],
+          "properties": {
+            "evidence_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "return_event_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+            "next_valid_action": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    }
+  }
+}
