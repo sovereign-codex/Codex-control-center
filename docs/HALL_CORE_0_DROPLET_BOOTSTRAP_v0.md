@@ -82,8 +82,8 @@ This is an event-memory and orchestration foundation, not a model-inference mach
    TCP 80 and TCP/UDP 443 from the internet.
 5. Point `core.tymehall.org` to the Droplet.
 
-Cloud-init hardens and prepares the substrate but deliberately does not activate Hall
-Core. Runtime activation remains a separate gate.
+Cloud-init hardens and prepares the substrate, disables password and root SSH login,
+and deliberately does not activate Hall Core. Runtime activation remains a separate gate.
 
 ### Gate B — activate reviewed code
 

@@ -13,6 +13,8 @@ from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
+from jsonschema import Draft202012Validator, FormatChecker
+
 ROOT = Path(__file__).resolve().parents[3]
 SPEC = importlib.util.spec_from_file_location("hall_core_app", ROOT / "services/hall-core/app.py")
 assert SPEC and SPEC.loader
@@ -45,10 +47,16 @@ class HallCoreTests(unittest.TestCase):
         app.verify(self.secret, self.raw, "sha256=" + digest)
         with self.assertRaises(app.BadSignature):
             app.verify(self.secret, self.raw, "sha256=" + "0" * 64)
-        event = self.envelope()["hall_event"]
+        envelope = self.envelope()
+        event = envelope["hall_event"]
         self.assertEqual(event["authority"]["posture"], "observe")
         self.assertEqual(event["authority"]["authorized_actions"], [])
         self.assertEqual(event["state"]["execution_state"], "not_started")
+        schema = json.loads((ROOT / "schemas/hall-event-envelope.v0.1.schema.json").read_text())
+        Draft202012Validator(schema, format_checker=FormatChecker()).validate(envelope)
+        adapter = json.loads((ROOT / "registry/adapters/github-webhook-v0.json").read_text())
+        self.assertEqual(adapter["hall_adapter"]["authority"]["ceiling"], "observe")
+        self.assertEqual(adapter["hall_adapter"]["capabilities"]["execute"], [])
 
     def test_idempotency_mismatch_and_append_only(self) -> None:
         first = self.store.ingest("github-webhook-v0", "delivery-1", self.envelope(), self.raw)
