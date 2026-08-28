@@ -1,0 +1,38 @@
+name: Hall Core 0 Conformance
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/hall-core-0-conformance.yml"
+      - "deploy/hall-core-0/**"
+      - "docs/HALL_CORE_0_DROPLET_BOOTSTRAP_v0.md"
+      - "docs/CURSOR_RUNTIME_COGNITION_EVALUATION_v0.md"
+      - "registry/adapters/github-webhook-v0.json"
+      - "schemas/hall-event-envelope.v0.1.schema.json"
+      - "services/hall-core/**"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conformance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Compile and test
+        run: |
+          python -m py_compile services/hall-core/app.py
+          python -m unittest discover -s services/hall-core/tests -v
+          python -m json.tool schemas/hall-event-envelope.v0.1.schema.json >/dev/null
+          python -m json.tool registry/adapters/github-webhook-v0.json >/dev/null
+      - name: Check deployment script syntax
+        run: |
+          bash -n deploy/hall-core-0/bootstrap.sh
+          bash -n deploy/hall-core-0/backup.sh
+          bash -n deploy/hall-core-0/restore.sh
+          bash -n deploy/hall-core-0/smoke-test.sh
+      - name: Validate Compose projection
+        run: docker compose --env-file deploy/hall-core-0/hall-core.env.example -f deploy/hall-core-0/docker-compose.yml config --quiet
+      - name: Build Hall Core image
+        run: docker build --build-arg HALL_BUILD_COMMIT=${GITHUB_SHA} -f services/hall-core/Dockerfile -t hall-core-0:conformance .

@@ -1,0 +1,57 @@
+name: hall-core-0
+services:
+  hall-core:
+    build:
+      context: ../..
+      dockerfile: services/hall-core/Dockerfile
+      args:
+        HALL_BUILD_COMMIT: ${HALL_BUILD_COMMIT:-unknown}
+    image: hall-core-0:${HALL_BUILD_COMMIT:-local}
+    restart: unless-stopped
+    environment:
+      HALL_NODE_ID: ${HALL_NODE_ID:-hall-core-0}
+      HALL_BUILD_COMMIT: ${HALL_BUILD_COMMIT:-unknown}
+      HALL_DB_PATH: /var/lib/hall-core/hall.db
+      HALL_GITHUB_ADAPTER_ID: ${HALL_GITHUB_ADAPTER_ID:-github-webhook-v0}
+      HALL_GITHUB_WEBHOOK_SECRET: ${HALL_GITHUB_WEBHOOK_SECRET:?required}
+      HALL_READ_TOKEN: ${HALL_READ_TOKEN:?required}
+      HALL_MAX_BODY_BYTES: ${HALL_MAX_BODY_BYTES:-1048576}
+      HALL_LOG_LEVEL: ${HALL_LOG_LEVEL:-INFO}
+    volumes:
+      - ${HALL_DATA_DIR:-/var/lib/tyme/hall-core}:/var/lib/hall-core
+    expose: ["8080"]
+    read_only: true
+    tmpfs: ["/tmp:size=64m,mode=1777"]
+    cap_drop: ["ALL"]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 128
+    mem_limit: 512m
+    cpus: 1.0
+    networks: [core]
+    logging:
+      driver: json-file
+      options: {max-size: "10m", max-file: "5"}
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      hall-core:
+        condition: service_healthy
+    environment:
+      HALL_DOMAIN: ${HALL_DOMAIN:?required}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    security_opt: ["no-new-privileges:true"]
+    networks: [front, core]
+
+volumes:
+  caddy_data:
+  caddy_config:
+networks:
+  front:
+  core:
+    internal: true

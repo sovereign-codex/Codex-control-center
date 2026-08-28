@@ -1,0 +1,61 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - ca-certificates
+  - curl
+  - docker.io
+  - docker-compose-v2
+  - fail2ban
+  - git
+  - jq
+  - openssl
+  - sqlite3
+  - ufw
+  - unattended-upgrades
+users:
+  - default
+  - name: tyme
+    shell: /bin/bash
+    groups: [adm, docker, sudo]
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+write_files:
+  - path: /etc/ssh/sshd_config.d/99-hall-core.conf
+    permissions: "0644"
+    content: |
+      PasswordAuthentication no
+      KbdInteractiveAuthentication no
+      PermitRootLogin prohibit-password
+      X11Forwarding no
+      AllowAgentForwarding no
+  - path: /etc/sysctl.d/99-hall-core.conf
+    permissions: "0644"
+    content: |
+      net.ipv4.conf.all.accept_redirects = 0
+      net.ipv4.conf.default.accept_redirects = 0
+      net.ipv4.tcp_syncookies = 1
+      kernel.dmesg_restrict = 1
+      kernel.kptr_restrict = 2
+runcmd:
+  - [systemctl, enable, --now, docker]
+  - [systemctl, enable, --now, fail2ban]
+  - [systemctl, enable, --now, unattended-upgrades]
+  - [bash, -lc, "sysctl --system"]
+  - [bash, -lc, "ufw default deny incoming"]
+  - [bash, -lc, "ufw default allow outgoing"]
+  - [bash, -lc, "ufw allow OpenSSH"]
+  - [bash, -lc, "ufw allow 80/tcp"]
+  - [bash, -lc, "ufw allow 443/tcp"]
+  - [bash, -lc, "ufw allow 443/udp"]
+  - [bash, -lc, "ufw --force enable"]
+  - [bash, -lc, "install -d -o tyme -g tyme -m 0750 /opt/tyme"]
+  - [bash, -lc, "install -d -o 10001 -g 10001 -m 0700 /var/lib/tyme/hall-core"]
+  - [bash, -lc, "install -d -o root -g root -m 0700 /var/lib/tyme/hall-core-backups"]
+  - [bash, -lc, "if [ -f /root/.ssh/authorized_keys ]; then install -d -o tyme -g tyme -m 0700 /home/tyme/.ssh; install -o tyme -g tyme -m 0600 /root/.ssh/authorized_keys /home/tyme/.ssh/authorized_keys; fi"]
+  - [bash, -lc, "git clone --depth 1 https://github.com/sovereign-codex/Codex-control-center.git /opt/tyme/Codex-control-center"]
+  - [bash, -lc, "chown -R tyme:tyme /opt/tyme/Codex-control-center"]
+  - [bash, -lc, "date -u +%FT%TZ > /var/lib/tyme/cloud-init.complete"]
+final_message: |
+  Hall Core 0 substrate is prepared; no Hall runtime was automatically activated.
+  Next: sudo HALL_DOMAIN=core.tymehall.org /opt/tyme/Codex-control-center/deploy/hall-core-0/bootstrap.sh

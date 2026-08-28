@@ -1,0 +1,8 @@
+[Unit]
+Description=Daily Hall Core 0 backup
+[Timer]
+OnCalendar=*-*-* 03:17:00 UTC
+Persistent=true
+RandomizedDelaySec=600
+[Install]
+WantedBy=timers.target

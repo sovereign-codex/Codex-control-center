@@ -1,0 +1,12 @@
+[Unit]
+Description=Integrity-checked Hall Core 0 backup
+[Service]
+Type=oneshot
+ExecStart=/opt/tyme/Codex-control-center/deploy/hall-core-0/backup.sh
+User=root
+Group=root
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/tyme/hall-core /var/lib/tyme/hall-core-backups
