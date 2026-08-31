@@ -6,6 +6,7 @@ DOMAIN="${HALL_DOMAIN:-}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 REF="${HALL_REPO_REF:-main}"
+SERVICE_USER="${HALL_SERVICE_USER:-tyme}"
 ENV_DIR=/etc/tyme
 ENV_FILE=${ENV_DIR}/hall-core.env
 DATA_DIR=${HALL_DATA_DIR:-/var/lib/tyme/hall-core}
@@ -14,11 +15,21 @@ COMPOSE=${SCRIPT_DIR}/docker-compose.yml
 
 for command in git docker openssl python3; do command -v "$command" >/dev/null || { echo "Missing $command" >&2; exit 2; }; done
 docker compose version >/dev/null
+id -u "${SERVICE_USER}" >/dev/null 2>&1 || { echo "Missing service user: ${SERVICE_USER}" >&2; exit 2; }
+if id -nG "${SERVICE_USER}" | tr ' ' '\n' | grep -Eq '^(sudo|docker)$'; then
+  echo "Service user ${SERVICE_USER} must not belong to sudo or docker" >&2
+  exit 2
+fi
+SERVICE_SHELL=$(getent passwd "${SERVICE_USER}" | cut -d: -f7)
+[[ ${SERVICE_SHELL} == /usr/sbin/nologin || ${SERVICE_SHELL} == /bin/false ]] || {
+  echo "Service user ${SERVICE_USER} must be non-login" >&2
+  exit 2
+}
 
-runuser -u tyme -- git -C "${REPO_DIR}" fetch --depth 1 origin "${REF}"
-runuser -u tyme -- git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
-COMMIT="$(runuser -u tyme -- git -C "${REPO_DIR}" rev-parse HEAD)"
-install -d -o root -g tyme -m 0750 "${ENV_DIR}"
+runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" fetch --depth 1 origin "${REF}"
+runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
+COMMIT="$(runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" rev-parse HEAD)"
+install -d -o root -g "${SERVICE_USER}" -m 0750 "${ENV_DIR}"
 install -d -o 10001 -g 10001 -m 0700 "${DATA_DIR}"
 install -d -o root -g root -m 0700 "${BACKUP_DIR}"
 
@@ -50,7 +61,7 @@ for key,value in updates.items():
 path.write_text("\n".join(out)+"\n")
 PY
 fi
-chown root:tyme "${ENV_FILE}"; chmod 0640 "${ENV_FILE}"; chown -R 10001:10001 "${DATA_DIR}"
+chown root:"${SERVICE_USER}" "${ENV_FILE}"; chmod 0640 "${ENV_FILE}"; chown -R 10001:10001 "${DATA_DIR}"
 
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE}" config --quiet
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE}" build --pull
@@ -68,6 +79,7 @@ Hall Core 0 is ready at https://${DOMAIN}
 Webhook: https://${DOMAIN}/v0/webhooks/github
 Secrets: ${ENV_FILE}
 Verify: sudo ${SCRIPT_DIR}/smoke-test.sh
+Operator identity: steward. Service identity: ${SERVICE_USER}.
 Authority ceiling: observe. No dispatch, execution, publishing, or promotion was enabled.
 EOF
     exit 0

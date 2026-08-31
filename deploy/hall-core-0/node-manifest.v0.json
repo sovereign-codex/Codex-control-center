@@ -1,0 +1,84 @@
+{
+  "manifest_version": "0.1",
+  "node_id": "hall-core-0",
+  "canonical_repository": "sovereign-codex/Codex-control-center",
+  "role": "control-plane",
+  "environment": "production-boundary",
+  "authority_ceiling": "observe",
+  "status": "substrate-secured-runtime-not-activated",
+  "substrate": {
+    "provider": "DigitalOcean",
+    "region": "nyc3",
+    "operating_system": "Ubuntu 24.04 LTS",
+    "architecture": "x86_64",
+    "vcpus": 2,
+    "memory_gib": 4,
+    "disk_gib": 80,
+    "planned_dns_name": "core.tymehall.org"
+  },
+  "human_access": {
+    "operator_user": "steward",
+    "ssh_authentication": "ed25519-key-only",
+    "password_authentication": false,
+    "direct_root_login": false,
+    "sudo_requires_local_password": true
+  },
+  "runtime_identity": {
+    "service_user": "tyme",
+    "service_user_may_login": false,
+    "service_user_has_sudo": false,
+    "repository_path": "/opt/tyme/Codex-control-center",
+    "secret_environment_file": "/etc/tyme/hall-core.env",
+    "data_path": "/var/lib/tyme/hall-core",
+    "backup_path": "/var/lib/tyme/hall-core-backups",
+    "node_identity_file": "/opt/hall/config/hall-core.env"
+  },
+  "perimeter": {
+    "ufw_enabled": true,
+    "default_incoming": "deny",
+    "default_outgoing": "allow",
+    "allowed_ports": [
+      "22/tcp",
+      "80/tcp",
+      "443/tcp",
+      "443/udp"
+    ],
+    "fail2ban_enabled": true,
+    "fail2ban_jails": [
+      "sshd"
+    ]
+  },
+  "runtime_baseline": {
+    "docker_required": true,
+    "git_required": true,
+    "caddy_delivery": "container",
+    "database": "sqlite",
+    "docker_socket_mount_allowed": false,
+    "self_hosted_runner_allowed": false,
+    "arbitrary_agent_executor_allowed": false
+  },
+  "deployment": {
+    "mode": "human-gated-exact-ref-pull",
+    "public_repository_clone": true,
+    "node_github_write_credential_required": false,
+    "github_ingress": "signed-webhook",
+    "initial_webhook_scope": "one-repository",
+    "activation_requires_reviewed_commit": true
+  },
+  "observed_checkpoint": {
+    "date_utc": "2026-08-31",
+    "operator_user_verified": true,
+    "fresh_key_only_ssh_verified": true,
+    "sudo_boundary_verified": true,
+    "root_ssh_disabled": true,
+    "password_ssh_disabled": true,
+    "ufw_verified": true,
+    "fail2ban_sshd_jail_verified": true,
+    "docker_present": true,
+    "git_present": true,
+    "hall_identity_file_present": true,
+    "hall_runtime_activated": false,
+    "dns_connected": false,
+    "github_webhook_connected": false
+  }
+}
