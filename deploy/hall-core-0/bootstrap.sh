@@ -25,6 +25,8 @@ SERVICE_SHELL=$(getent passwd "${SERVICE_USER}" | cut -d: -f7)
   echo "Service user ${SERVICE_USER} must be non-login" >&2
   exit 2
 }
+RUNTIME_UID=$(id -u "${SERVICE_USER}")
+RUNTIME_GID=$(id -g "${SERVICE_USER}")
 
 runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" fetch --depth 1 origin "${REF}"
 runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
@@ -39,6 +41,8 @@ if [[ ! -f ${ENV_FILE} ]]; then
 HALL_DOMAIN=${DOMAIN}
 HALL_NODE_ID=hall-core-0
 HALL_BUILD_COMMIT=${COMMIT}
+HALL_RUNTIME_UID=${RUNTIME_UID}
+HALL_RUNTIME_GID=${RUNTIME_GID}
 HALL_GITHUB_ADAPTER_ID=github-webhook-v0
 HALL_GITHUB_WEBHOOK_SECRET=$(openssl rand -hex 32)
 HALL_READ_TOKEN=$(openssl rand -hex 32)
@@ -47,10 +51,10 @@ HALL_MAX_BODY_BYTES=1048576
 HALL_LOG_LEVEL=INFO
 ENV
 else
-  python3 - "${ENV_FILE}" "${DOMAIN}" "${COMMIT}" "${DATA_DIR}" <<'PY'
+  python3 - "${ENV_FILE}" "${DOMAIN}" "${COMMIT}" "${DATA_DIR}" "${RUNTIME_UID}" "${RUNTIME_GID}" <<'PY'
 from pathlib import Path
 import sys
-path=Path(sys.argv[1]); updates=dict(HALL_DOMAIN=sys.argv[2],HALL_BUILD_COMMIT=sys.argv[3],HALL_DATA_DIR=sys.argv[4])
+path=Path(sys.argv[1]); updates=dict(HALL_DOMAIN=sys.argv[2],HALL_BUILD_COMMIT=sys.argv[3],HALL_DATA_DIR=sys.argv[4],HALL_RUNTIME_UID=sys.argv[5],HALL_RUNTIME_GID=sys.argv[6])
 out=[]; seen=set()
 for line in path.read_text().splitlines():
     key=line.split("=",1)[0] if "=" in line and not line.lstrip().startswith("#") else ""
@@ -79,7 +83,7 @@ Hall Core 0 is ready at https://${DOMAIN}
 Webhook: https://${DOMAIN}/v0/webhooks/github
 Secrets: ${ENV_FILE}
 Verify: sudo ${SCRIPT_DIR}/smoke-test.sh
-Operator identity: steward. Service identity: ${SERVICE_USER}.
+Operator identity: steward. Service identity: ${SERVICE_USER} (${RUNTIME_UID}:${RUNTIME_GID}).
 Authority ceiling: observe. No dispatch, execution, publishing, or promotion was enabled.
 EOF
     exit 0
