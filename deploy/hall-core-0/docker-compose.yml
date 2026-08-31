@@ -6,6 +6,8 @@ services:
       dockerfile: services/hall-core/Dockerfile
       args:
         HALL_BUILD_COMMIT: ${HALL_BUILD_COMMIT:-unknown}
+        HALL_RUNTIME_UID: ${HALL_RUNTIME_UID:-10001}
+        HALL_RUNTIME_GID: ${HALL_RUNTIME_GID:-10001}
     image: hall-core-0:${HALL_BUILD_COMMIT:-local}
     restart: unless-stopped
     environment:
