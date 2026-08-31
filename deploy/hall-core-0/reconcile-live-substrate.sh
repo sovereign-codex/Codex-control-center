@@ -5,15 +5,21 @@ set -euo pipefail
 OPERATOR_USER="${HALL_OPERATOR_USER:-steward}"
 SERVICE_USER="${HALL_SERVICE_USER:-tyme}"
 REPO_URL="${HALL_REPO_URL:-https://github.com/sovereign-codex/Codex-control-center.git}"
-REPO_REF="${HALL_REPO_REF:-main}"
+REPO_REF="${HALL_REPO_REF:-}"
 REPO_DIR="${HALL_REPO_DIR:-/opt/tyme/Codex-control-center}"
 HALL_ROOT="${HALL_ROOT:-/opt/hall}"
 DATA_DIR="${HALL_DATA_DIR:-/var/lib/tyme/hall-core}"
 BACKUP_DIR="${HALL_BACKUP_DIR:-/var/lib/tyme/hall-core-backups}"
 
-for command in git sshd systemctl ufw fail2ban-client; do
+[[ -n ${REPO_REF} ]] || {
+  echo "HALL_REPO_REF is required; use a reviewed branch, tag, or commit" >&2
+  exit 2
+}
+
+for command in git sshd systemctl ufw fail2ban-client docker openssl python3 jq sqlite3 sysctl; do
   command -v "${command}" >/dev/null || { echo "Missing command: ${command}" >&2; exit 2; }
 done
+docker compose version >/dev/null
 
 id -u "${OPERATOR_USER}" >/dev/null 2>&1 || {
   echo "Missing human operator account: ${OPERATOR_USER}" >&2
@@ -50,6 +56,13 @@ if [[ ! -s /home/${OPERATOR_USER}/.ssh/authorized_keys && -s /root/.ssh/authoriz
   install -o "${OPERATOR_USER}" -g "${OPERATOR_USER}" -m 0600 \
     /root/.ssh/authorized_keys "/home/${OPERATOR_USER}/.ssh/authorized_keys"
 fi
+[[ -s /home/${OPERATOR_USER}/.ssh/authorized_keys ]] || {
+  echo "Refusing SSH hardening: ${OPERATOR_USER} has no authorized key" >&2
+  exit 2
+}
+chown -R "${OPERATOR_USER}:${OPERATOR_USER}" "/home/${OPERATOR_USER}/.ssh"
+chmod 0700 "/home/${OPERATOR_USER}/.ssh"
+chmod 0600 "/home/${OPERATOR_USER}/.ssh/authorized_keys"
 
 cat > /etc/ssh/sshd_config.d/99-hall-core.conf <<'SSH'
 PasswordAuthentication no
@@ -60,8 +73,22 @@ X11Forwarding no
 AllowAgentForwarding no
 SSH
 chmod 0644 /etc/ssh/sshd_config.d/99-hall-core.conf
+
+cat > /etc/sysctl.d/99-hall-core.conf <<'SYSCTL'
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.tcp_syncookies = 1
+kernel.dmesg_restrict = 1
+kernel.kptr_restrict = 2
+SYSCTL
+chmod 0644 /etc/sysctl.d/99-hall-core.conf
+sysctl --system >/dev/null
+
 sshd -t
 systemctl reload ssh 2>/dev/null || systemctl reload sshd
+systemctl enable --now docker
+systemctl enable --now fail2ban
+systemctl enable --now unattended-upgrades
 
 ufw default deny incoming
 ufw default allow outgoing
@@ -70,7 +97,11 @@ ufw allow 80/tcp
 ufw allow 443/tcp
 ufw allow 443/udp
 ufw --force enable
-systemctl enable --now fail2ban
+
+systemctl is-active --quiet ssh 2>/dev/null || systemctl is-active --quiet sshd
+systemctl is-active --quiet docker
+systemctl is-active --quiet fail2ban
+fail2ban-client status | grep -Eq 'Jail list:.*sshd'
 
 cat > "${HALL_ROOT}/config/hall-core.env" <<EOF
 HALL_NODE_ID=hall-core-0
@@ -103,5 +134,5 @@ Service:  ${SERVICE_USER} (locked, non-login, no sudo/docker group)
 Repository: ${REPO_DIR}
 Commit: ${COMMIT}
 Runtime activation: NOT performed
-Next gate: review exact commit, connect DNS, then run bootstrap.sh explicitly.
+Next gate: verify a fresh ${OPERATOR_USER} SSH session, review DNS/backups, then run bootstrap.sh explicitly.
 EOF
