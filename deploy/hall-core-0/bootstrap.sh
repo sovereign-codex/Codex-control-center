@@ -30,7 +30,7 @@ runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" fetch --depth 1 origin "${R
 runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" checkout --detach FETCH_HEAD
 COMMIT="$(runuser -u "${SERVICE_USER}" -- git -C "${REPO_DIR}" rev-parse HEAD)"
 install -d -o root -g "${SERVICE_USER}" -m 0750 "${ENV_DIR}"
-install -d -o 10001 -g 10001 -m 0700 "${DATA_DIR}"
+install -d -o "${SERVICE_USER}" -g "${SERVICE_USER}" -m 0700 "${DATA_DIR}"
 install -d -o root -g root -m 0700 "${BACKUP_DIR}"
 
 if [[ ! -f ${ENV_FILE} ]]; then
@@ -61,7 +61,7 @@ for key,value in updates.items():
 path.write_text("\n".join(out)+"\n")
 PY
 fi
-chown root:"${SERVICE_USER}" "${ENV_FILE}"; chmod 0640 "${ENV_FILE}"; chown -R 10001:10001 "${DATA_DIR}"
+chown root:"${SERVICE_USER}" "${ENV_FILE}"; chmod 0640 "${ENV_FILE}"; chown -R "${SERVICE_USER}:${SERVICE_USER}" "${DATA_DIR}"
 
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE}" config --quiet
 docker compose --env-file "${ENV_FILE}" -f "${COMPOSE}" build --pull
