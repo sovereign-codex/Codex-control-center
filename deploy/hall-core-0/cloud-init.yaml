@@ -2,7 +2,7 @@
 package_update: true
 package_upgrade: true
 ssh_pwauth: false
-disable_root: true
+disable_root: false
 packages:
   - ca-certificates
   - curl
@@ -69,10 +69,10 @@ runcmd:
   - [bash, -lc, "install -d -o 10001 -g 10001 -m 0700 /var/lib/tyme/hall-core"]
   - [bash, -lc, "install -d -o root -g root -m 0700 /var/lib/tyme/hall-core-backups"]
   - [bash, -lc, "if [ -f /root/.ssh/authorized_keys ]; then install -d -o steward -g steward -m 0700 /home/steward/.ssh; install -o steward -g steward -m 0600 /root/.ssh/authorized_keys /home/steward/.ssh/authorized_keys; fi"]
+  - [bash, -lc, "test -s /home/steward/.ssh/authorized_keys"]
   - [bash, -lc, "printf '%s\n' 'HALL_NODE_ID=hall-core-0' 'HALL_ROLE=control-plane' 'HALL_ENV=production-boundary' 'HALL_STEWARD=steward' 'HALL_RUNTIME_ROOT=/opt/hall/runtime' 'HALL_STATE_ROOT=/opt/hall/state' 'HALL_LOG_ROOT=/opt/hall/logs' 'HALL_BACKUP_ROOT=/opt/hall/backups' > /opt/hall/config/hall-core.env"]
   - [bash, -lc, "chown steward:steward /opt/hall/config/hall-core.env && chmod 0640 /opt/hall/config/hall-core.env"]
-  - [bash, -lc, "git clone --depth 1 https://github.com/sovereign-codex/Codex-control-center.git /opt/tyme/Codex-control-center"]
-  - [bash, -lc, "chown -R tyme:tyme /opt/tyme/Codex-control-center"]
+  - [bash, -lc, "runuser -u tyme -- git clone --depth 1 https://github.com/sovereign-codex/Codex-control-center.git /opt/tyme/Codex-control-center"]
   - [bash, -lc, "systemctl reload ssh || systemctl reload sshd"]
   - [bash, -lc, "date -u +%FT%TZ > /var/lib/tyme/cloud-init.complete"]
 final_message: |
