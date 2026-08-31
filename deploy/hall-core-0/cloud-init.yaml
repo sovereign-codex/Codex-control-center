@@ -1,6 +1,8 @@
 #cloud-config
 package_update: true
 package_upgrade: true
+ssh_pwauth: false
+disable_root: true
 packages:
   - ca-certificates
   - curl
@@ -14,11 +16,9 @@ packages:
   - ufw
   - unattended-upgrades
 users:
-  - default
-  - name: tyme
+  - name: steward
     shell: /bin/bash
     groups: [adm, sudo]
-    sudo: ALL=(ALL) NOPASSWD:ALL
     lock_passwd: true
 write_files:
   - path: /etc/ssh/sshd_config.d/99-hall-core.conf
@@ -26,6 +26,7 @@ write_files:
     content: |
       PasswordAuthentication no
       KbdInteractiveAuthentication no
+      PubkeyAuthentication yes
       PermitRootLogin no
       X11Forwarding no
       AllowAgentForwarding no
@@ -37,6 +38,19 @@ write_files:
       net.ipv4.tcp_syncookies = 1
       kernel.dmesg_restrict = 1
       kernel.kptr_restrict = 2
+  - path: /usr/local/sbin/hall-core-finalize-steward
+    owner: root:root
+    permissions: "0750"
+    content: |
+      #!/usr/bin/env bash
+      set -euo pipefail
+      [[ ${EUID} -eq 0 ]] || { echo "Run from the provider console as root" >&2; exit 2; }
+      id steward >/dev/null
+      [[ -s /home/steward/.ssh/authorized_keys ]] || { echo "Missing steward SSH key" >&2; exit 2; }
+      echo "Set the local sudo password for steward. This does not enable SSH passwords."
+      passwd steward
+      sshd -t
+      echo "Steward finalized. Verify a fresh key-only SSH login and sudo -v before activation."
 runcmd:
   - [systemctl, enable, --now, docker]
   - [systemctl, enable, --now, fail2ban]
@@ -49,14 +63,21 @@ runcmd:
   - [bash, -lc, "ufw allow 443/tcp"]
   - [bash, -lc, "ufw allow 443/udp"]
   - [bash, -lc, "ufw --force enable"]
+  - [bash, -lc, "id -u tyme >/dev/null 2>&1 || useradd --system --user-group --home-dir /opt/tyme --shell /usr/sbin/nologin tyme"]
   - [bash, -lc, "install -d -o tyme -g tyme -m 0750 /opt/tyme"]
+  - [bash, -lc, "install -d -o steward -g steward -m 0750 /opt/hall /opt/hall/runtime /opt/hall/state /opt/hall/config /opt/hall/logs /opt/hall/backups"]
   - [bash, -lc, "install -d -o 10001 -g 10001 -m 0700 /var/lib/tyme/hall-core"]
   - [bash, -lc, "install -d -o root -g root -m 0700 /var/lib/tyme/hall-core-backups"]
-  - [bash, -lc, "if [ -f /root/.ssh/authorized_keys ]; then install -d -o tyme -g tyme -m 0700 /home/tyme/.ssh; install -o tyme -g tyme -m 0600 /root/.ssh/authorized_keys /home/tyme/.ssh/authorized_keys; fi"]
+  - [bash, -lc, "if [ -f /root/.ssh/authorized_keys ]; then install -d -o steward -g steward -m 0700 /home/steward/.ssh; install -o steward -g steward -m 0600 /root/.ssh/authorized_keys /home/steward/.ssh/authorized_keys; fi"]
+  - [bash, -lc, "printf '%s\n' 'HALL_NODE_ID=hall-core-0' 'HALL_ROLE=control-plane' 'HALL_ENV=production-boundary' 'HALL_STEWARD=steward' 'HALL_RUNTIME_ROOT=/opt/hall/runtime' 'HALL_STATE_ROOT=/opt/hall/state' 'HALL_LOG_ROOT=/opt/hall/logs' 'HALL_BACKUP_ROOT=/opt/hall/backups' > /opt/hall/config/hall-core.env"]
+  - [bash, -lc, "chown steward:steward /opt/hall/config/hall-core.env && chmod 0640 /opt/hall/config/hall-core.env"]
   - [bash, -lc, "git clone --depth 1 https://github.com/sovereign-codex/Codex-control-center.git /opt/tyme/Codex-control-center"]
   - [bash, -lc, "chown -R tyme:tyme /opt/tyme/Codex-control-center"]
   - [bash, -lc, "systemctl reload ssh || systemctl reload sshd"]
   - [bash, -lc, "date -u +%FT%TZ > /var/lib/tyme/cloud-init.complete"]
 final_message: |
   Hall Core 0 substrate is prepared; no Hall runtime was automatically activated.
-  Next: sudo HALL_DOMAIN=core.tymehall.org /opt/tyme/Codex-control-center/deploy/hall-core-0/bootstrap.sh
+  Human operator: steward (key-only SSH; local sudo password must be finalized from the provider console).
+  Service identity: tyme (locked, non-login, no sudo).
+  Console gate: /usr/local/sbin/hall-core-finalize-steward
+  Activation gate: sudo HALL_DOMAIN=core.tymehall.org /opt/tyme/Codex-control-center/deploy/hall-core-0/bootstrap.sh
