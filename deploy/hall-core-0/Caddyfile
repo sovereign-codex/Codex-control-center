@@ -1,9 +1,15 @@
 {$HALL_DOMAIN} {
     encode zstd gzip
-    request_body { max_size 1MB }
+
+    request_body {
+        max_size 1MB
+    }
+
     @forbidden method PUT PATCH DELETE
     respond @forbidden 405
+
     reverse_proxy hall-core:8080
+
     header {
         Strict-Transport-Security "max-age=31536000; includeSubDomains"
         X-Content-Type-Options "nosniff"
@@ -12,5 +18,9 @@
         Permissions-Policy "camera=(), microphone=(), geolocation=()"
         -Server
     }
-    log { output stdout format json }
+
+    log {
+        output stdout
+        format json
+    }
 }
