@@ -48,7 +48,7 @@ install -d -o "${OPERATOR_USER}" -g "${OPERATOR_USER}" -m 0750 \
   "${HALL_ROOT}/config" \
   "${HALL_ROOT}/logs" \
   "${HALL_ROOT}/backups"
-install -d -o 10001 -g 10001 -m 0700 "${DATA_DIR}"
+install -d -o "${SERVICE_USER}" -g "${SERVICE_USER}" -m 0700 "${DATA_DIR}"
 install -d -o root -g root -m 0700 "${BACKUP_DIR}"
 
 if [[ ! -s /home/${OPERATOR_USER}/.ssh/authorized_keys && -s /root/.ssh/authorized_keys ]]; then
