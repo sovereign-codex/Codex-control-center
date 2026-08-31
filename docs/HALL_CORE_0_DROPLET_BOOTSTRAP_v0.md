@@ -70,6 +70,32 @@ DNS: core.tymehall.org -> Droplet public IP
 
 This is an event-memory and orchestration foundation, not a model-inference machine.
 
+## Identity boundary
+
+Hall Core separates the human operator from the persistent runtime identity.
+
+```text
+steward -> human key-only SSH operator; password-protected sudo
+tyme    -> locked non-login service identity; no sudo; no docker group
+```
+
+The canonical repository checkout is owned by `tyme`, while activation and recovery are
+explicitly invoked by `steward` through `sudo`. Hall Core itself never receives the Docker
+socket.
+
+Canonical paths:
+
+```text
+/opt/hall/config/hall-core.env       non-secret node identity
+/opt/tyme/Codex-control-center       reviewed repository checkout
+/etc/tyme/hall-core.env              runtime secrets
+/var/lib/tyme/hall-core              append-only service data
+/var/lib/tyme/hall-core-backups      local integrity-checked backups
+```
+
+See `HALL_CORE_0_LIVE_SUBSTRATE_RECONCILIATION_v0.md` for the observed first-node
+checkpoint and existing-node reconciliation path.
+
 ## Provisioning gates
 
 ### Gate A — substrate
@@ -80,26 +106,47 @@ This is an event-memory and orchestration foundation, not a model-inference mach
 3. Enable DigitalOcean automated Droplet backups as a substrate-level recovery layer.
 4. Apply a DigitalOcean Cloud Firewall: TCP 22 from a trusted path where practical;
    TCP 80 and TCP/UDP 443 from the internet.
-5. Point `core.tymehall.org` to the Droplet.
+5. Point `core.tymehall.org` to the Droplet when activation is approved.
+6. From the provider console, run:
 
-Cloud-init hardens and prepares the substrate, disables password and root SSH login,
-and deliberately does not activate Hall Core. Runtime activation remains a separate gate.
+```bash
+/usr/local/sbin/hall-core-finalize-steward
+```
+
+7. Verify a fresh key-only SSH login as `steward`, then verify `sudo -v`.
+
+Cloud-init hardens and prepares the substrate, creates the locked `steward` and `tyme`
+identities, disables password and root SSH login, checks out the public repository, and
+deliberately does not activate Hall Core. The provider console remains the first human
+gate because the local `steward` sudo password is not embedded in cloud-init.
+
+For an existing manually provisioned node, review and run the separate reconciliation
+script instead of recreating the Droplet:
+
+```bash
+sudo HALL_REPO_REF=<reviewed-commit-or-ref> \
+  ./deploy/hall-core-0/reconcile-live-substrate.sh
+```
 
 ### Gate B — activate reviewed code
 
-From the DigitalOcean console or SSH:
+From the verified `steward` session:
 
 ```bash
 sudo HALL_DOMAIN=core.tymehall.org \
   /opt/tyme/Codex-control-center/deploy/hall-core-0/bootstrap.sh
 ```
 
-The script checks out an exact Git ref, records its commit, creates independent webhook
-and read tokens, builds the container, starts TLS through Caddy, installs the backup timer,
-and waits for readiness.
+The script checks out an exact Git ref as the locked `tyme` service user, rejects a
+service identity that belongs to `sudo` or `docker`, records its commit, creates
+independent webhook and read tokens, builds the container, starts TLS through Caddy,
+installs the backup timer, and waits for readiness.
 
 Secrets remain in `/etc/tyme/hall-core.env` with restricted permissions. They are not
 committed, embedded in images, or written into cloud-init.
+
+The public repository is cloned over HTTPS. Hall Core does not require a GitHub personal
+access token, write-capable deploy key, or self-hosted runner for the first activation.
 
 ### Gate C — verify
 
@@ -157,7 +204,8 @@ sudo /opt/tyme/Codex-control-center/deploy/hall-core-0/restore.sh \
   --yes /var/lib/tyme/hall-core-backups/<backup>.sqlite3
 ```
 
-The local SQLite backups complement, rather than replace, DigitalOcean Droplet backups. Local retention is not geographic redundancy. Encrypted off-node backup becomes a later
+The local SQLite backups complement, rather than replace, DigitalOcean Droplet backups.
+Local retention is not geographic redundancy. Encrypted off-node backup becomes a later
 bounded capability after the first restore rehearsal succeeds.
 
 ## Acceptance evidence
