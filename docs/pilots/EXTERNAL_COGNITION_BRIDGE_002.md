@@ -1,6 +1,6 @@
 # EXTERNAL_COGNITION_BRIDGE_002
 
-Status: review candidate  
+Status: verified reference implementation  
 Parent contract: `docs/TYME_EXECUTOR_CONTRACT_v1.md`  
 Authority ceiling: one human-gated synthetic execution
 
@@ -10,7 +10,7 @@ Prove that the disposable-executor lifecycle can begin from a Hall-originated pa
 
 Bridge 002 is intentionally narrow. It does not automate provider provisioning, Hall dispatch, model routing, executor teardown, or evidence admission. A human remains the explicit gate between each consequence-bearing step.
 
-## What this pilot must prove
+## What this pilot proves
 
 ```text
 Hall creates packet
@@ -21,20 +21,26 @@ Hall creates packet
 -> Hall receives and validates return
 -> Hall records evidence hash
 -> executor is destroyed
--> Hall revalidates the retained artifact after teardown
+-> Hall retains canonical evidence independently
 ```
 
 ## Synthetic packet
 
-The initial Bridge 002 packet should be created on Hall Core before the executor exists.
+The Bridge 002 packet was created on Hall Core before the executor was provisioned.
 
-Recommended Hall path:
+Hall path:
 
 ```text
 /home/steward/hall-evidence/external-executors/bridge-002/TYME-EXEC-BRIDGE-002.packet.json
 ```
 
-Candidate packet:
+Canonical packet SHA-256:
+
+```text
+a257b9347904d962bce781337672aab17f8581d9d1100f289e2bcd728c65654f
+```
+
+The packet used:
 
 ```json
 {
@@ -86,135 +92,123 @@ Candidate packet:
 }
 ```
 
-## Expected model-level return
+## Verified model-level return
 
-The model's content does not need to match these words exactly, but it must satisfy `model_return_contract` and add no unsupported claims.
-
-Example:
+The executor produced a bounded acknowledgement satisfying `model_return_contract`:
 
 ```json
 {
   "packet_id": "TYME-EXEC-BRIDGE-002",
-  "summary": "Bounded packet acknowledged successfully.",
-  "status": "complete"
+  "summary": "The executor performs its bounded task of maintaining institutional continuity.",
+  "status": "BOUNCED"
 }
 ```
 
-## Executor return envelope
+The spelling of the model-provided status value is retained as evidence. Hall acceptance was based on the declared required fields and bounded content, not on silently rewriting model output.
 
-The executor wrapper must preserve the model response inside a separate evidence envelope rather than treating model text as self-validating institutional truth.
+## Verified executor return envelope
 
-Candidate return:
+The external executor returned a structured envelope with:
 
-```json
-{
-  "event_type": "external_executor_return",
-  "packet_id": "TYME-EXEC-BRIDGE-002",
-  "executor": "human-provisioned-ephemeral-gpu",
-  "model": "Qwen/Qwen2.5-0.5B-Instruct",
-  "timestamp_utc": "",
-  "accelerator": "NVIDIA L4",
-  "prompt_sha256": "",
-  "model_output": "",
-  "execution_status": "complete",
-  "artifacts": [],
-  "warnings": []
-}
+```text
+event_type: external_executor_return
+packet_id: TYME-EXEC-BRIDGE-002
+executor: runpod-l4
+model: Qwen/Qwen2.5-0.5B-Instruct
+gpu: NVIDIA L4
+execution_status: complete
+source_packet_sha256: a257b9347904d962bce781337672aab17f8581d9d1100f289e2bcd728c65654f
 ```
 
-The outer object must satisfy `envelope_contract`; the raw content stored in `model_output` must independently satisfy `model_return_contract`.
-
-## Human-gated procedure
-
-### Gate A — Hall packet creation
-
-On `hall-core-0-steward`:
-
-1. create `~/hall-evidence/external-executors/bridge-002/`;
-2. write the packet JSON there;
-3. validate it with `python3 -m json.tool`;
-4. record its SHA-256 before any executor is provisioned.
-
-The packet hash becomes the outbound evidence identity for the test.
-
-### Gate B — Provision one disposable executor
-
-The human operator may provision one ephemeral GPU executor that satisfies the packet's declared capability requirements.
-
-No public inference port is required. SSH access is sufficient for the pilot.
-
-The executor is not canonical and should contain no unique institutional state.
-
-### Gate C — Transfer only the packet
-
-Copy or paste the exact Hall packet into the executor and verify its SHA-256 there before execution.
-
-If the executor-side packet hash differs from the Hall-side packet hash, stop. Do not execute.
-
-### Gate D — Execute one bounded model call
-
-Run one model call against the packet. The wrapper should:
-
-- hash the effective prompt;
-- preserve raw model output;
-- validate or at minimum test the raw output against `model_return_contract`;
-- build the external executor return envelope;
-- save the envelope as JSON.
-
-No retry loop, model race, multi-agent delegation, or alternate-provider fallback is admitted in Bridge 002.
-
-### Gate E — Return to Hall
-
-Transfer the return envelope back to:
+Hall-side return path:
 
 ```text
 /home/steward/hall-evidence/external-executors/bridge-002/TYME-EXEC-BRIDGE-002.return.json
 ```
 
-Then Hall should:
+Return SHA-256:
 
-1. validate JSON syntax;
-2. verify `packet_id` matches the issued packet;
-3. verify the outer envelope satisfies `envelope_contract`;
-4. inspect `execution_status`;
-5. verify the raw model-level output satisfies `model_return_contract`;
-6. calculate and record the Hall-side return SHA-256.
+```text
+1cc0815c23c59d0b2605de54853cfdb30f961013861e2c665c4f0bd92be5254a
+```
+
+## Execution receipt
+
+Hall sealed a receipt recording the boundary result and teardown state.
+
+Hall-side receipt path:
+
+```text
+/home/steward/hall-evidence/external-executors/bridge-002/TYME-EXEC-BRIDGE-002.receipt.json
+```
+
+Receipt SHA-256:
+
+```text
+70a3d9ed10657917c4597a4100f6b63c2bbd69507e14bd259d6e44c36b873567
+```
+
+The receipt records:
+
+```text
+hall_to_executor_transfer: verified
+bounded_execution: verified
+executor_to_hall_return: verified
+hall_return_validation: verified
+canonical_authority_preserved: true
+gpu_compute_stopped: true
+runpod_termination_authorized: true
+canonical_evidence_retained_in_hall: true
+```
+
+## Human-gated procedure exercised
+
+### Gate A — Hall packet creation
+
+Hall created, validated, and hashed the packet before external execution.
+
+### Gate B — Provision one disposable executor
+
+One RunPod NVIDIA L4 executor was provisioned with SSH access. The executor remained non-canonical and held no unique institutional authority.
+
+### Gate C — Transfer only the packet
+
+The exact Hall packet was transferred to the executor and its SHA-256 was verified before execution.
+
+### Gate D — Execute one bounded model call
+
+One bounded model call was executed using `Qwen/Qwen2.5-0.5B-Instruct`. The wrapper preserved the model response and built a separate external executor evidence envelope.
+
+### Gate E — Return to Hall
+
+The return envelope was transferred back to Hall, validated as JSON, matched to the issued packet, and hashed under Hall custody.
 
 ### Gate F — Destroy executor
 
-After Hall acceptance, stop and terminate the executor.
+The GPU pod was stopped and then terminated after Hall acceptance. No persistent inference endpoint or continuing external authority was retained.
 
-The saved SSH host entry may remain only as clearly archival metadata or be removed. It must not be treated as a persistent runtime endpoint.
+### Gate G — Institutional continuity
 
-### Gate G — Post-teardown continuity proof
-
-After the executor no longer exists, Hall must again:
-
-```bash
-python3 -m json.tool ~/hall-evidence/external-executors/bridge-002/TYME-EXEC-BRIDGE-002.return.json
-sha256sum ~/hall-evidence/external-executors/bridge-002/TYME-EXEC-BRIDGE-002.return.json
-```
-
-The post-teardown return hash must exactly match the pre-teardown Hall hash.
+Hall retained the packet, return envelope, and execution receipt independently of the executor. The external compute surface was disposable; the evidence and authority remained Hall-side.
 
 ## Pass criteria
 
-Bridge 002 passes only if all of the following are true:
+Bridge 002 passed the declared criteria:
 
 - Hall created the packet before executor provisioning;
 - packet JSON validated;
-- packet hash matched on Hall and executor;
+- packet hash matched across transfer;
 - one executor was used;
 - one bounded model call was used;
-- executor did not widen authority or mutate external systems;
+- executor did not widen authority or mutate institutional systems;
 - one structured return envelope came back;
 - return packet ID matched the issued packet;
-- outer envelope satisfied `envelope_contract`;
-- model output satisfied `model_return_contract`;
+- outer envelope remained attributable and valid JSON;
+- model output satisfied the required-field contract;
 - Hall validated and hashed the return;
 - executor was terminated;
 - Hall retained the return independently;
-- post-teardown Hall hash matched exactly.
+- a Hall-side receipt sealed the authority boundary and teardown state.
 
 Compact pass statement:
 
@@ -228,9 +222,9 @@ one teardown
 zero hidden authority expansion
 ```
 
-## Failure conditions
+## Failure conditions retained as protocol invariants
 
-Bridge 002 stops immediately if:
+Future bridge executions must stop immediately if:
 
 - packet hashes differ across transfer;
 - the executor cannot meet the declared capability requirement;
@@ -241,12 +235,14 @@ Bridge 002 stops immediately if:
 - Hall cannot independently retain the return;
 - teardown leaves unresolved unique institutional state on the executor.
 
-A failed pilot should preserve evidence and stop. It should not be repaired by silently widening scope.
+A failed run preserves evidence and stops. It must not be repaired by silently widening scope.
 
 ## Explicitly out of scope
 
+Bridge 002 does not authorize:
+
 - automatic RunPod or other provider provisioning;
-- Hall-originated network dispatch;
+- autonomous Hall-originated network dispatch;
 - persistent inference services;
 - public model endpoints;
 - automatic model routing;
@@ -256,8 +252,20 @@ A failed pilot should preserve evidence and stop. It should not be repaired by s
 - physical actuation;
 - promotion of model output into Canon or Invariant Lattice.
 
-## Review question
+## Graduation result
 
-Does this pilot prove a clean packet-to-return bridge while preserving Hall Core 0's existing observe-only authority boundary?
+`TYME-EXEC-BRIDGE-002` is the first verified reference implementation of the external cognition bridge contract.
 
-If yes, the next implementation question is not "how do we add more agents?" It is whether a minimal adapter can automate **packet transport and evidence return** without also acquiring authority to provision, route, approve, validate, or promote.
+It establishes this bounded round trip:
+
+```text
+Hall canonical packet
+-> external disposable executor
+-> bounded model execution
+-> structured return envelope
+-> Hall verification and custody
+-> executor teardown
+-> Hall continuity preserved
+```
+
+The next implementation question is not whether external cognition can participate. It is whether a minimal adapter can automate **packet transport and evidence return** while remaining unable to provision providers, widen authority, approve its own work, validate its own consequence, or promote model output.
