@@ -1,14 +1,14 @@
 # TYME_EXECUTOR_CONTRACT_v1
 
-Status: review candidate  
-Reference proof: `TYME-EXEC-TEST-001`  
-Authority ceiling: bounded documentation and human-gated pilot only
+Status: verified reference contract  
+Reference proofs: `TYME-EXEC-TEST-001`, `TYME-EXEC-BRIDGE-002`  
+Authority ceiling: bounded documentation and human-gated external execution only
 
 ## Purpose
 
 Define the minimum contract by which TYME Hall may use replaceable external cognition surfaces while keeping institutional continuity, authority, evidence, and accepted state inside Hall.
 
-This contract is derived from the first completed disposable-executor proof on a RunPod L4. It does not authorize autonomous provider provisioning, persistent inference APIs, swarm orchestration, repository mutation by executors, public model hosting, or physical actuation.
+This contract is derived from completed disposable-executor proofs on RunPod L4. It does not authorize autonomous provider provisioning, persistent inference APIs, swarm orchestration, repository mutation by executors, public model hosting, or physical actuation.
 
 ## Governing rule
 
@@ -16,9 +16,11 @@ This contract is derived from the first completed disposable-executor proof on a
 
 An executor may reason, transform, infer, compile, simulate, or generate only within an already-authorized packet. It does not own institutional memory, authority, accepted evidence, gate state, or the next valid transition.
 
-## Reference proof
+## Reference proofs
 
-`TYME-EXEC-TEST-001` completed this lifecycle:
+### TYME-EXEC-TEST-001
+
+The precursor proof completed this lifecycle:
 
 ```text
 RunPod Secure Cloud L4
@@ -31,16 +33,44 @@ RunPod Secure Cloud L4
 -> identical post-teardown Hall hash
 ```
 
-Hall evidence path:
-
-```text
-/home/steward/hall-evidence/external-executors/TYME-EXEC-TEST-001.return.json
-```
-
 Accepted Hall-side SHA-256:
 
 ```text
 ac3c0090cf164defe0463362c705624588f9f93c9e4fcc72e7349becdee4d95f
+```
+
+### TYME-EXEC-BRIDGE-002
+
+Bridge 002 then proved the packet originated in Hall, crossed to a disposable external executor, returned in a structured evidence envelope, was validated under Hall custody, and survived executor teardown as institutional evidence.
+
+Canonical packet SHA-256:
+
+```text
+a257b9347904d962bce781337672aab17f8581d9d1100f289e2bcd728c65654f
+```
+
+Returned envelope SHA-256:
+
+```text
+1cc0815c23c59d0b2605de54853cfdb30f961013861e2c665c4f0bd92be5254a
+```
+
+Execution receipt SHA-256:
+
+```text
+70a3d9ed10657917c4597a4100f6b63c2bbd69507e14bd259d6e44c36b873567
+```
+
+Bridge 002 establishes the reference round trip:
+
+```text
+Hall canonical packet
+-> external disposable executor
+-> bounded model execution
+-> structured return envelope
+-> Hall verification and custody
+-> executor teardown
+-> Hall continuity preserved
 ```
 
 ## Executor invariants
@@ -144,7 +174,7 @@ A return is accepted only if all required checks pass:
 - model-level output satisfies `model_return_contract`;
 - required artifacts are present and hashable;
 - Hall stores the accepted return independently of the executor;
-- post-teardown revalidation reproduces the same accepted artifact hash.
+- post-teardown continuity remains independently verifiable from Hall-retained evidence.
 
 ## Failure behavior
 
@@ -160,7 +190,7 @@ A return is accepted only if all required checks pass:
 
 ## Authority boundary
 
-This contract permits a documentation-first pilot in which a human remains the explicit authorization gate. It does not alter Hall Core 0's current observe-only runtime authority.
+This contract permits human-gated bounded external execution. It does not alter Hall Core 0's current observe-only institutional authority boundary.
 
 Specifically, this contract does **not** admit:
 
@@ -171,19 +201,26 @@ Specifically, this contract does **not** admit:
 - public inference endpoints;
 - multi-agent or swarm execution;
 - model self-selection outside packet constraints;
-- physical or consequence-bearing actuation.
+- physical or consequence-bearing actuation;
+- self-validation or self-promotion of model output.
 
-## Repository projection
+## Reference implementation
 
-The first implementation target is documentation-only:
+`docs/pilots/EXTERNAL_COGNITION_BRIDGE_002.md` is the first verified reference implementation of this contract.
 
-```text
-docs/TYME_EXECUTOR_CONTRACT_v1.md
-docs/pilots/EXTERNAL_COGNITION_BRIDGE_002.md
-```
-
-No runtime dispatch code is admitted by this contract alone.
+It proves that a Hall-originated packet can move through an external cognition surface while preserving canonical authority, evidence custody, and teardown discipline.
 
 ## Next valid action
 
-Review `EXTERNAL_COGNITION_BRIDGE_002.md` against Hall Core 0's existing observe-only boundary. If the packet-to-return semantics are coherent, run exactly one human-gated synthetic bridge test before considering any runtime automation.
+Do not expand to autonomous provider control yet.
+
+The next admissible implementation step is a minimal bridge adapter that may automate **packet transport and evidence return only** while remaining unable to:
+
+- provision or terminate providers on its own authority;
+- choose or widen model scope beyond the packet;
+- authorize its own work;
+- validate its own consequence;
+- mutate Hall canon;
+- promote model output into institutional truth.
+
+Any broader runtime authority requires a separate contract and review gate.
