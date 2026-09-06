@@ -47,7 +47,7 @@ ac3c0090cf164defe0463362c705624588f9f93c9e4fcc72e7349becdee4d95f
 
 1. **Hall remains canonical.** Accepted packet identity, authority, evidence, and custody remain Hall-side.
 2. **Executors are disposable.** No executor is required for institutional continuity after its return is accepted.
-3. **Every execution begins from a bounded packet.** The packet carries stable identity, task scope, constraints, return contract, and authority ceiling.
+3. **Every execution begins from a bounded packet.** The packet carries stable identity, task scope, constraints, model-return contract, envelope contract, and authority ceiling.
 4. **Capability does not imply authority.** Available GPU, model, shell, network, storage, or tool access does not widen the packet's permitted action.
 5. **No executor manufactures authority.** It consumes an already-authorized task and cannot self-promote, self-route, or widen scope.
 6. **No single component authorizes, executes, and validates its own consequence.** Human or Hall gate, executor, and Hall validation remain distinct roles.
@@ -76,6 +76,8 @@ A failure at any stage returns evidence and stops. Failure never silently advanc
 
 ## Minimum outbound packet
 
+The packet distinguishes the **model-level return contract** from the **executor evidence-envelope contract**. Model content must satisfy the former; the wrapper surrounding that content must satisfy the latter.
+
 ```json
 {
   "packet_version": "executor-packet-v1",
@@ -91,16 +93,21 @@ A failure at any stage returns evidence and stops. Failure never silently advanc
   },
   "constraints": [],
   "inputs": [],
-  "return_contract": {
+  "model_return_contract": {
+    "required_fields": [],
+    "json_only": true
+  },
+  "envelope_contract": {
+    "event_type": "external_executor_return",
     "required_fields": [
+      "event_type",
       "packet_id",
       "executor",
       "model",
       "timestamp_utc",
       "execution_status",
       "model_output"
-    ],
-    "json_only": true
+    ]
   },
   "teardown_required": true
 }
@@ -124,6 +131,8 @@ A failure at any stage returns evidence and stops. Failure never silently advanc
 }
 ```
 
+`model_output` preserves the raw model-level return. It is evidence, not self-validating institutional truth. Hall validates the model output against `model_return_contract` and separately validates the outer envelope against `envelope_contract`.
+
 ## Hall acceptance gate
 
 A return is accepted only if all required checks pass:
@@ -131,7 +140,8 @@ A return is accepted only if all required checks pass:
 - packet ID matches an issued Hall packet;
 - executor identity and declared capability are attributable;
 - execution remained within the packet's authority ceiling;
-- return envelope parses and satisfies the declared contract;
+- outer return envelope satisfies `envelope_contract`;
+- model-level output satisfies `model_return_contract`;
 - required artifacts are present and hashable;
 - Hall stores the accepted return independently of the executor;
 - post-teardown revalidation reproduces the same accepted artifact hash.
@@ -142,7 +152,8 @@ A return is accepted only if all required checks pass:
 | --- | --- |
 | Capability unavailable | Return `failed` or `refused`; do not silently substitute an unapproved surface. |
 | Packet ambiguity | Stop and request clarification; do not infer new authority. |
-| Model output violates return contract | Preserve raw output as evidence, mark validation failure, and do not promote it. |
+| Model output violates model-return contract | Preserve raw output as evidence, mark validation failure, and do not promote it. |
+| Executor envelope violates envelope contract | Preserve the raw envelope, mark validation failure, and do not accept it as institutional evidence. |
 | Executor interrupted | Record partial evidence if recoverable; Hall remains authoritative. |
 | Hash mismatch after transfer | Reject acceptance and preserve both observed hashes for investigation. |
 | Teardown fails | Cycle remains incomplete until residual executor state is resolved. |
