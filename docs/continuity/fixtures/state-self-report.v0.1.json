@@ -1,0 +1,59 @@
+{
+  "hall_event": {
+    "envelope_version": "0.1",
+    "event_id": "evt:self-report:conformance-004",
+    "event_type": "state.self_report",
+    "occurred_at": "2026-09-06T10:20:00Z",
+    "accepted_at": "2026-09-06T10:21:00Z",
+    "lineage": {
+      "lineage_id": "lineage:self-report:conformance-004",
+      "parent_event_id": null,
+      "correlation_id": "corr:self-report:2026-09-06"
+    },
+    "identity": {
+      "actor_id": "participant:fixture-node-001",
+      "actor_type": "system",
+      "adapter_id": "adapter:self-report-fixture-v0"
+    },
+    "provenance": {
+      "source_surface": "notion",
+      "source_record": "https://app.notion.com/p/3d3c51d54b7581c39116f3fdb67b926a",
+      "artifact_ids": [
+        "artifact:self-report:fixture-001"
+      ],
+      "evidence_links": [
+        "https://phys.org/news/2026-09-virus-particles-enable-gene-tracking.html",
+        "https://app.notion.com/p/3d3c51d54b7581c39116f3fdb67b926a"
+      ]
+    },
+    "authority": {
+      "posture": "observe",
+      "authorization_basis": "Human-approved architecture compatibility test only; no execution authority is conveyed by the report.",
+      "authorized_actions": [],
+      "prohibited_actions": [
+        "execute",
+        "mutate_canon",
+        "infer_withheld_state"
+      ],
+      "gate_id": "gate:self-report:conformance-review"
+    },
+    "payload": {
+      "summary": "Fixture node emitted a bounded operational-state projection while explicitly withholding private cognition.",
+      "content_ref": "bounded self-report fixture: disclosed operational state only; private cognition withheld",
+      "content_hash": "sha256:1c0fd0046df5f239a16b998ba13566d84acd727deeaffb14cbfa036d3b5a6256"
+    },
+    "state": {
+      "recorded_state": "bounded_state_projection_emitted",
+      "current_resolution": "candidate_fixture_recorded",
+      "execution_state": "done",
+      "verification_state": "needs_review"
+    },
+    "return": {
+      "evidence_ids": [
+        "notion:sovereign-self-reporting-principle:v0"
+      ],
+      "return_event_ids": [],
+      "next_valid_action": "Validate this event against Hall Event Envelope v0.1 and review whether any v0.2 disclosure-scope extension is actually necessary."
+    }
+  }
+}
