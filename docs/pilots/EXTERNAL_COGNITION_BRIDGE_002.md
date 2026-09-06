@@ -41,7 +41,7 @@ Candidate packet:
   "packet_version": "executor-packet-v1",
   "packet_id": "TYME-EXEC-BRIDGE-002",
   "commission_ref": "EXTERNAL_COGNITION_BRIDGE_002",
-  "task": "Read the supplied synthetic statement and return a bounded acknowledgement using the declared return contract.",
+  "task": "Read the supplied synthetic statement and return a bounded acknowledgement using the declared model return contract.",
   "sensitivity": "synthetic",
   "authority_ceiling": "bounded_execute",
   "executor_requirements": {
@@ -62,7 +62,7 @@ Candidate packet:
       "value": "Hall retains institutional continuity; the executor performs only the bounded task it is given."
     }
   ],
-  "return_contract": {
+  "model_return_contract": {
     "required_fields": [
       "packet_id",
       "summary",
@@ -70,13 +70,25 @@ Candidate packet:
     ],
     "json_only": true
   },
+  "envelope_contract": {
+    "event_type": "external_executor_return",
+    "required_fields": [
+      "event_type",
+      "packet_id",
+      "executor",
+      "model",
+      "timestamp_utc",
+      "execution_status",
+      "model_output"
+    ]
+  },
   "teardown_required": true
 }
 ```
 
 ## Expected model-level return
 
-The model's content does not need to match these words exactly, but it must satisfy the packet contract and add no unsupported claims.
+The model's content does not need to match these words exactly, but it must satisfy `model_return_contract` and add no unsupported claims.
 
 Example:
 
@@ -109,6 +121,8 @@ Candidate return:
   "warnings": []
 }
 ```
+
+The outer object must satisfy `envelope_contract`; the raw content stored in `model_output` must independently satisfy `model_return_contract`.
 
 ## Human-gated procedure
 
@@ -143,6 +157,7 @@ Run one model call against the packet. The wrapper should:
 
 - hash the effective prompt;
 - preserve raw model output;
+- validate or at minimum test the raw output against `model_return_contract`;
 - build the external executor return envelope;
 - save the envelope as JSON.
 
@@ -160,9 +175,10 @@ Then Hall should:
 
 1. validate JSON syntax;
 2. verify `packet_id` matches the issued packet;
-3. inspect `execution_status`;
-4. verify the model-level output satisfies the declared return contract;
-5. calculate and record the Hall-side return SHA-256.
+3. verify the outer envelope satisfies `envelope_contract`;
+4. inspect `execution_status`;
+5. verify the raw model-level output satisfies `model_return_contract`;
+6. calculate and record the Hall-side return SHA-256.
 
 ### Gate F — Destroy executor
 
@@ -193,6 +209,8 @@ Bridge 002 passes only if all of the following are true:
 - executor did not widen authority or mutate external systems;
 - one structured return envelope came back;
 - return packet ID matched the issued packet;
+- outer envelope satisfied `envelope_contract`;
+- model output satisfied `model_return_contract`;
 - Hall validated and hashed the return;
 - executor was terminated;
 - Hall retained the return independently;
@@ -216,7 +234,8 @@ Bridge 002 stops immediately if:
 
 - packet hashes differ across transfer;
 - the executor cannot meet the declared capability requirement;
-- the model output cannot be represented under the return contract;
+- the model output violates `model_return_contract`;
+- the outer return violates `envelope_contract`;
 - executor tooling requests broader authority than the packet permits;
 - return identity is ambiguous;
 - Hall cannot independently retain the return;
