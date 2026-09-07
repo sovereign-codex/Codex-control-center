@@ -1,6 +1,6 @@
 # Gate C Institutional Return Index — Public v0.1
 
-Status: `PROPOSED_FOR_REVIEW`  
+Status: `ACCEPTED_PUBLIC_INDEX`  
 Recorded: 2026-09-05  
 Authority effect: none
 
@@ -86,4 +86,4 @@ This public index does not authorize:
 
 ## Next valid action
 
-Review this public index as a lineage and sequencing record. Acceptance may make the return discoverable; it must not be interpreted as execution authorization.
+Reconcile the Office/P0 state to the accepted public lineage, crosswalk version 8, and independent-repeat preparation state. Then complete and preserve the Hall Core restore rehearsal. This acceptance grants no execution authority.
