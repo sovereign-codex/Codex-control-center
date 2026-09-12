@@ -26,6 +26,7 @@ jobs:
         run: |
           python -m py_compile services/hall-core/app.py
           python -m unittest discover -s services/hall-core/tests -v
+          python -m unittest discover -s deploy/hall-core-0/tests -v
           python -m json.tool schemas/hall-event-envelope.v0.1.schema.json >/dev/null
           python -m json.tool registry/adapters/github-webhook-v0.json >/dev/null
           python -m json.tool deploy/hall-core-0/node-manifest.v0.json >/dev/null
@@ -35,8 +36,14 @@ jobs:
           bash -n deploy/hall-core-0/reconcile-live-substrate.sh
           bash -n deploy/hall-core-0/backup.sh
           bash -n deploy/hall-core-0/restore.sh
+          bash -n deploy/hall-core-0/rehearse-restore.sh
           bash -n deploy/hall-core-0/smoke-test.sh
       - name: Validate Compose projection
         run: docker compose --env-file deploy/hall-core-0/hall-core.env.example -f deploy/hall-core-0/docker-compose.yml config --quiet
       - name: Build Hall Core image
-        run: docker build --build-arg HALL_BUILD_COMMIT=${GITHUB_SHA} -f services/hall-core/Dockerfile -t hall-core-0:conformance .
+        run: docker build --build-arg HALL_BUILD_COMMIT=${GITHUB_SHA} --build-arg HALL_RUNTIME_UID=12001 --build-arg HALL_RUNTIME_GID=12002 -f services/hall-core/Dockerfile -t hall-core-0:conformance .
+      - name: Rehearse restore with non-default runtime identity
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y sqlite3
+          sudo bash deploy/hall-core-0/rehearse-restore.sh hall-core-0:conformance
