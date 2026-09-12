@@ -60,7 +60,8 @@ HALL_ENV_FILE="${WORK}/hall-core.env" bash "${WORK}/restore.sh" --check "${WORK}
 HALL_ENV_FILE="${WORK}/hall-core.env" bash "${WORK}/restore.sh" --yes "${WORK}/backup.sqlite3"
 # Query through the restored container as its actual runtime user, not host root.
 docker compose --env-file "${WORK}/hall-core.env" -f "${WORK}/docker-compose.yml" exec -T hall-core python -c "import sqlite3; db=sqlite3.connect('/var/lib/hall-core/hall.db'); assert db.execute('PRAGMA integrity_check').fetchone()[0]=='ok'; assert db.execute('SELECT value FROM rehearsal_evidence').fetchone()[0]=='hall-restore-synthetic-witness-v1'"
-export REHEARSAL_SOURCE_SHA="$(git -C "${SCRIPT_DIR}" rev-parse HEAD)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd -P)"
+export REHEARSAL_SOURCE_SHA="$(git -c safe.directory="${REPO_ROOT}" -C "${REPO_ROOT}" rev-parse HEAD)"
 python3 - <<'PY'
 import hashlib, json, os, stat
 from datetime import datetime, timezone
