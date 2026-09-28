@@ -1,0 +1,77 @@
+{
+  "artifact_id": "BRIDGE_LOCAL_REPAIR_001",
+  "standing": "candidate_noncanonical",
+  "test_verdict": "PASS",
+  "tests_run": 61,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "suite": "original_22",
+      "tests_run": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true,
+      "failure_ids": [],
+      "error_ids": []
+    },
+    {
+      "suite": "review_9",
+      "tests_run": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true,
+      "failure_ids": [],
+      "error_ids": []
+    },
+    {
+      "suite": "repair_30",
+      "tests_run": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": true,
+      "failure_ids": [],
+      "error_ids": []
+    }
+  ],
+  "execution_exit_code": 0,
+  "recorded_at_utc": "2026-09-27T20:56:04.367909+00:00",
+  "timestamp_source": "container_or_reviewer_clock_not_attested",
+  "duration_seconds": 2.938868,
+  "environment": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux",
+    "machine": "x86_64"
+  },
+  "tested_files_sha256": {
+    "bridge_specimen.py": "f45d26951092889c623b86f5e214100ebf8908f6054b643b698482cb402d81c2",
+    "test_bridge_specimen.py": "8bd105c4c19d51305f13a3ff70890dbedab13f23f63a9764abdff6142a2ba774",
+    "test_review_regressions.py": "eb47911b22479cf36d9afaac1c8eb5bcac68407f044213f42c1df5f21e501026",
+    "test_repair_regressions.py": "c893b386083acc514550cb36667e15b8851fad96c2c7779a062698cea4826e55",
+    "run_tests.py": "c6731ace05084f8dcd478018f18306e11b228d4b22d74eb5193bfe5f2dd76ac8",
+    "fixtures/packet.json": "3c8767b48faca7a716bd6605e2fd4ddcd8c1f16b3ca672c277ea07898421b7db"
+  },
+  "source_unchanged_during_run": true,
+  "independent_review": "NOT_PERFORMED_BY_THIS_RUNNER",
+  "model_execution": "not_performed",
+  "source_system_writes": false,
+  "institutional_acceptance": "not_assessed",
+  "authority_effect": "none",
+  "hall_receipt_claimed": false,
+  "handoff_ready": false,
+  "next_gate": "independent_review_of_exact_repaired_bytes",
+  "limits": [
+    "Single-writer local specimen, not remote delivery or a live queue.",
+    "Python socket audit guard, not an operating-system firewall.",
+    "Same account/container, not hostile-principal isolation.",
+    "Fault-injected local writes and clocks, not power-loss crash proof.",
+    "Deadline checked through decision preparation, immediately before publication.",
+    "Atomic publication syscall and function-return latency are not preemptible or timed to completion.",
+    "File fsync and no-overwrite hard link do not establish directory or host-crash durability.",
+    "Historical byte/profile verification does not check or renew current authorization."
+  ]
+}

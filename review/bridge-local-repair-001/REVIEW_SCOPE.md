@@ -1,40 +1,34 @@
-# BRIDGE_LOCAL_REPAIR_001 — review-only staging
+# BRIDGE_LOCAL_REPAIR_001: reproducible review projection
 
-**Standing:** review candidate only; non-canonical; non-authorizing.
+Standing: non-canonical review candidate. PR #14 remains unmerged.
+This pass repairs review packaging only; no bridge logic was changed.
 
-This branch stages the exact repair diff and review documents from `BRIDGE_LOCAL_REPAIR_001` so Codex/GitHub can perform a separate static review.
+## Two prior P1 staging findings
 
-## Exact identities
+1. The staged patch lacked its final LF. Regeneration from the exact archived
+   baseline and candidate produces the original valid patch byte-for-byte.
+   The previous remote blob equals that patch with only its final LF removed.
+2. The handoff required files not in the repository. This projection includes
+   the repaired implementation, baseline, original/review/repair tests, runner,
+   synthetic fixture, subset-specific checksums, provenance, and test reports.
+   README.md and the handoff now reference only included review dependencies.
 
-- Repaired implementation SHA-256: `f45d26951092889c623b86f5e214100ebf8908f6054b643b698482cb402d81c2`
-- Original author-observed test result: 61 tests, 0 failures/errors/skips.
-- Those test results are evidence supplied by the authoring pass, not independent review evidence.
+## Review targets
 
-## Review target
+Primary: candidate/bridge_specimen.py and candidate/test_*.py.
+Comparison: baseline/ and bridge_specimen.patch.
+Evidence: SOURCE_ARTIFACTS.json, SHA256SUMS, evidence/*.json.
+Design: REPAIR_DESIGN_001.md.
 
-Primary target:
-- `review/bridge-local-repair-001/bridge_specimen.patch`
+The full historical archive is not staged; omitted duplicates and old logs are
+not needed for the documented 61-test reproduction. Exact archive-member
+mappings distinguish copies from newly adapted projection documentation.
 
-Context:
-- `REPAIR_DESIGN_001.md`
-- `INDEPENDENT_REVIEW_HANDOFF.md`
-- `BRIDGE_REPAIR_RETURN_001.md`
+The author's local rerun is evidence, not independent approval. Ask a separate
+reviewer to reproduce checks where execution is available and challenge logic.
+Do not close findings merely because files now exist or tests pass.
 
-The patch is the exact local diff from the preserved baseline to the repaired implementation. This review branch does **not** place any fixture under an incoming/dispatch path and does not activate a runtime.
-
-## Requested reviewer posture
-
-Please challenge:
-1. shared static profile validation vs current authorization;
-2. exact packet/claim/preparation/outcome binding;
-3. missing/corrupt/contradictory/symlinked/partial record handling;
-4. late-operation evidence and replay semantics;
-5. write/read-back/publication failure paths;
-6. the documented hard-link publication timing boundary;
-7. preservation of native statuses and absence of false model/authority/receipt claims.
-
-Return concrete findings against this local specimen. Do not treat a clean static review as deployment approval.
-
-## Explicitly out of scope
-
-No live transport, model call, provider operation, Office awakening, Archivist ingestion, TRACE receipt, Hall receipt, merge, or deployment is authorized by this branch.
+All files stay under this review directory. No runtime/CI wiring, source
+contract edits, live incoming/queue paths, provider configuration, model calls,
+Office awakening, ingest/receipt, merge, or deployment is part of this change.
+Existing automatic repository services are not reconfigured by this package.

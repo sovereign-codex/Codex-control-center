@@ -1,0 +1,124 @@
+{
+  "review_id": "BRIDGE_TECHNICAL_REVIEW_001",
+  "recorded_at_utc": "2026-09-27T20:45:42.856038+00:00",
+  "timestamp_source": "container_clock",
+  "standing": "noncanonical_review_candidate",
+  "technical_disposition": "REQUIRES_REVISION",
+  "independent_review_status": "NOT_PERFORMED",
+  "reviewer_relationship": "Follow-up technical review by the same conversational assistant; not independent author review.",
+  "subject": {
+    "name": "TYME_Bridge_Crosswalk_001_candidate.zip",
+    "zip_sha256": "0f60db42a77e8b739867c6877360aa46f317dc771753823630a34ecc119d5b22",
+    "original_members_verified": 15,
+    "original_checksums_all_match": true,
+    "code_sha256": "bb58c27d1044f2d0143a2ae6595375685edbb8316ccff7fae5c0b4a75287ee1e",
+    "baseline_tests_sha256": "8bd105c4c19d51305f13a3ff70890dbedab13f23f63a9764abdff6142a2ba774"
+  },
+  "baseline": {
+    "tests_run": 22,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "retained_evidence_verifier_exit": 0
+  },
+  "added_regressions": {
+    "tests_run": 9,
+    "failures": 8,
+    "errors": 1,
+    "successful": false,
+    "candidate_changed": false,
+    "interpretation": "Red regression failures expose unresolved candidate behavior; not an acceptance PASS."
+  },
+  "findings": [
+    {
+      "id": "BTR-001",
+      "title": "Standalone verification does not enforce the selected fixture profile",
+      "disposition": "REPAIR_BEFORE_LIVE_BINDING",
+      "locations": [
+        "bridge_specimen.py:132-158",
+        "bridge_specimen.py:223-256"
+      ],
+      "tests": [
+        "R01",
+        "R02",
+        "R03",
+        "R04"
+      ],
+      "observed": "With correct controller digests for deliberately invalid samples, staging rejects restricted sensitivity, added repository_write capability, weakened envelope fields, and an unknown packet version. Standalone verification reports schema_check=passed for all four. With weakened fields, timestamp_utc is missing from the returned envelope.",
+      "qualification": "No trusted digest was bypassed. This tests conformance independently from integrity; it does not demonstrate a confidentiality breach or unauthorized execution. Every report still says authority_effect=none and handoff_ready=false.",
+      "repair": "Factor pure, immutable profile validation out of time-dependent eligibility. Require it in both entry points; use a pinned, reviewed profile rather than letting the packet choose a weaker schema. Historical read-back must not renew a grant or fail merely because a valid historical grant has since expired."
+    },
+    {
+      "id": "BTR-002",
+      "title": "Replay treats terminal-record existence as a valid delivery decision",
+      "disposition": "REPAIR_BEFORE_LIVE_BINDING",
+      "locations": [
+        "bridge_specimen.py:175-183"
+      ],
+      "tests": [
+        "R05",
+        "R06"
+      ],
+      "observed": "An empty delivered.json and a delivered.json containing transport_only=false both produce normal duplicate_suppressed results.",
+      "qualification": "The reproduction does not cause a second delivery. It shows incomplete or contradictory outcome evidence is accepted as an ordinary completed duplicate.",
+      "repair": "Read the terminal record using bounded, no-symlink handling; validate its exact expected contents and relationship to the immutable claim. Missing, empty, malformed, or contradictory records must remain explicitly held."
+    },
+    {
+      "id": "BTR-003",
+      "title": "A final deadline failure is not retained for replay",
+      "disposition": "REPAIR_BEFORE_LIVE_BINDING",
+      "locations": [
+        "bridge_specimen.py:175-191"
+      ],
+      "tests": [
+        "R07"
+      ],
+      "observed": "A synthetic monotonic clock crosses the deadline after delivered.json has been written. The first call raises elapsed_budget, but the next call returns ordinary duplicate_suppressed without preserving the late/failed outcome.",
+      "qualification": "This is loss of terminal outcome provenance, not duplicate execution. Bytes were staged; the result must distinguish delivered bytes from an on-time successful operation. Concurrent writers and host-crash durability were not exercised.",
+      "repair": "Specify the commit/decision point and preserve late or uncertain terminal outcomes. A failed final check must prevent a later unqualified success-like replay result. Allow explicit held/late reporting without erasing bytes or automatically retrying. Moving a check alone is not proof of correct post-write behavior."
+    },
+    {
+      "id": "BTR-004",
+      "title": "Malformed nested input escapes the stable boundary-error contract",
+      "disposition": "ROBUSTNESS_REPAIR",
+      "locations": [
+        "bridge_specimen.py:155-157"
+      ],
+      "tests": [
+        "R08"
+      ],
+      "observed": "inputs=[17], with a matching synthetic controller digest, raises AttributeError instead of a stable BoundaryError.",
+      "qualification": "The operation stops; this is not permission widening. It weakens predictable failure evidence and error handling.",
+      "repair": "Check the type of each nested object before using dictionary methods. Return a stable fixture_input or explicitly versioned validation code, preserving raw input separately."
+    },
+    {
+      "id": "BTR-005",
+      "title": "Numeric overflow bypasses the non-finite JSON guard",
+      "disposition": "ROBUSTNESS_REPAIR",
+      "locations": [
+        "bridge_specimen.py:45-62"
+      ],
+      "tests": [
+        "R09"
+      ],
+      "observed": "decode on the literal bytes {\"elapsed\":1e999} returns a Python infinity. The parse_constant hook rejects NaN/Infinity tokens but does not cover this numeric conversion.",
+      "qualification": "The fixed original fixture does not use this numeric field. No routing or execution impact was demonstrated. This is a parser-hardening issue before broader structured inputs are accepted.",
+      "repair": "Reject non-finite parsed numbers at all nesting levels, through a finite-checking numeric parser or an explicit post-parse walk. Keep the error stable and test exponent overflow as well as nonstandard constant tokens."
+    }
+  ],
+  "scope": {
+    "original_candidate_modified": false,
+    "review_artifacts_created_locally": true,
+    "notion_writes": false,
+    "github_writes": false,
+    "live_dispatch": false,
+    "model_calls": false,
+    "provider_provisioning": false,
+    "source_repository_suites_rerun": false,
+    "os_network_isolation_proven": false,
+    "hostile_worker_isolation_proven": false,
+    "local_package_tests_rerun": true,
+    "live_bridge_authorized": false
+  },
+  "next_valid_action": "A separate local repair candidate and rerun; then independent review of the repaired exact bytes. Do not bind a live transport yet."
+}
