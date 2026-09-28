@@ -1,0 +1,40 @@
+{
+  "projection": "REVIEW_PROJECTION_REPAIR_01",
+  "observed_at_utc": "2026-09-28T00:50:24.438605+00:00",
+  "timestamp_source": "container_clock_not_attested",
+  "prior_pr_head": "d165f2fb621e44bab5655f0c335382999d9757e1",
+  "prior_staged_patch_blob": "2af79377033c194c3ee30c02882763f05b11d524",
+  "patch_sha256": "d4129c7d091f0a6f45762ff8523509ad8638485ac34ac4b181f18af653cbbb92",
+  "patch_regeneration_matches_archive": true,
+  "prior_staging_lost_exactly_final_lf": true,
+  "patch_checks": [
+    {
+      "command": "git apply --numstat /mnt/data/projection_repair_01/projection/bridge_specimen.patch",
+      "exit_code": 0,
+      "stdout": "230\t49\tbridge_specimen.py\n",
+      "stderr": ""
+    },
+    {
+      "command": "git apply --check -p1",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": "git apply -p1 /mnt/data/projection_repair_01/projection/bridge_specimen.patch",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "applied_patch_matches_candidate_bytes": true,
+  "baseline_copies_equal": [
+    "test_bridge_specimen.py",
+    "test_review_regressions.py",
+    "fixtures/packet.json"
+  ],
+  "test_report": "projection_test_report.json",
+  "independent_review": "NOT_PERFORMED_BY_THIS_PASS",
+  "bridge_logic_changed": false,
+  "live_transport": "HOLD"
+}
