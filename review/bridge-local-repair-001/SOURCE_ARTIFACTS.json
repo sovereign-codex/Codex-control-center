@@ -1,0 +1,95 @@
+{
+  "projection": "REVIEW_PROJECTION_REPAIR_01",
+  "source_archive": "TYME_Bridge_Local_Repair_001.zip",
+  "source_archive_sha256": "c0b291e99c8a52d412e6651b0cee241b2b3a7146d72a08c736f412ad653c24c1",
+  "source_archive_manifest_members_verified": 99,
+  "source_archive_modified": false,
+  "full_archive_staged": false,
+  "scope": "Dependency-complete subset for the documented patch check and 61-test reproduction; duplicate historical packages and unrelated logs omitted. Adapted repository docs are not exact historical copies.",
+  "exact_copies": [
+    {
+      "path": "candidate/bridge_specimen.py",
+      "archive_member": "tyme_bridge_repair_001/candidate/bridge_specimen.py",
+      "sha256": "f45d26951092889c623b86f5e214100ebf8908f6054b643b698482cb402d81c2",
+      "size_bytes": 22440
+    },
+    {
+      "path": "candidate/test_bridge_specimen.py",
+      "archive_member": "tyme_bridge_repair_001/candidate/test_bridge_specimen.py",
+      "sha256": "8bd105c4c19d51305f13a3ff70890dbedab13f23f63a9764abdff6142a2ba774",
+      "size_bytes": 10776
+    },
+    {
+      "path": "candidate/test_review_regressions.py",
+      "archive_member": "tyme_bridge_repair_001/candidate/test_review_regressions.py",
+      "sha256": "eb47911b22479cf36d9afaac1c8eb5bcac68407f044213f42c1df5f21e501026",
+      "size_bytes": 8196
+    },
+    {
+      "path": "candidate/test_repair_regressions.py",
+      "archive_member": "tyme_bridge_repair_001/candidate/test_repair_regressions.py",
+      "sha256": "c893b386083acc514550cb36667e15b8851fad96c2c7779a062698cea4826e55",
+      "size_bytes": 21949
+    },
+    {
+      "path": "candidate/run_tests.py",
+      "archive_member": "tyme_bridge_repair_001/candidate/run_tests.py",
+      "sha256": "c6731ace05084f8dcd478018f18306e11b228d4b22d74eb5193bfe5f2dd76ac8",
+      "size_bytes": 4897
+    },
+    {
+      "path": "candidate/fixtures/packet.json",
+      "archive_member": "tyme_bridge_repair_001/candidate/fixtures/packet.json",
+      "sha256": "3c8767b48faca7a716bd6605e2fd4ddcd8c1f16b3ca672c277ea07898421b7db",
+      "size_bytes": 1516
+    },
+    {
+      "path": "baseline/bridge_specimen.py",
+      "archive_member": "tyme_bridge_repair_001/baseline/tyme_bridge_crosswalk_001/bridge_specimen.py",
+      "sha256": "bb58c27d1044f2d0143a2ae6595375685edbb8316ccff7fae5c0b4a75287ee1e",
+      "size_bytes": 12855
+    },
+    {
+      "path": "baseline/test_bridge_specimen.py",
+      "archive_member": "tyme_bridge_repair_001/baseline/tyme_bridge_crosswalk_001/test_bridge_specimen.py",
+      "sha256": "8bd105c4c19d51305f13a3ff70890dbedab13f23f63a9764abdff6142a2ba774",
+      "size_bytes": 10776
+    },
+    {
+      "path": "baseline/test_review_regressions.py",
+      "archive_member": "tyme_bridge_repair_001/baseline/tyme_bridge_review_001/test_review_regressions.py",
+      "sha256": "eb47911b22479cf36d9afaac1c8eb5bcac68407f044213f42c1df5f21e501026",
+      "size_bytes": 8196
+    },
+    {
+      "path": "baseline/fixtures/packet.json",
+      "archive_member": "tyme_bridge_repair_001/baseline/tyme_bridge_crosswalk_001/fixtures/packet.json",
+      "sha256": "3c8767b48faca7a716bd6605e2fd4ddcd8c1f16b3ca672c277ea07898421b7db",
+      "size_bytes": 1516
+    },
+    {
+      "path": "REPAIR_DESIGN_001.md",
+      "archive_member": "tyme_bridge_repair_001/REPAIR_DESIGN_001.md",
+      "sha256": "bd7d82096bbfc69e1343112f864f0256aa12f32427dac76e890dd174e6217926",
+      "size_bytes": 6652
+    },
+    {
+      "path": "bridge_specimen.patch",
+      "archive_member": "tyme_bridge_repair_001/bridge_specimen.patch",
+      "sha256": "d4129c7d091f0a6f45762ff8523509ad8638485ac34ac4b181f18af653cbbb92",
+      "size_bytes": 21577
+    },
+    {
+      "path": "evidence/author_test_report.json",
+      "archive_member": "tyme_bridge_repair_001/evidence/repair_run/test_report.json",
+      "sha256": "0885ce6a423b398145a4d79e6c884a8f527955e0632f173353baf865c03c240d",
+      "size_bytes": 2754
+    },
+    {
+      "path": "evidence/author_review_report.json",
+      "archive_member": "tyme_bridge_repair_001/baseline/tyme_bridge_review_001/evidence/review_report.json",
+      "sha256": "77131287bb9fc3942c0eccc4c8ed41f45d354f0a96d05c2b21c53a2284f58032",
+      "size_bytes": 6778
+    }
+  ]
+}
