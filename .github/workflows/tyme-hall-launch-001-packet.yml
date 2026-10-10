@@ -19,3 +19,5 @@ jobs:
         uses: actions/checkout@v4
       - name: Verify Day One issue, release and publication invariants
         run: python3 launch/TYME-HALL-LAUNCH-001/verify_packet.py
+      - name: Replay Phase 2 receipt invariants and negative cases offline
+        run: python3 -m unittest discover -s launch/TYME-HALL-LAUNCH-001 -p 'test_phase2_*.py' -v
