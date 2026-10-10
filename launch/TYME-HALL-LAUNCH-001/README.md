@@ -24,7 +24,8 @@ Explicit holds: `GFC-0001` publication, native Hall receipt/identity, autonomous
 
 - [issue-ledger.json](./issue-ledger.json): all nine open issues and dependencies; assigned account; independent reviewers pending.
 - [release-gates.json](./release-gates.json): seven independent GO/HOLD gates; **all OPEN** at commissioning.
-- [infrastructure-matrix.md](./infrastructure-matrix.md): observed source/DNS versus unknown runtime, independent verification procedure.
+- [infrastructure-matrix.md](./infrastructure-matrix.md): authenticated Cloudflare Pages/DNS/compute-storage inventory, actual production SHA, unresolved HTTP/security/rollback gates.
+- [cloudflare-staging-carrier-contract.md](./cloudflare-staging-carrier-contract.md): isolated Worker/D1 concept with inherited Phase 2 Notion receipt semantics; **not provisioned**.
 - [public-content-manifest.json](./public-content-manifest.json): AGI-0001 and three founding missions, GFC publication excluded.
 - [cit-probe-contract.md](./cit-probe-contract.md): precise real-model proof with bounded authority.
 - [threat-register.md](./threat-register.md): release threat hypotheses, mitigations and required evidence.
