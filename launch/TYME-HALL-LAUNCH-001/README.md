@@ -32,9 +32,9 @@ Explicit holds: `GFC-0001` publication, native Hall receipt/identity, autonomous
 - [cit-probe-contract.md](./cit-probe-contract.md): precise real-model proof with bounded authority.
 - [threat-register.md](./threat-register.md): release threat hypotheses, mitigations and required evidence.
 - [collaboration-bounty-candidate.md](./collaboration-bounty-candidate.md): **not yet posted as funded**, awaiting licensing, scope and spending approval.
-- [collaboration-frame-preflight.md](./collaboration-frame-preflight.md): Door 04 architecture inheritance, five load-bearing participation layers, current gaps and six founder decisions; review only, no public door activated.
-- [collaboration-frame-gates.json](./collaboration-frame-gates.json): machine-readable G4/G5 human decision holds, external intake/receipt boundaries and abuse baseline; NOT an operational Office registry.
-- [test_collaboration_frame.py](./test_collaboration_frame.py): 15 static fail-closed contract regressions against unauthorized licensing, native receipts, CI claims, review authority, bypass and implied payment; NOT a live intake/security test.
+- [collaboration-frame-preflight.md](./collaboration-frame-preflight.md): Door 04 architecture inheritance, five load-bearing participation layers, current gaps and six founder decisions and separate deployment-control hold; review only, no public door activated.
+- [collaboration-frame-gates.json](./collaboration-frame-gates.json): machine-readable G4/G5 human decision holds, external intake/receipt boundaries, Cloudflare auto-publish gap and abuse baseline; NOT an operational Office registry.
+- [test_collaboration_frame.py](./test_collaboration_frame.py): 18 static fail-closed contract regressions against unauthorized licensing, native receipts, CI claims, review authority, bypass and implied payment; NOT a live intake/security test.
 - [fixtures/agi-0001-publication.json](./fixtures/agi-0001-publication.json): snapshot of reviewed public machine record, NOT a mutable new authority.
 - [verify_packet.py](./verify_packet.py): standard-library, offline structural and boundary smoke tests (NOT a runtime release test).
 
