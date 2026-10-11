@@ -26,12 +26,16 @@ Explicit holds: `GFC-0001` publication, native Hall receipt/identity, autonomous
 - [release-gates.json](./release-gates.json): seven independent GO/HOLD gates; **all OPEN** at commissioning.
 - [infrastructure-matrix.md](./infrastructure-matrix.md): authenticated Cloudflare Pages/DNS/compute-storage inventory, actual production SHA, unresolved HTTP/security/rollback gates.
 - [cloudflare-staging-carrier-contract.md](./cloudflare-staging-carrier-contract.md): isolated Worker/D1 concept with inherited Phase 2 Notion receipt semantics; **not provisioned**.
+- [phase2-transport-evidence-runbook.md](./phase2-transport-evidence-runbook.md): historical scheduled-Notion null receipt readback, source identity and next production monitor acceptance; no runtime changes.
+- [phase2_replay.py](./phase2_replay.py) + [test_phase2_replay.py](./test_phase2_replay.py): deterministic offline append-only test adapter, 20 synthetic no-authority and replay regressions. **Not a live Worker, D1, Notion write or production receipt.**
 - [public-content-manifest.json](./public-content-manifest.json): AGI-0001 and three founding missions, GFC publication excluded.
 - [cit-probe-contract.md](./cit-probe-contract.md): precise real-model proof with bounded authority.
 - [threat-register.md](./threat-register.md): release threat hypotheses, mitigations and required evidence.
 - [collaboration-bounty-candidate.md](./collaboration-bounty-candidate.md): **not yet posted as funded**, awaiting licensing, scope and spending approval.
 - [fixtures/agi-0001-publication.json](./fixtures/agi-0001-publication.json): snapshot of reviewed public machine record, NOT a mutable new authority.
 - [verify_packet.py](./verify_packet.py): standard-library, offline structural and boundary smoke tests (NOT a runtime release test).
+
+Run both local suites with `python3 launch/TYME-HALL-LAUNCH-001/verify_packet.py` and `python3 -m unittest discover -s launch/TYME-HALL-LAUNCH-001 -p 'test_phase2_*.py' -v`. These require Python 3 and no credentials/network.
 
 ## One question for release reviewers
 
