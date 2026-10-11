@@ -50,6 +50,25 @@ An optional local Hall environment may help participants privately orient, but i
 - Completed independent Door 04 seam retest, ITX/RIX scope acceptance and any authenticated native Hall receipt carrier.
 - Production rollback rehearsal, disaster recovery and continuity if the sole human steward becomes unavailable.
 
+## Independent release authorization gap — verified from Cloudflare on October 11
+
+Authenticated, read-only Cloudflare Pages inspection of existing project `codex-interface` shows:
+- GitHub source repository `sovereign-codex/Codex-interface-`, with production branch `main`, automatic deployments **enabled** and preview deployment setting **all**.
+- Current verified production deployment `8f2b21b4-9541-471f-b2f7-651373591e4f` was successful on September 11 from `main` commit `5342cbaf1098391879a15c7ccca752d3fbc241b8`. Recent draft changes are in a **preview** deployment and have not been promoted to production.
+- Pages project deployment settings expose zero preview and production environment-variable entries in this inspected account. This is **not** proof that all project files, logs, GitHub Actions or future providers are secret-free.
+- Repository main ruleset #24880323 requires one eligible approval but lacks mandatory CI and does **not** express a separate "founder approves this deployment" control. With GitHub write-level review access, an eligible collaborator may acquire merge capacity under the existing GitHub rights, which could cause an automatic production Pages deployment. Review approval, GitHub merge permission and explicit founder release GO are therefore **not yet mechanically isolated**.
+
+**P0 HOLD:** Until a separate human-controlled production promotion mechanism or enforceable release approval is designed, tested and independently attested, do not grant an unvetted person GitHub `write` permission just to solve the reviewer bottleneck. Do not mistake a passing draft CI check or one Github approval for a reliable production-release firewall.
+
+Candidate architecture *for separate human choice*, not implemented:
+1. Decouple reviewed development from the Pages production publishing branch or disable automatic production promotion, with an explicitly controlled release path.
+2. Choose a human release authorizer and a separately scoped deployment credential or gate. Keep review permissions distinct from credentials and publishing rights.
+3. Preserve automatic **preview-only** branch builds if their source/secret exposure is independently accepted; do not give preview workflows production secrets.
+4. Test one no-change staging promotion and one rollback using exact immutable content and source SHA. Audit both allow and deny cases: an approved PR must not silently publish before the founder's release decision.
+5. Only then consider expanding repository write access to an accepted reviewer and enabling the candidate required CI job in the GitHub ruleset.
+
+This is a *design prerequisite*, not authorization to reconfigure Pages, create a release branch or deployment credential, add a GitHub environment, or change GitHub permissions.
+
 ## Authority grammar — one direction only
 
 PUBLIC READER → optional UNTRUSTED REPORT → EVIDENCE TRIAGE → REVIEW CANDIDATE → authorised human review → proposed Work/Branch transition → optional repository PR → independent technical assessment → separate human release decision → deployment observation and trace.
