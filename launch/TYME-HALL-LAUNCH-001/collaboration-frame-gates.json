@@ -91,7 +91,8 @@
       "owner": "founder_git_admin",
       "evidence": "candidate screening, exact repository permission, approved invitation and revocation verification",
       "blocks": [
-        "PRODUCTION_MAIN_MERGE"
+        "PRODUCTION_MAIN_MERGE",
+        "FUTURE_COLLABORATOR_WRITE_INVITATION"
       ],
       "action_executed": false
     },
@@ -205,6 +206,12 @@
       "task": "required CI gate enabled only after source on main",
       "status": "OPEN",
       "evidence_refs": []
+    },
+    {
+      "id": "A9",
+      "task": "separate technical founder production gate from GitHub reviewer merge permission; demonstrate approved PR does not automatically deploy without founder GO",
+      "status": "OPEN",
+      "evidence_refs": []
     }
   ],
   "authority_effect": "none",
@@ -213,5 +220,24 @@
   "new_private_ingress_created": false,
   "license_granted_by_this_packet": false,
   "contributors_invited": false,
-  "status": "FRAME_NOT_ACCEPTED_FOR_PUBLIC_INTENTIONAL_RECRUITMENT"
+  "status": "FRAME_NOT_ACCEPTED_FOR_PUBLIC_INTENTIONAL_RECRUITMENT",
+  "deployment_seam": {
+    "inspection_date": "2026-10-11",
+    "project_name": "codex-interface",
+    "source_platform": "github",
+    "production_source_branch": "main",
+    "automatic_git_deployments_enabled": true,
+    "preview_branches_setting": "all",
+    "current_production_deployment_id": "8f2b21b4-9541-471f-b2f7-651373591e4f",
+    "current_production_source_sha": "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+    "production_env_var_count_observed": 0,
+    "preview_env_var_count_observed": 0,
+    "repository_ruleset_id": 24880323,
+    "repository_rule_requires_review": true,
+    "github_merge_can_trigger_cloudflare_production": true,
+    "independent_founder_deployment_gate_technically_enforced": false,
+    "reviewed_candidate_source_published_to_production": false,
+    "separate_deployment_approval_required_before_write_invite": true,
+    "next_valid_action": "Human decision: design and rehearse an independently controlled production promotion gate; do not grant new write access or change Pages until authorized."
+  }
 }
