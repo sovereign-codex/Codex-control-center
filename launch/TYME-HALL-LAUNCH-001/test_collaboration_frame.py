@@ -103,8 +103,26 @@ def validate(packet):
     }
     require(expected_transitions <= set(transition),
             "expected invariant removed")
+    release = packet.get("deployment_seam", {})
+    require(release.get("project_name") == "codex-interface"
+            and release.get("source_platform") == "github"
+            and release.get("production_source_branch") == "main"
+            and release.get("automatic_git_deployments_enabled") is True,
+            "actual auto-production boundary lost")
+    require(release.get("preview_branches_setting") == "all",
+            "preview branch behavior must be documented accurately")
+    require(release.get("current_production_source_sha")
+            == "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+            "unknown source claimed as live production")
+    require(release.get("repository_rule_requires_review") is True
+            and release.get("github_merge_can_trigger_cloudflare_production") is True,
+            "approval-to-publish path must remain visible")
+    require(release.get("independent_founder_deployment_gate_technically_enforced") is False
+            and release.get("reviewed_candidate_source_published_to_production") is False
+            and release.get("separate_deployment_approval_required_before_write_invite") is True,
+            "unverified production release separation cannot be promoted")
     acceptance = packet.get("acceptance", [])
-    require([a.get("id") for a in acceptance] == [f"A{i}" for i in range(1, 9)],
+    require([a.get("id") for a in acceptance] == [f"A{i}" for i in range(1, 10)],
             "collaboration acceptance sequence incomplete")
     require(all(a.get("status") == "OPEN" and a.get("evidence_refs") == []
                 for a in acceptance), "manifest cannot certify missing evidence")
@@ -124,7 +142,7 @@ def validate(packet):
             "fail-closed gate not explicit")
     return {"state": "SYNTHETIC_CONTRACT_VALID",
             "gate": "OPEN", "authority_effect": "none", "founder_decisions": 6,
-            "evidence_acceptance_gates": 8, "public_site_modified": False}
+            "evidence_acceptance_gates": 9, "public_site_modified": False}
 
 
 class CollaborationFrameTests(unittest.TestCase):
@@ -217,6 +235,24 @@ class CollaborationFrameTests(unittest.TestCase):
     def test_no_out_of_band_production_permission(self):
         p = deepcopy(self.packet)
         p["release_controls"]["production_release_authorized"] = True
+        with self.assertRaises(CollaborationFrameViolation):
+            validate(p)
+
+    def test_automated_deployment_must_not_be_hidden(self):
+        p = deepcopy(self.packet)
+        p["deployment_seam"]["automatic_git_deployments_enabled"] = False
+        with self.assertRaises(CollaborationFrameViolation):
+            validate(p)
+
+    def test_founder_gate_cannot_be_claimed_without_execution(self):
+        p = deepcopy(self.packet)
+        p["deployment_seam"]["independent_founder_deployment_gate_technically_enforced"] = True
+        with self.assertRaises(CollaborationFrameViolation):
+            validate(p)
+
+    def test_separate_deployment_approval_remains_required_before_write(self):
+        p = deepcopy(self.packet)
+        p["deployment_seam"]["separate_deployment_approval_required_before_write_invite"] = False
         with self.assertRaises(CollaborationFrameViolation):
             validate(p)
 
