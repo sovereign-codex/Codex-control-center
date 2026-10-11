@@ -1,0 +1,90 @@
+{
+  "schema": "tyme-hall-launch-001/release-gates/v0.1",
+  "launch_id": "TYME-HALL-LAUNCH-001",
+  "conditional_release_date": "2026-10-30",
+  "created_at_date": "2026-10-10",
+  "command": "https://app.notion.com/p/3f5c51d54b758197a92ff59d2c203045",
+  "source_baselines": {
+    "sovereign-codex/Codex-interface-": "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+    "sovereign-codex/Tyme-Lab": "0af29cf783e0cf5a515ba2978fcf209a600d1f24",
+    "sovereign-codex/AVOT-engine": "dea4b3f0c05334f8abd33ac4c2abae76b094e6f4",
+    "sovereign-codex/Codex-control-center": "4a5def9816bdb6c771559f3105558578edd284c1"
+  },
+  "launch_authorized": false,
+  "production_deployment_authorized": false,
+  "gfc_publication_authorized": false,
+  "financial_bounties_authorized": false,
+  "autonomous_office_authority_authorized": false,
+  "gates": [
+    {
+      "id": "G0",
+      "title": "Scope and governance",
+      "acceptance": "Founding frozen scope and human final authority recorded; no accidental publication or authority grant",
+      "signoff_role": "human_release_authority",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G1",
+      "title": "Infrastructure and deployment",
+      "acceptance": "Fresh production HTTP+DNS+Cloudflare configuration, source SHA, rollback and credentials custody independently checked",
+      "signoff_role": "independent_infrastructure_reviewer",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G2",
+      "title": "Model-backed CIT",
+      "acceptance": "Live staging or reviewed deployment invokes real model, source anchored to approved AGI-0001 record, preserves request/return and refusals",
+      "signoff_role": "independent_cit_reviewer",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G3",
+      "title": "Publication and learning",
+      "acceptance": "AGI canonical human+machine manifests; GFC excluded; three missions properly labeled; Mission 03 reproducible",
+      "signoff_role": "canon_steward_and_learning_reviewer",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G4",
+      "title": "Participation and circulation",
+      "acceptance": "External GitHub write path honestly labeled; independent context-zero and evidence/review seam; Office receipt not overclaimed",
+      "signoff_role": "independent_participation_reviewer",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G5",
+      "title": "Security and privacy",
+      "acceptance": "Prompt injection/secret isolation/data retention/rate limits/rollback validated on real deployment footprint",
+      "signoff_role": "independent_security_reviewer",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    },
+    {
+      "id": "G6",
+      "title": "Final public beta authorization",
+      "acceptance": "Human explicit GO only after all blocking gates PASS and evidence preserved; otherwise HOLD or separately approved reduced static release",
+      "signoff_role": "human_release_authority",
+      "status": "OPEN",
+      "evidence_refs": [],
+      "reviewed_at": null,
+      "reviewer": null
+    }
+  ]
+}

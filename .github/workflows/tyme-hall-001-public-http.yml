@@ -1,0 +1,31 @@
+name: TYME Hall 001 Public HTTP Evidence
+
+on:
+  pull_request:
+    paths:
+      - "launch/TYME-HALL-LAUNCH-001/**"
+      - ".github/workflows/tyme-hall-001-public-http.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readonly-public-hall-sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out reviewed launch branch
+        uses: actions/checkout@v4
+      - name: Verify smoke checker without internet
+        run: python3 -m unittest discover -s launch/TYME-HALL-LAUNCH-001 -p 'test_smoke_public_hall.py' -v
+      - name: Observe public HTTPS routes with bounded GET
+        run: python3 launch/TYME-HALL-LAUNCH-001/smoke_public_hall.py public-hall-observation.json
+      - name: Preserve redacted observation JSON for independent inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tyme-hall-001-public-http-observation
+          path: public-hall-observation.json
+          if-no-files-found: warn
+          retention-days: 7
