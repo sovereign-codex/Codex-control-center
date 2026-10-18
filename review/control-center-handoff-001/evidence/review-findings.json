@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CONTROL-CENTER-HANDOFF-001",
+  "recorded_at_utc": "2026-10-18T04:51:12.334677+00:00",
+  "standing": "noncanonical_local_review",
+  "candidate_implementation_sha256": "8e65db24185911f3e5f945bf6a1a6560c244f0fdc1c963b878302cbc4b464572",
+  "independent_acceptance_suite": {
+    "tests": 34,
+    "passed": 34,
+    "failed": 0,
+    "scope": "Ten approved acceptance categories; written independently of implementation."
+  },
+  "regression_demonstration_before_fixes": {
+    "tests": 10,
+    "passed": 4,
+    "failed": 6,
+    "scope": "Local run of review-regressions.test.mjs before the corresponding adapter fixes."
+  },
+  "combined_postfix_result": {
+    "tests": 44,
+    "passed": 44,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "independent_closure": {
+    "performed": true,
+    "combined_suite_reproduced": true,
+    "tests": 44,
+    "passed": 44,
+    "remaining_reported_issues": 0,
+    "scope": "Targeted verification of reported findings and their regression tests; no activation or institutional approval."
+  },
+  "resolved_findings": [
+    {
+      "id": "R01",
+      "issue": "Conflicting legacy source could survive repository normalization.",
+      "correction": "Check event and wrapper source against the admitted declared producer repository; do not use source to replace missing repo."
+    },
+    {
+      "id": "R03",
+      "issue": "Unmodeled workflow and AVOT destination selectors were silently accepted.",
+      "correction": "Hold non-null destination.workflow or destination.avot; preserve null as unspecified."
+    },
+    {
+      "id": "R05",
+      "issue": "Literal lone UTF-16 surrogates could collapse distinct input strings to the same UTF-8 digest.",
+      "correction": "Reject literal unpaired surrogates before hashing; preserve ASCII escaped forms as byte-distinct input."
+    },
+    {
+      "id": "R08",
+      "issue": "Null or nonobject API input could throw instead of returning a hold.",
+      "correction": "Return structured invalid_input hold without synthesizing provenance."
+    },
+    {
+      "id": "R09",
+      "issue": "Caller mutation could alter a previously validated fixture observation clock.",
+      "correction": "Capture the validated fixed observation time when the harness is created."
+    },
+    {
+      "id": "R10",
+      "issue": "Wrapper-only source_event could be replaced by an inappropriate legacy profile annotation.",
+      "correction": "Hold the unresolved declaration and leave producer source_event absent."
+    }
+  ],
+  "runner_resolution": {
+    "initial_issue": "Child-process launch returned EPERM in this workspace.",
+    "correction": "Use node:test.run with isolation none in the current process.",
+    "final_entrypoint": "node run-review.mjs",
+    "final_result": "passed",
+    "documentation": "https://nodejs.org/download/release/v24.13.1/docs/api/test.html#runoptions"
+  },
+  "remote_repository_writes": false,
+  "live_workflow_executions": false,
+  "token_or_secret_operations": false,
+  "receiver_execution_evidence": false,
+  "institutional_acceptance": false
+}

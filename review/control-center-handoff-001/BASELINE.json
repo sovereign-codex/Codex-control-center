@@ -1,0 +1,181 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CONTROL-CENTER-HANDOFF-001",
+  "repository": "sovereign-codex/Codex-control-center",
+  "baseline_commit": "4a5def9816bdb6c771559f3105558578edd284c1",
+  "source_files": [
+    {
+      "path": ".github/workflows/Control_center_receiver.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/Control_center_receiver.yml",
+      "blob_sha": "a7371f517cbbfcc76a3c49c3707e91f4ceeeb0d6",
+      "source_sha256": "ebaace88755dd4a6871aa43b8c3fd58b1f211057e20fc89b9c057216385514fc",
+      "source_bytes": 1345,
+      "local_snapshot_sha256": "33aaeb38bce139caee63a001d47600feb4469a367934bd8b35124b9c9e511da8",
+      "local_snapshot_bytes": 1346,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/avot-executor.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/avot-executor.yml",
+      "blob_sha": "72ee843c8bfbf41039e67d12206064a54a655ee5",
+      "source_sha256": "237935da071f6b75fe5463af3d04a6957bbca2fc5a84cb36cc0bc5de3840116e",
+      "source_bytes": 2504,
+      "local_snapshot_sha256": "b17ca4aa75cd6347213842782edbf4d5741a23f31df00bc61be3acd5d67cac83",
+      "local_snapshot_bytes": 2505,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/control-center-router.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/control-center-router.yml",
+      "blob_sha": "35ef125461cba661e44540318fb586b50725282d",
+      "source_sha256": "f136f4fc0d09110b8621b83ddb933d556d700906473555dca8888299e4e79af7",
+      "source_bytes": 6174,
+      "local_snapshot_sha256": "d9f4c2e9184ffc1ececcaf5ac949d127f30aad283d74621e4456e93bb9d88ed9",
+      "local_snapshot_bytes": 6175,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/control-center.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/control-center.yml",
+      "blob_sha": "3c8fe6984b0ee545d2be2766ecca311215d97fa8",
+      "source_sha256": "19c81c16b74f1b31e6d3907c9adb52167077d6fd4cf04729c78889fc7d298802",
+      "source_bytes": 1129,
+      "local_snapshot_sha256": "61848bd08a1907d7d64f5a900c995ce4f83b24d25d0d75ead1d54f2d0ef82f59",
+      "local_snapshot_bytes": 1130,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/cross-repo-dispatch.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/cross-repo-dispatch.yml",
+      "blob_sha": "dd95058db722390a276de36acbba41a6c31dc070",
+      "source_sha256": "602902424e0d224fb09e5088d811eafda39fcc3bdea4fefd136fcf1c71965da1",
+      "source_bytes": 9352,
+      "local_snapshot_sha256": "aaaba21ba5f14d2cda3f688ab008e16eed41dd073def86903735c75fdbb73ece",
+      "local_snapshot_bytes": 9353,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/hall-core-0-conformance.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/hall-core-0-conformance.yml",
+      "blob_sha": "02a90d96b3f6b7cdea42cf2b916401b6fd6a01fa",
+      "source_sha256": "d8a0e38b51e465a0009bd4d446b48921a15ffbbf08bc4db8cb73e4dfcb5bf0e0",
+      "source_bytes": 2294,
+      "local_snapshot_sha256": "4fb6429590175bbbbbeb1d70bf4785674955c01f3b826b7c15ec0c8f676abd46",
+      "local_snapshot_bytes": 2295,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": ".github/workflows/result-receiver.yml",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/.github/workflows/result-receiver.yml",
+      "blob_sha": "2b40b366a8c538d0222011939e30db8af97ad61f",
+      "source_sha256": "349efd380dcd231d59fbcd2bc810cde7d2e542e9781842f1720aa7accbaecf9f",
+      "source_bytes": 2911,
+      "local_snapshot_sha256": "2103fdb30c9e10db5873edc2d523a0e5edc581406f7fce26d8c38256fedcef58",
+      "local_snapshot_bytes": 2912,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "WORKFLOW_ROUTING_STANDARD.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/WORKFLOW_ROUTING_STANDARD.md",
+      "blob_sha": "368bb42cf86f54c7aa8b040cc22d63e858390b25",
+      "source_sha256": "b44393cda51d7cd2560adac3ed88da0cca0f451954f852125440f8f0cc6c9b09",
+      "source_bytes": 6516,
+      "local_snapshot_sha256": "52329c48b2be3e5e8b080874d42cc1ed92463f9bb374a288a1d3a9168dd3a8f7",
+      "local_snapshot_bytes": 6517,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "docs/EVENT_ROUTING_TABLE.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/docs/EVENT_ROUTING_TABLE.md",
+      "blob_sha": "92c2ef4295a0f8dbb2140e57dbd3d07048d13fce",
+      "source_sha256": "3708f2a93a79c4a455b6c9bbc9f5dfa15d1c2c3c5781beab6886d0104c2f2a79",
+      "source_bytes": 3076,
+      "local_snapshot_sha256": "e235534a59a611bc73740f2585e358bee3c3235e933c8d6f91c0b805a1b29cca",
+      "local_snapshot_bytes": 3077,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "docs/TYME_EXECUTOR_CONTRACT_v1.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/docs/TYME_EXECUTOR_CONTRACT_v1.md",
+      "blob_sha": "7ca63782a5b980b5a5ba8470eb92190b8c9c4c62",
+      "source_sha256": "97cabe572a8a24c1072d825998c12a801e1c969a0f62fdd718491bef1de5bf44",
+      "source_bytes": 8497,
+      "local_snapshot_sha256": "f65d4ca7438f7957b06bcd0930821d6d81b674e40e6765559351b929228d12a1",
+      "local_snapshot_bytes": 8498,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "review/bridge-local-repair-001/README.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/review/bridge-local-repair-001/README.md",
+      "blob_sha": "53993e46c81a973363f8fe2cab1f41a082e0fbfa",
+      "source_sha256": "65f8f256baa306414bf2701a7c2155c68af33c7cbd72cdfa965629ced2203d86",
+      "source_bytes": 2599,
+      "local_snapshot_sha256": "4eff1b6c2462bb52eceb914aa0503314f3905220240f5b5f0d1f59920cc2ccfd",
+      "local_snapshot_bytes": 2600,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "review/bridge-local-repair-001/REPAIR_DESIGN_001.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/review/bridge-local-repair-001/REPAIR_DESIGN_001.md",
+      "blob_sha": "cdf81bda8e4c164c9f1a8bc388b53d4a68167aed",
+      "source_sha256": "bd7d82096bbfc69e1343112f864f0256aa12f32427dac76e890dd174e6217926",
+      "source_bytes": 6652,
+      "local_snapshot_sha256": "7941631353ebb4f81527f16aa29449d8fb7366f746ccb9e715bea0663b1e6326",
+      "local_snapshot_bytes": 6653,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "review/bridge-local-repair-001/REVIEW_SCOPE.md",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/review/bridge-local-repair-001/REVIEW_SCOPE.md",
+      "blob_sha": "2164d31d4b8f8b2e9784301c2a3b47570bcd35e7",
+      "source_sha256": "be304a94b45456ee5bb82e9e71c40c89bd0395d958062f1c2cb9b9c1655a90e2",
+      "source_bytes": 1764,
+      "local_snapshot_sha256": "cd70dabaff5bc645be30da79e96f4e29108c705f751726e41a13401ebed26f61",
+      "local_snapshot_bytes": 1765,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "schemas/routing-envelope.schema.json",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/schemas/routing-envelope.schema.json",
+      "blob_sha": "d091d2168cee63fffa0e6e56da94c24c62ee72c3",
+      "source_sha256": "0085ad05933a3432622ed08759b602285dc2c129b1d753d99b9f7bdb568f8d17",
+      "source_bytes": 1293,
+      "local_snapshot_sha256": "30e2eaf0ed0c1ee9d214788e2154ebdd99ca288521bc4cdf2210268726aad602",
+      "local_snapshot_bytes": 1294,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "schemas/trace-contract-v1.json",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/schemas/trace-contract-v1.json",
+      "blob_sha": "7569a1fc1210e183588319a8cbafe1a33e5ab832",
+      "source_sha256": "b0ec4a4d65da946e0b6614318cb78a18ba3a174995abdf329473beca55d3123c",
+      "source_bytes": 1679,
+      "local_snapshot_sha256": "c4ff9b053a1dff43b6b52bcafd5285688062aa5c922d0412af1e80e621cc5928",
+      "local_snapshot_bytes": 1680,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "services/webhook-router/github-webhook.ts",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/services/webhook-router/github-webhook.ts",
+      "blob_sha": "032f8a3a1b47a5330c6c0b7ee880024317fb1aa8",
+      "source_sha256": "3e61c2067732cbf21c73d0f3868d0d1875b1b87d33cac53dc0f69ed2b9c355ab",
+      "source_bytes": 264,
+      "local_snapshot_sha256": "232c37de44b98b7051b611c6dec48ba38f6b3c076073bfdab67097ace9cf8259",
+      "local_snapshot_bytes": 265,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    },
+    {
+      "path": "scripts/validate_trace_event.js",
+      "source_url": "https://github.com/sovereign-codex/Codex-control-center/blob/4a5def9816bdb6c771559f3105558578edd284c1/scripts/validate_trace_event.js",
+      "blob_sha": "4172eead76d3f49c72538fe5b871c98f0aaee99c",
+      "source_sha256": "d7d89be14a9355ccbba96f96f3a015c3ad62dde2855b613df1842ee72d08a3f3",
+      "source_bytes": 4798,
+      "local_snapshot_sha256": "56643d52285028c1779b2627b75312129cf71c783b88f8cd6584f4de89819ec2",
+      "local_snapshot_bytes": 4799,
+      "snapshot_transform": "Source bytes plus one final LF from prior materialization; local snapshot retained unchanged."
+    }
+  ],
+  "previous_review_url": "https://chatgpt.com/space/page_7cbbaf04401881918ae73bd78a212be8",
+  "baseline_git_blobs_verified": true,
+  "scope": "Isolated local review candidate; production source files remain unchanged."
+}

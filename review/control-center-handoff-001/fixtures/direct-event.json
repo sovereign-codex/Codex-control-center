@@ -1,0 +1,25 @@
+{
+  "target": "avot-engine-runner",
+  "trace_id": "fixture-trace-001",
+  "workflow": "fixture-dispatch",
+  "repo": "sovereign-codex/AVOT-ARCHIVIST",
+  "status": "started",
+  "timestamp": "2026-10-18T04:00:00Z",
+  "payload": {
+    "operation": "inspect_contract_fixture",
+    "message": "Synthetic local input. No receiver is contacted.",
+    "nested_extension": { "preserve": true }
+  },
+  "governance": {
+    "authority_effect": "none",
+    "mutation_allowed": false,
+    "canon_posture": "noncanonical"
+  },
+  "runtime_packet": {
+    "packet_version": "review-fixture/1",
+    "packet_id": "fixture-packet-001",
+    "synthetic": true,
+    "open_conditions": ["Receiver execution is unobserved."]
+  },
+  "extension": { "keep_this_field": [1, 2, 3] }
+}
