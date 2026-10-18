@@ -1,0 +1,44 @@
+name: Control Center Handoff Contract
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/handoff/**'
+      - 'tests/handoff/**'
+      - 'config/control-center-handoff.json'
+      - '.github/workflows/control-center-router.yml'
+      - '.github/workflows/cross-repo-dispatch.yml'
+      - '.github/workflows/control-center-handoff-contract.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'scripts/handoff/**'
+      - 'tests/handoff/**'
+      - 'config/control-center-handoff.json'
+      - '.github/workflows/control-center-router.yml'
+      - '.github/workflows/cross-repo-dispatch.yml'
+      - '.github/workflows/control-center-handoff-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  handoff-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout test commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Run offline handoff contract tests
+        run: node --test --test-isolation=none tests/handoff/*.test.mjs

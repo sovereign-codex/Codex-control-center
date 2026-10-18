@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: disabled or unconfigured policy stops before all service calls
+ok 1 - disabled or unconfigured policy stops before all service calls
+  ---
+  duration_ms: 39.661445
+  type: 'test'
+  ...
+# Subtest: trusted outer sender is bound to exact declared producer repository and workflow
+ok 2 - trusted outer sender is bound to exact declared producer repository and workflow
+  ---
+  duration_ms: 13.656889
+  type: 'test'
+  ...
+# Subtest: Router and Dispatcher have independent sender admission lists
+ok 3 - Router and Dispatcher have independent sender admission lists
+  ---
+  duration_ms: 12.607558
+  type: 'test'
+  ...
+# Subtest: caller request identity is required at root and contradictory nested identities hold
+ok 4 - caller request identity is required at root and contradictory nested identities hold
+  ---
+  duration_ms: 21.637662
+  type: 'test'
+  ...
+# Subtest: delivery run, retry attempt, formatting, and observation time do not change semantic binding
+ok 5 - delivery run, retry attempt, formatting, and observation time do not change semantic binding
+  ---
+  duration_ms: 4.624867
+  type: 'test'
+  ...
+# Subtest: same request identity binds changed substantive input and policy evidence differently
+ok 6 - same request identity binds changed substantive input and policy evidence differently
+  ---
+  duration_ms: 2.64133
+  type: 'test'
+  ...
+# Subtest: full direct and wrapped event content survives normalization without changing producer status/time
+ok 7 - full direct and wrapped event content survives normalization without changing producer status/time
+  ---
+  duration_ms: 2.280663
+  type: 'test'
+  ...
+# Subtest: negative and compound positive-looking statuses hold; completion remains only a producer claim
+ok 8 - negative and compound positive-looking statuses hold; completion remains only a producer claim
+  ---
+  duration_ms: 6.705557
+  type: 'test'
+  ...
+# Subtest: missing provenance is never backfilled from wrapper metadata or local observation
+ok 9 - missing provenance is never backfilled from wrapper metadata or local observation
+  ---
+  duration_ms: 4.123922
+  type: 'test'
+  ...
+# Subtest: contradictory aliases, rich fields, and unreviewed destination selectors hold
+ok 10 - contradictory aliases, rich fields, and unreviewed destination selectors hold
+  ---
+  duration_ms: 8.574554
+  type: 'test'
+  ...
+# Subtest: reserved Router metadata cannot be supplied at wrapper or event root
+ok 11 - reserved Router metadata cannot be supplied at wrapper or event root
+  ---
+  duration_ms: 4.707147
+  type: 'test'
+  ...
+# Subtest: shell and prototype-shaped content remains inert preserved data
+ok 12 - shell and prototype-shaped content remains inert preserved data
+  ---
+  duration_ms: 1.575832
+  type: 'test'
+  ...
+# Subtest: invalid bytes, duplicate decoded keys, unsafe numbers, and impossible dates hold
+ok 13 - invalid bytes, duplicate decoded keys, unsafe numbers, and impossible dates hold
+  ---
+  duration_ms: 2.013153
+  type: 'test'
+  ...
+# Subtest: wrong Actions surface or repository never becomes an admitted dispatch
+ok 14 - wrong Actions surface or repository never becomes an admitted dispatch
+  ---
+  duration_ms: 4.91843
+  type: 'test'
+  ...
+# Subtest: final payload expansion is bounded before a claim may be acquired
+ok 15 - final payload expansion is bounded before a claim may be acquired
+  ---
+  duration_ms: 15.007835
+  type: 'test'
+  ...
+# Subtest: JSON nesting accepts the 64-container boundary and rejects the next level before recursion
+ok 16 - JSON nesting accepts the 64-container boundary and rejects the next level before recursion
+  ---
+  duration_ms: 2.379176
+  type: 'test'
+  ...
+# Subtest: a small but excessively nested Actions event returns a structured hold with zero service calls
+ok 17 - a small but excessively nested Actions event returns a structured hold with zero service calls
+  ---
+  duration_ms: 7.032812
+  type: 'test'
+  ...
+# Subtest: moderately nested producer data remains intact through preparation and Dispatcher handoff
+ok 18 - moderately nested producer data remains intact through preparation and Dispatcher handoff
+  ---
+  duration_ms: 5.201094
+  type: 'test'
+  ...
+# Subtest: deep and malformed policies return structured holds without reaching a service
+ok 19 - deep and malformed policies return structured holds without reaching a service
+  ---
+  duration_ms: 14.230495
+  type: 'test'
+  ...
+# Subtest: preserved wrapper metadata that exceeds the outgoing nesting limit holds before claiming
+ok 20 - preserved wrapper metadata that exceeds the outgoing nesting limit holds before claiming
+  ---
+  duration_ms: 2.422985
+  type: 'test'
+  ...
+# Subtest: one verified claim admits one request and persists a separate outcome
+ok 21 - one verified claim admits one request and persists a separate outcome
+  ---
+  duration_ms: 5.699439
+  type: 'test'
+  ...
+# Subtest: a fresh runner instance with the same caller binding is a duplicate after acceptance
+ok 22 - a fresh runner instance with the same caller binding is a duplicate after acceptance
+  ---
+  duration_ms: 6.743153
+  type: 'test'
+  ...
+# Subtest: same caller identity with different data is a collision and does not overwrite prior records
+ok 23 - same caller identity with different data is a collision and does not overwrite prior records
+  ---
+  duration_ms: 3.382935
+  type: 'test'
+  ...
+# Subtest: competing Actions runs race on create-only claim and yield at most one transport attempt
+ok 24 - competing Actions runs race on create-only claim and yield at most one transport attempt
+  ---
+  duration_ms: 4.565182
+  type: 'test'
+  ...
+# Subtest: non-created claim statuses and an incorrect 201 blob SHA never authorize dispatch
+ok 25 - non-created claim statuses and an incorrect 201 blob SHA never authorize dispatch
+  ---
+  duration_ms: 8.815084
+  type: 'test'
+  ...
+# Subtest: ambiguous claim creation does not dispatch even when a committed claim exists
+ok 26 - ambiguous claim creation does not dispatch even when a committed claim exists
+  ---
+  duration_ms: 5.869416
+  type: 'test'
+  ...
+# Subtest: an existing claim without outcome stays duplicate and cannot be resumed
+ok 27 - an existing claim without outcome stays duplicate and cannot be resumed
+  ---
+  duration_ms: 5.317849
+  type: 'test'
+  ...
+# Subtest: malformed or unreadable existing claims hold rather than being guessed duplicates
+ok 28 - malformed or unreadable existing claims hold rather than being guessed duplicates
+  ---
+  duration_ms: 12.188556
+  type: 'test'
+  ...
+# Subtest: only 204 is acceptance; rejected and uncertain requests are not retried
+ok 29 - only 204 is acceptance; rejected and uncertain requests are not retried
+  ---
+  duration_ms: 20.92693
+  type: 'test'
+  ...
+# Subtest: accepted transport remains accepted when its outcome cannot be persisted
+ok 30 - accepted transport remains accepted when its outcome cannot be persisted
+  ---
+  duration_ms: 9.69249
+  type: 'test'
+  ...
+# Subtest: valid Router claim authorizes Dispatcher with the complete normalized event
+ok 31 - valid Router claim authorizes Dispatcher with the complete normalized event
+  ---
+  duration_ms: 9.508938
+  type: 'test'
+  ...
+# Subtest: Dispatcher requires a persisted Router claim, not just plausible metadata
+ok 32 - Dispatcher requires a persisted Router claim, not just plausible metadata
+  ---
+  duration_ms: 7.12771
+  type: 'test'
+  ...
+# Subtest: Dispatcher holds altered event, metadata, or caller identity before any downstream attempt
+ok 33 - Dispatcher holds altered event, metadata, or caller identity before any downstream attempt
+  ---
+  duration_ms: 10.554633
+  type: 'test'
+  ...
+# Subtest: Dispatcher verifies Router claim content and blob integrity before creating its own claim
+ok 34 - Dispatcher verifies Router claim content and blob integrity before creating its own claim
+  ---
+  duration_ms: 17.102848
+  type: 'test'
+  ...
+# Subtest: Dispatcher can verify a valid Router claim before the Router outcome is recorded
+ok 35 - Dispatcher can verify a valid Router claim before the Router outcome is recorded
+  ---
+  duration_ms: 10.695052
+  type: 'test'
+  ...
+# Subtest: Dispatcher duplicate binding excludes the Dispatcher delivery run and attempt
+ok 36 - Dispatcher duplicate binding excludes the Dispatcher delivery run and attempt
+  ---
+  duration_ms: 11.80669
+  type: 'test'
+  ...
+# Subtest: execution rejects fabricated or cloned ready records and preparation cannot be mutated
+ok 37 - execution rejects fabricated or cloned ready records and preparation cannot be mutated
+  ---
+  duration_ms: 2.710602
+  type: 'test'
+  ...
+# Subtest: plausible Router observation edits cannot bypass the exact persisted request hash
+ok 38 - plausible Router observation edits cannot bypass the exact persisted request hash
+  ---
+  duration_ms: 2.886238
+  type: 'test'
+  ...
+# Subtest: a duplicate rejects forged prior outcomes without inventing completion or reattempting
+ok 39 - a duplicate rejects forged prior outcomes without inventing completion or reattempting
+  ---
+  duration_ms: 20.396158
+  type: 'test'
+  ...
+# Subtest: GitHub claim creation is one fixed Contents PUT with canonical bytes and no update SHA
+ok 40 - GitHub claim creation is one fixed Contents PUT with canonical bytes and no update SHA
+  ---
+  duration_ms: 83.778254
+  type: 'test'
+  ...
+# Subtest: GitHub non-created claim statuses are returned without retries or interpreting error bodies
+ok 41 - GitHub non-created claim statuses are returned without retries or interpreting error bodies
+  ---
+  duration_ms: 6.602322
+  type: 'test'
+  ...
+# Subtest: GitHub creation rejects an incorrect or malformed 201 blob identity
+ok 42 - GitHub creation rejects an incorrect or malformed 201 blob identity
+  ---
+  duration_ms: 4.575346
+  type: 'test'
+  ...
+# Subtest: GitHub record read verifies exact decoded bytes and canonical record serialization
+ok 43 - GitHub record read verifies exact decoded bytes and canonical record serialization
+  ---
+  duration_ms: 2.477135
+  type: 'test'
+  ...
+# Subtest: GitHub missing record is ordinary missing without guessed content
+ok 44 - GitHub missing record is ordinary missing without guessed content
+  ---
+  duration_ms: 0.337369
+  type: 'test'
+  ...
+# Subtest: GitHub record read rejects wrong blob SHA, malformed base64, noncanonical bytes, and duplicate keys
+ok 45 - GitHub record read rejects wrong blob SHA, malformed base64, noncanonical bytes, and duplicate keys
+  ---
+  duration_ms: 6.218188
+  type: 'test'
+  ...
+# Subtest: GitHub ledger paths cannot select arbitrary repository files or branch parameters
+ok 46 - GitHub ledger paths cannot select arbitrary repository files or branch parameters
+  ---
+  duration_ms: 1.747434
+  type: 'test'
+  ...
+# Subtest: GitHub dispatch preserves complete body and uses only the dispatch credential
+ok 47 - GitHub dispatch preserves complete body and uses only the dispatch credential
+  ---
+  duration_ms: 1.141013
+  type: 'test'
+  ...
+# Subtest: GitHub dispatch rejects unreviewed repository and event pairs before fetch
+ok 48 - GitHub dispatch rejects unreviewed repository and event pairs before fetch
+  ---
+  duration_ms: 0.876431
+  type: 'test'
+  ...
+# Subtest: GitHub HTTP rejection and network failure do not cause automatic retries
+ok 49 - GitHub HTTP rejection and network failure do not cause automatic retries
+  ---
+  duration_ms: 2.336645
+  type: 'test'
+  ...
+# Subtest: GitHub ledger fetch failures cannot leak credentials through returned errors
+ok 50 - GitHub ledger fetch failures cannot leak credentials through returned errors
+  ---
+  duration_ms: 0.418331
+  type: 'test'
+  ...
+1..50
+# tests 50
+# suites 0
+# pass 50
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 655.866191

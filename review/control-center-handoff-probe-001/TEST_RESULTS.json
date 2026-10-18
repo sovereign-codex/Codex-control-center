@@ -1,0 +1,104 @@
+{
+  "schema_version": "ccc-handoff-probe-tests/1",
+  "started_at": "2026-10-18T06:10:13.852241+00:00",
+  "completed_at": "2026-10-18T06:10:14.671974+00:00",
+  "node_version": "v24.19.0",
+  "command": [
+    "node",
+    "--test",
+    "--test-isolation=none",
+    "--test-reporter=tap",
+    "tests/handoff/contract.test.mjs",
+    "tests/handoff/executor.test.mjs",
+    "tests/handoff/github-service.test.mjs"
+  ],
+  "exit_code": 0,
+  "counts": {
+    "tests": 50,
+    "pass": 50,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "result": "passed",
+  "workflow_validation": "YAML parsed; stacked PR base allowed; main push only; narrow paths; contents read; three steps; no expressions/secrets/install/artifacts",
+  "tested_files": [
+    {
+      "path": ".github/workflows/control-center-handoff-contract.yml",
+      "bytes": 1287,
+      "sha256": "8bc422a2e9f151ea7921dfb87046bbefc5faba892812433bd01b4bfc1c01100c"
+    },
+    {
+      "path": ".github/workflows/control-center-router.yml",
+      "bytes": 1892,
+      "sha256": "9f3c33e67a58c4bf5043edbd4c86cb94cea0ad6ab36e4e6d74ace013d93ed926"
+    },
+    {
+      "path": ".github/workflows/cross-repo-dispatch.yml",
+      "bytes": 1905,
+      "sha256": "dd83c411f6d3a403b939a9f749813c6cae37bc9e0aa4e001616c3e1e78c234d1"
+    },
+    {
+      "path": "config/control-center-handoff.json",
+      "bytes": 337,
+      "sha256": "9a10c70b397f03f04e3972dde1cd0cd3df5298854d0b8859962c81c8efc55b09"
+    },
+    {
+      "path": "scripts/handoff/contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9"
+    },
+    {
+      "path": "scripts/handoff/executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9"
+    },
+    {
+      "path": "scripts/handoff/github-service.mjs",
+      "bytes": 7410,
+      "sha256": "f951cf24786d94f2c0aa12e8297355e1aa7e9be49d9a31de02f8260f6f43c4a5"
+    },
+    {
+      "path": "scripts/handoff/normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a"
+    },
+    {
+      "path": "scripts/handoff/run.mjs",
+      "bytes": 4191,
+      "sha256": "0acbf28b8d0f86880a2da3e5468b8ed6a6b63c33ebeed49c0528d5ee005e714f"
+    },
+    {
+      "path": "tests/handoff/contract.test.mjs",
+      "bytes": 14700,
+      "sha256": "d215ce2a3581280d37cda9a316558f0da1f4cf2725f66a5a1eedea7810f16bae"
+    },
+    {
+      "path": "tests/handoff/executor.test.mjs",
+      "bytes": 15327,
+      "sha256": "649d181a1ceca0390c08b5cca0d16da7dc90fecc0f02ab64f5715313ac1bffa6"
+    },
+    {
+      "path": "tests/handoff/github-service.test.mjs",
+      "bytes": 9235,
+      "sha256": "264a268295d27dd5a5e13977e089493c880e863a43564db3c560d14ad46a7d32"
+    },
+    {
+      "path": "tests/handoff/helpers.mjs",
+      "bytes": 5318,
+      "sha256": "ce2035b03b7e80e233d9c5edc868641fe403c6c1b77bc97edf21d5af5d61e48d"
+    }
+  ],
+  "tested_files_unchanged": true,
+  "tap": {
+    "path": "review/control-center-handoff-probe-001/tests.tap",
+    "bytes": 11705,
+    "sha256": "7079f61b27d85ad1158eb37647e23b6b7c96ff8aff43002ef51e1ced331a72f1"
+  },
+  "source_baseline_commit": "08e79156f540e3f869ad0dc2e6209f6e79f52164",
+  "additional_repository_source": [
+    ".github/workflows/control-center-handoff-contract.yml"
+  ],
+  "scope": "Offline test-gate addition; existing handoff runtime, policies, tests and frozen review packages are unchanged."
+}
