@@ -1,0 +1,176 @@
+{
+  "schema_version": "ccc-handoff-cli-smoke/1",
+  "started_at": "2026-10-18T05:37:30.756Z",
+  "completed_at": "2026-10-18T05:37:30.838Z",
+  "node_version": "v24.19.0",
+  "result": "passed",
+  "policy_enabled": false,
+  "credentials": "Credential environment variables replaced with empty strings without reading inherited values.",
+  "transport_guard": "globalThis.fetch rejects and counts every attempted call; no transport calls occurred.",
+  "cases": [
+    {
+      "command": [
+        "node",
+        "scripts/handoff/run.mjs",
+        "prepare",
+        "router"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "receiver_unverified",
+        "sender_not_allowed"
+      ],
+      "event_bytes": 324,
+      "event_sha256": "2b0e1f445606e21f3bfe30fca63248018ecac0b7e727b5d2e62825ffb376b9e6",
+      "preserved_event_sha256": "2b0e1f445606e21f3bfe30fca63248018ecac0b7e727b5d2e62825ffb376b9e6",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "passed": true
+    },
+    {
+      "command": [
+        "node",
+        "scripts/handoff/run.mjs",
+        "execute",
+        "router"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "receiver_unverified",
+        "sender_not_allowed"
+      ],
+      "event_bytes": 324,
+      "event_sha256": "2b0e1f445606e21f3bfe30fca63248018ecac0b7e727b5d2e62825ffb376b9e6",
+      "preserved_event_sha256": "2b0e1f445606e21f3bfe30fca63248018ecac0b7e727b5d2e62825ffb376b9e6",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "passed": true
+    },
+    {
+      "command": [
+        "node",
+        "scripts/handoff/run.mjs",
+        "prepare",
+        "dispatcher"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "receiver_unverified",
+        "dispatcher_sender_not_allowed",
+        "invalid_handoff_metadata"
+      ],
+      "event_bytes": 327,
+      "event_sha256": "2fb0c4b11a1373adf852dcdcaef4321cca739a6a92259a993c4657195004f7a5",
+      "preserved_event_sha256": "2fb0c4b11a1373adf852dcdcaef4321cca739a6a92259a993c4657195004f7a5",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "passed": true
+    },
+    {
+      "command": [
+        "node",
+        "scripts/handoff/run.mjs",
+        "execute",
+        "dispatcher"
+      ],
+      "exit_code": 1,
+      "ready": false,
+      "output_exact": true,
+      "disposition": "hold",
+      "issue_codes": [
+        "policy_disabled",
+        "receiver_unverified",
+        "dispatcher_sender_not_allowed",
+        "invalid_handoff_metadata"
+      ],
+      "event_bytes": 327,
+      "event_sha256": "2fb0c4b11a1373adf852dcdcaef4321cca739a6a92259a993c4657195004f7a5",
+      "preserved_event_sha256": "2fb0c4b11a1373adf852dcdcaef4321cca739a6a92259a993c4657195004f7a5",
+      "exact_event_bytes_preserved": true,
+      "network_attempts": 0,
+      "execution": {
+        "completion_claim": false,
+        "status": "unverified"
+      },
+      "passed": true
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0,
+    "network_attempts": 0
+  },
+  "tested_files": [
+    {
+      "path": "scripts/handoff/normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a"
+    },
+    {
+      "path": "scripts/handoff/contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9"
+    },
+    {
+      "path": "scripts/handoff/executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9"
+    },
+    {
+      "path": "scripts/handoff/github-service.mjs",
+      "bytes": 7410,
+      "sha256": "f951cf24786d94f2c0aa12e8297355e1aa7e9be49d9a31de02f8260f6f43c4a5"
+    },
+    {
+      "path": "scripts/handoff/run.mjs",
+      "bytes": 4191,
+      "sha256": "0acbf28b8d0f86880a2da3e5468b8ed6a6b63c33ebeed49c0528d5ee005e714f"
+    },
+    {
+      "path": "config/control-center-handoff.json",
+      "bytes": 337,
+      "sha256": "9a10c70b397f03f04e3972dde1cd0cd3df5298854d0b8859962c81c8efc55b09"
+    },
+    {
+      "path": ".github/workflows/control-center-router.yml",
+      "bytes": 1892,
+      "sha256": "9f3c33e67a58c4bf5043edbd4c86cb94cea0ad6ab36e4e6d74ace013d93ed926"
+    },
+    {
+      "path": ".github/workflows/cross-repo-dispatch.yml",
+      "bytes": 1905,
+      "sha256": "dd83c411f6d3a403b939a9f749813c6cae37bc9e0aa4e001616c3e1e78c234d1"
+    }
+  ],
+  "tested_files_unchanged": true,
+  "excluded_generated_state": [
+    ".handoff-state/router/",
+    ".handoff-state/dispatcher/"
+  ],
+  "temporary_guard_files_removed": true
+}
