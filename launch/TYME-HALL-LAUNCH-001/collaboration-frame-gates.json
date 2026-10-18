@@ -1,0 +1,243 @@
+{
+  "schema": "tyme-hall-launch-001/collaboration-frame/v0.1",
+  "launch_id": "TYME-HALL-LAUNCH-001",
+  "observed_on": "2026-10-11",
+  "posture": "REVIEW_CANDIDATE_NON_AUTHORIZING",
+  "canonical_work": "https://app.notion.com/p/3f5c51d54b758197a92ff59d2c203045",
+  "source_refs": {
+    "door04": "https://app.notion.com/p/3d6c51d54b75817d8cb5f3aa42a9c169",
+    "door04_mobile": "https://app.notion.com/p/3d6c51d54b7581d4a0c0e7bac5f5accd",
+    "live_participation": "https://app.notion.com/p/3d8c51d54b7581968b5be2fd9264758a",
+    "trail": "https://app.notion.com/p/39ec51d54b758179a21cf96e12dd857c",
+    "routing": "https://app.notion.com/p/39dc51d54b758140a566c94145446eb5",
+    "public_source": "https://github.com/sovereign-codex/Codex-interface-/tree/5342cbaf1098391879a15c7ccca752d3fbc241b8",
+    "hall_ruleset": "https://github.com/sovereign-codex/Codex-interface-/rules/24880323",
+    "issue18": "https://github.com/sovereign-codex/Codex-interface-/issues/18",
+    "hall_pr19": "https://github.com/sovereign-codex/Codex-interface-/pull/19"
+  },
+  "surfaces": [
+    {
+      "id": "PUBLIC_HALL",
+      "meaning": "read_only_public_projection",
+      "transport": "PUBLIC_HTTPS_GET",
+      "observed": "VERIFIED_BOUNDED"
+    },
+    {
+      "id": "LEARNING_SHARE",
+      "meaning": "session_preview_not_contribution",
+      "transport": "CLIENT_SESSION_ONLY",
+      "observed": "SOURCE_REVIEWED_NOT_PERSISTENCE_CERTIFIED"
+    },
+    {
+      "id": "CONTRIBUTION",
+      "meaning": "external_attributable_intake",
+      "transport": "GITHUB_ISSUES_EXTERNAL",
+      "observed": "SOURCE_VERIFIED"
+    },
+    {
+      "id": "NATIVE_HALL_RECEIPT",
+      "meaning": "not_implemented",
+      "transport": "NONE",
+      "observed": "ABSENT"
+    },
+    {
+      "id": "INSTITUTIONAL_WORK",
+      "meaning": "existing_notional_work_registry",
+      "transport": "OFFICE_EXISTING",
+      "observed": "NOT_AUTOMATED_FROM_PUBLIC_SUBMISSION"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D1",
+      "name": "IP license and contributor rights",
+      "status": "HUMAN_DECISION_REQUIRED",
+      "owner": "founder_and_legal_reviewer",
+      "evidence": "verified code/document/media rights, license text, contributor terms",
+      "blocks": [
+        "PUBLIC_PAID_BOUNTY",
+        "EXTERNAL_CODE_ACCEPTANCE"
+      ],
+      "action_executed": false
+    },
+    {
+      "id": "D2",
+      "name": "private vulnerability intake",
+      "status": "HUMAN_DECISION_REQUIRED",
+      "owner": "founder_security_steward",
+      "evidence": "actual private security-reporting channel, reachable owner, response playbook",
+      "blocks": [
+        "PUBLIC_SECURITY_TEST_RECRUITMENT",
+        "CONFIDENTIAL_SECURITY_REPORT_INTAKE"
+      ],
+      "action_executed": false
+    },
+    {
+      "id": "D3",
+      "name": "privacy consent and retention",
+      "status": "HUMAN_DECISION_REQUIRED",
+      "owner": "founder_privacy_steward",
+      "evidence": "approved privacy notice, minimization, retention, redaction, deletion and consent controls",
+      "blocks": [
+        "NATIVE_HALL_INGRESS",
+        "PERSISTENT_PARTICIPANT_CONTINUITY"
+      ],
+      "action_executed": false
+    },
+    {
+      "id": "D4",
+      "name": "eligible human reviewer and revocation",
+      "status": "QUALIFICATION_PENDING",
+      "owner": "founder_git_admin",
+      "evidence": "candidate screening, exact repository permission, approved invitation and revocation verification",
+      "blocks": [
+        "PRODUCTION_MAIN_MERGE",
+        "FUTURE_COLLABORATOR_WRITE_INVITATION"
+      ],
+      "action_executed": false
+    },
+    {
+      "id": "D5",
+      "name": "moderated public intake",
+      "status": "HUMAN_DECISION_REQUIRED",
+      "owner": "founder_intake_steward",
+      "evidence": "GitHub issue and PR templates, abuse triage, appeals, disclosure limitations",
+      "blocks": [
+        "BROAD_PUBLIC_COLLABORATOR_CAMPAIGN"
+      ],
+      "action_executed": false
+    },
+    {
+      "id": "D6",
+      "name": "release rollback and succession",
+      "status": "TEST_PENDING",
+      "owner": "founder_infra_security_reviewer",
+      "evidence": "staging source+deployment rollback, timed observed result, operator and recovery custody",
+      "blocks": [
+        "FULL_G5_SECURITY_PASS",
+        "PRODUCTION_RESTORE_CERTIFICATION"
+      ],
+      "action_executed": false
+    }
+  ],
+  "abuse_case": {
+    "incident": "ISSUE_18_REPEATED_UNSOLICITED_BOUNTY_CLAIMS",
+    "comments_observed": 91,
+    "same_author_comments_observed": 91,
+    "containment": "LOCKED_SPAM",
+    "record_standing": "UNTRUSTED_UNVERIFIED",
+    "financial_commitment": false,
+    "offsite_payload_verified": false,
+    "hall_native_receipt_issued": false,
+    "promotion_authorized": false
+  },
+  "release_controls": {
+    "ruleset_id": 24880323,
+    "ruleset_status": "ACTIVE",
+    "target_branch": "main",
+    "required_approvals": 1,
+    "bypass_actors": 0,
+    "require_last_push_approval": true,
+    "dismiss_stale_reviews": true,
+    "require_conversation_resolution": true,
+    "force_push_allowed": false,
+    "deletion_allowed": false,
+    "required_ci_currently_enforced": false,
+    "candidate_ci_context": "hall_launch_001_premerge",
+    "production_release_authorized": false,
+    "unmerged_review_branch": true
+  },
+  "transitions": {
+    "external_submission_is_hall_event": false,
+    "external_issue_is_hall_receipt": false,
+    "local_share_is_external_submission": false,
+    "submitted_contribution_is_verified": false,
+    "review_is_institutional_authority": false,
+    "github_approval_is_deployment_authorization": false,
+    "approved_release_merges_automatically": false,
+    "financial_bounties_authorized": false,
+    "native_identity_or_receipt_enabled": false
+  },
+  "acceptance": [
+    {
+      "id": "A1",
+      "task": "public source licensing and IP mapping",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A2",
+      "task": "private security-report path witnessed",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A3",
+      "task": "consent/retention/disclosure policy approved",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A4",
+      "task": "independent Door04 cold-read plus ITX/RIX reconciled",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A5",
+      "task": "moderated issue and PR intake tested against spam",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A6",
+      "task": "vetted independent reviewer and minimal reversible access",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A7",
+      "task": "timed staging rollback and emergency authority tested",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A8",
+      "task": "required CI gate enabled only after source on main",
+      "status": "OPEN",
+      "evidence_refs": []
+    },
+    {
+      "id": "A9",
+      "task": "separate technical founder production gate from GitHub reviewer merge permission; demonstrate approved PR does not automatically deploy without founder GO",
+      "status": "OPEN",
+      "evidence_refs": []
+    }
+  ],
+  "authority_effect": "none",
+  "public_contribution_campaign_authorized": false,
+  "public_site_mutated": false,
+  "new_private_ingress_created": false,
+  "license_granted_by_this_packet": false,
+  "contributors_invited": false,
+  "status": "FRAME_NOT_ACCEPTED_FOR_PUBLIC_INTENTIONAL_RECRUITMENT",
+  "deployment_seam": {
+    "inspection_date": "2026-10-11",
+    "project_name": "codex-interface",
+    "source_platform": "github",
+    "production_source_branch": "main",
+    "automatic_git_deployments_enabled": true,
+    "preview_branches_setting": "all",
+    "current_production_deployment_id": "8f2b21b4-9541-471f-b2f7-651373591e4f",
+    "current_production_source_sha": "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+    "production_env_var_count_observed": 0,
+    "preview_env_var_count_observed": 0,
+    "repository_ruleset_id": 24880323,
+    "repository_rule_requires_review": true,
+    "github_merge_can_trigger_cloudflare_production": true,
+    "independent_founder_deployment_gate_technically_enforced": false,
+    "reviewed_candidate_source_published_to_production": false,
+    "separate_deployment_approval_required_before_write_invite": true,
+    "next_valid_action": "Human decision: design and rehearse an independently controlled production promotion gate; do not grant new write access or change Pages until authorized."
+  }
+}

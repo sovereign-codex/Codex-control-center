@@ -1,0 +1,69 @@
+{
+  "schema": "tyme-hall-launch-001/public-content-manifest/v0.1",
+  "launch_id": "TYME-HALL-LAUNCH-001",
+  "manifest_status": "REVIEW_CANDIDATE_NOT_DEPLOYED",
+  "canonical_domain": "https://tymehall.org",
+  "release_publications": [
+    {
+      "id": "AGI-0001",
+      "version": "0.1.0",
+      "publication_number": 1,
+      "public_state": "PUBLISHED_CANONICAL",
+      "authorized": true,
+      "evidence_tier": "Canon",
+      "epistemic_class": "normative_doctrine",
+      "empirical_claims_asserted": false,
+      "source_commit": "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+      "source_path": "scrolls/AGI-0001/publication.json",
+      "human_path": "/scrolls/AGI-0001/",
+      "machine_path": "/scrolls/AGI-0001/publication.json",
+      "historical_source_sha256": "347bfaaa8d6c73c59697a43022c415b2a45819b9e5e39aa7a07862695d0caeca",
+      "current_live_http_status": "UNVERIFIED_THIS_SESSION",
+      "source_url": "https://github.com/sovereign-codex/Codex-interface-/blob/main/scrolls/AGI-0001/publication.json"
+    }
+  ],
+  "excluded_publication_candidates": [
+    {
+      "id": "GFC-0001",
+      "public_state": "PUBLIC_REVIEWED",
+      "excluded_from_beta_publication": true,
+      "publication_authorized": false,
+      "reason": "Explicit separate human publication authorization required; unresolved primary source repository provenance remains recorded",
+      "source_url": "https://app.notion.com/p/3d4c51d54b75814487e8cf99f6579de1"
+    }
+  ],
+  "learning_missions": [
+    {
+      "id": "M01",
+      "name": "Memory That Survives",
+      "starting_artifact": "magnetic-core memory",
+      "mission_status": "DOCUMENTED_CANDIDATE",
+      "physical_build_authorized": false,
+      "question": "How can critical state survive power loss and remain reconstructable?",
+      "source": "https://app.notion.com/p/3cec51d54b7581539770e63653f3e095"
+    },
+    {
+      "id": "M02",
+      "name": "Network That Survives",
+      "starting_artifact": "Wi-Fi HaLow, LoRa, local networking",
+      "mission_status": "DOCUMENTED_CANDIDATE",
+      "physical_build_authorized": false,
+      "question": "How can exchange continue under broken WAN and later reconcile?",
+      "source": "https://app.notion.com/p/3cec51d54b7581539770e63653f3e095"
+    },
+    {
+      "id": "M03",
+      "name": "Intelligence That Survives Handoff",
+      "starting_artifact": "public Hall context-zero reconstruction",
+      "mission_status": "REPRODUCIBLE_DIGITAL_SPECIMEN_COMMISSIONED_NOT_YET_PASSED",
+      "physical_build_authorized": false,
+      "question": "Can an uncoached participant recover standing, state, evidence and safe contribution without founder context?",
+      "source": "https://github.com/sovereign-codex/Codex-interface-/blob/main/validation/CONTEXT_ZERO_PROTOCOL.md"
+    }
+  ],
+  "lab_mvp_mission_id": "M03",
+  "hall_receipt_carrier": "NONE_NATIVE",
+  "participation_write_carrier": "EXTERNAL_GITHUB_ISSUES",
+  "office_projection_rule": "REVIEWED_READ_ONLY_DATED_NO_AUTHORITY",
+  "no_self_authorizing_system": true
+}

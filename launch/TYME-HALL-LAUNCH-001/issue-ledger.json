@@ -1,0 +1,143 @@
+{
+  "schema": "tyme-hall-launch-001/issue-ledger/v0.1",
+  "as_of": "2026-10-10",
+  "command": "https://app.notion.com/p/3f5c51d54b758197a92ff59d2c203045",
+  "central_issue": "https://github.com/sovereign-codex/Codex-control-center/issues/15",
+  "stage": "COMMISSIONED_PRE_DEPLOYMENT",
+  "issues": [
+    {
+      "id": "INFRA",
+      "repo": "sovereign-codex/Codex-control-center",
+      "number": 16,
+      "url": "https://github.com/sovereign-codex/Codex-control-center/issues/16",
+      "priority": "P0",
+      "target": "2026-10-12",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "UI",
+      "repo": "sovereign-codex/Codex-interface-",
+      "number": 15,
+      "url": "https://github.com/sovereign-codex/Codex-interface-/issues/15",
+      "priority": "P0",
+      "target": "2026-10-16",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "INFRA"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "CIT",
+      "repo": "sovereign-codex/AVOT-engine",
+      "number": 16,
+      "url": "https://github.com/sovereign-codex/AVOT-engine/issues/16",
+      "priority": "P0",
+      "target": "2026-10-17",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "INFRA"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "OFFICE",
+      "repo": "sovereign-codex/Tyme-Lab",
+      "number": 55,
+      "url": "https://github.com/sovereign-codex/Tyme-Lab/issues/55",
+      "priority": "P0",
+      "target": "2026-10-17",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "INFRA"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "PUB",
+      "repo": "sovereign-codex/Codex-interface-",
+      "number": 16,
+      "url": "https://github.com/sovereign-codex/Codex-interface-/issues/16",
+      "priority": "P1",
+      "target": "2026-10-16",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "INFRA"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "LAB",
+      "repo": "sovereign-codex/Tyme-Lab",
+      "number": 56,
+      "url": "https://github.com/sovereign-codex/Tyme-Lab/issues/56",
+      "priority": "P1",
+      "target": "2026-10-19",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "UI"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "SEAM",
+      "repo": "sovereign-codex/Codex-interface-",
+      "number": 17,
+      "url": "https://github.com/sovereign-codex/Codex-interface-/issues/17",
+      "priority": "P0",
+      "target": "2026-10-18",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "UI"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "SEC",
+      "repo": "sovereign-codex/Codex-control-center",
+      "number": 17,
+      "url": "https://github.com/sovereign-codex/Codex-control-center/issues/17",
+      "priority": "P0",
+      "target": "2026-10-22",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "INFRA",
+        "CIT"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    },
+    {
+      "id": "BNT",
+      "repo": "sovereign-codex/Codex-interface-",
+      "number": 18,
+      "url": "https://github.com/sovereign-codex/Codex-interface-/issues/18",
+      "priority": "P1",
+      "target": "2026-10-13",
+      "accountable_owner": "sovereign-codex",
+      "independent_reviewer": "UNASSIGNED",
+      "depends_on": [
+        "UI"
+      ],
+      "status": "OPEN",
+      "proof_state": "NOT_YET_VERIFIED"
+    }
+  ]
+}

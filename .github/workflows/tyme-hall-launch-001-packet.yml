@@ -1,0 +1,25 @@
+name: TYME Hall Launch 001 Packet Contract
+
+on:
+  pull_request:
+    paths:
+      - "launch/TYME-HALL-LAUNCH-001/**"
+      - ".github/workflows/tyme-hall-launch-001-packet.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review-only-packet-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out proposed release packet
+        uses: actions/checkout@v4
+      - name: Verify Day One issue, release and publication invariants
+        run: python3 launch/TYME-HALL-LAUNCH-001/verify_packet.py
+      - name: Replay Phase 2 receipt invariants and negative cases offline
+        run: python3 -m unittest discover -s launch/TYME-HALL-LAUNCH-001 -p 'test_phase2_*.py' -v
+      - name: Verify collaboration, rights and authority boundaries offline
+        run: python3 -m unittest discover -s launch/TYME-HALL-LAUNCH-001 -p 'test_collaboration_frame.py' -v
