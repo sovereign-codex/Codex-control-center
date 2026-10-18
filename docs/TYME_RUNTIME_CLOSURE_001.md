@@ -2,6 +2,18 @@
 
 **Standing: REVIEW ONLY / NO LIVE DISPATCH / NONCANONICAL.** This bounded experiment remains subordinate to [TYME-HALL-LAUNCH-001](https://app.notion.com/p/3f5c51d54b758197a92ff59d2c203045), [the launch ledger](https://github.com/sovereign-codex/Codex-control-center/issues/15), and [Runtime Closure issue #23](https://github.com/sovereign-codex/Codex-control-center/issues/23). Neither the issue nor this branch grants runtime or institutional authority.
 
+## Verified last-known scheduled producer — July 17, 2026
+
+The user supplied the July 17 `runtime_packet` and the original ChatGPT task-history screen; both Notion references were subsequently independently fetched, and the two databases were queried for creation timestamps:
+
+- [Daily Staging Review — 2026-07-17](https://app.notion.com/p/3a0c51d54b75813b8fd1e991300ad710): actual Notion `createdTime` **2026-07-17T14:06:46Z** (07:06:46 America/Phoenix). Historical parent was **Repo dev Plan**, correctly for July's contract, not the current v4 destination.
+- [Scheduled runtime tracker record](https://app.notion.com/p/3a0c51d54b7581deb6d5f1a607c41fcf): actual Notion `createdTime` **2026-07-17T14:07:29Z** (07:07:29 America/Phoenix). Record: `notion-bridge-daily-staging-review-20260717-0703`, `Lineage ID: daily-staging-review-2026-07-17`, `Run Type: scheduled`, `Runtime Mode: scheduled`, `Persistence Verified: yes`, `Handoff Ready: conditional`. Tracker references the review and explicitly forbids downstream execution.
+- The user-provided packet declares `emitted_at: 2026-07-17T14:03:01Z`, **earlier than both Notion creations**. Do not confuse claimed packet emission with independently observed durable-write time.
+- Scoped tracker query for records with Agent `Notion Bridge` and `Emitted At >= 2026-07-17` returned this one scheduled entry, followed by **October 9 and October 10 manual** carrier records. This establishes **last-known in the queried evidence**, not universal proof that no other scheduled execution occurred.
+- The later **July 18 at 07:03** legacy ChatGPT task-history entry shows generic host failure: `Something went wrong, please try again later`. Error stage, any partial writes, and current scheduler status are unknown. July 18 v3 rename/instructions installation was separately recorded around **08:03**, after the visible failed attempt if timestamps are comparable.
+
+**Use as a historical timing/format fixture only.** Durable tracker persistence took until 07:07:29 for the 07:03 run, leaving about **7 minutes 31 seconds** before a 07:15 downstream check. That was a legacy v2 producer using a historical destination and a `conditional` handoff. It proves neither authorized dispatch nor current-v4 activation, nor repair of the October 17 skipped lineage.
+
 ## Regression: October 17, 2026
 
 [Repo Cartographer](https://app.notion.com/p/3fcc51d54b7581afb7e0da05ee93f78a) recorded a skipped topology review because it found no valid same-day Daily Staging Review or matching Notion Bridge packet. [Promotion Reviewer](https://app.notion.com/p/3fcc51d54b75810d9973ec2e641e9463) had no current promotion candidate, and [PR Synthesist](https://app.notion.com/p/3fcc51d54b7581c99389cfde21e73db5) had neither approval nor target artifact. Their database-row *Execution State: Done* describes **record creation**; their embedded runtime packets preserve substantive execution as **skipped**.
