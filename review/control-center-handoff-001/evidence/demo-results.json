@@ -1,0 +1,2523 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CONTROL-CENTER-HANDOFF-001",
+  "generated_at_utc": "2026-10-18T04:50:00.725Z",
+  "standing": "synthetic_local_demo",
+  "equality_checks": {
+    "normalized_event_digest_equal": true,
+    "raw_digest_distinct": true,
+    "duplicate_and_collision_did_not_add_request": true
+  },
+  "live_dispatch_performed": false,
+  "receiver_execution_observed": false,
+  "scenarios": [
+    {
+      "id": "direct_accepted",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "transport_accepted",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-REQUEST-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        },
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "accepted",
+          "http_status": 204,
+          "outcome_unknown": false,
+          "simulated_response": {
+            "type": "http",
+            "status": 204
+          }
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_requests": [
+        {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "identical_duplicate",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "duplicate",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-REQUEST-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-2",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ],
+        "prior_observation": {
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "disposition": "transport_accepted",
+          "observation": {
+            "diagnostic_id": "local-review-1",
+            "observed_at": "2026-10-18T04:50:00.722Z",
+            "clock_mode": "system_observation"
+          },
+          "transport": {
+            "mode": "fake",
+            "status": "accepted",
+            "http_status": 204,
+            "outcome_unknown": false,
+            "simulated_response": {
+              "type": "http",
+              "status": 204
+            }
+          },
+          "producer_outcome": {
+            "raw": "started",
+            "normalized": "started",
+            "category": "progress",
+            "producer_claim_only": true
+          }
+        }
+      },
+      "recorded_request_count": 1
+    },
+    {
+      "id": "changed_content_collision",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "identity_collision",
+        "issues": [
+          {
+            "code": "identity_collision",
+            "message": "Request identity is already bound to different bytes, ingress or route decision.",
+            "observed": {
+              "previous": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b",
+              "current": "1e14b940b84b71a6f25d0cecaa6567e718c51abb1feeeb976ec18a6e7645904a"
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Changed work under the same request identity.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-REQUEST-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"started\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Changed work under the same request identity.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "970927bca9e2552f672c44e42f499c11847ce292f979c3057fc0588b3ff5bf90",
+          "normalized_event_sha256": "989c2541a92f30a0d993c890b76c0c74e750c36dbac40b80207272dbf9522081",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "1e14b940b84b71a6f25d0cecaa6567e718c51abb1feeeb976ec18a6e7645904a"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-3",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ],
+        "prior_observation": {
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "disposition": "transport_accepted",
+          "observation": {
+            "diagnostic_id": "local-review-1",
+            "observed_at": "2026-10-18T04:50:00.722Z",
+            "clock_mode": "system_observation"
+          },
+          "transport": {
+            "mode": "fake",
+            "status": "accepted",
+            "http_status": 204,
+            "outcome_unknown": false,
+            "simulated_response": {
+              "type": "http",
+              "status": 204
+            }
+          },
+          "producer_outcome": {
+            "raw": "started",
+            "normalized": "started",
+            "category": "progress",
+            "producer_claim_only": true
+          }
+        }
+      },
+      "recorded_request_count": 1
+    },
+    {
+      "id": "nested_equivalent_fresh_instance",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "transport_accepted",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-REQUEST-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        },
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"event\": {\n    \"trace_id\": \"fixture-trace-001\",\n    \"workflow\": \"fixture-dispatch\",\n    \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n    \"status\": \"started\",\n    \"timestamp\": \"2026-10-18T04:00:00Z\",\n    \"payload\": {\n      \"operation\": \"inspect_contract_fixture\",\n      \"message\": \"Synthetic local input. No receiver is contacted.\",\n      \"nested_extension\": { \"preserve\": true }\n    },\n    \"governance\": {\n      \"authority_effect\": \"none\",\n      \"mutation_allowed\": false,\n      \"canon_posture\": \"noncanonical\"\n    },\n    \"runtime_packet\": {\n      \"packet_version\": \"review-fixture/1\",\n      \"packet_id\": \"fixture-packet-001\",\n      \"synthetic\": true,\n      \"open_conditions\": [\"Receiver execution is unobserved.\"]\n    },\n    \"extension\": { \"keep_this_field\": [1, 2, 3] }\n  }\n}\n",
+          "raw_sha256": "69980013141a7828d53a05dd51fea56d613d76f28f22d426bfe60a7043f5de31",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "38c1a3faaaa1be356bfea32265fd485a64c20cd36681574dcd5cbb103367d68e"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "accepted",
+          "http_status": 204,
+          "outcome_unknown": false,
+          "simulated_response": {
+            "type": "http",
+            "status": 204
+          }
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_requests": [
+        {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "producer_dispatch_failed",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "dispatch_failed",
+              "normalized": "dispatch_failed",
+              "category": "failure",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "dispatch_failed",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "dispatch_failed",
+          "normalized": "dispatch_failed",
+          "category": "failure",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-dispatch_failed",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"dispatch_failed\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "781c5491c262e3bed0915b63249e31bfe744bf49fb130e013ac2e6d997d4f12c",
+          "normalized_event_sha256": "a98f2df3712342ff5c7441c0a7050e6ba495ef4960ec66f5b84eb0996ded4400",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "e4029a297576e1ef137799312db96e9e1cc21b6490aefee7f9ea65f68388b3a2"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_route_failed",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "route_failed",
+              "normalized": "route_failed",
+              "category": "failure",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "route_failed",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "route_failed",
+          "normalized": "route_failed",
+          "category": "failure",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-route_failed",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"route_failed\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "ea7d2f2644098a4e61db63736b96e3a1af01aa2963c2149fccea4ab6458cba13",
+          "normalized_event_sha256": "09116efffc73551a9a55271e6e5e32042f92fc2a2b3367587d0eed4b56499648",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7cf46048666e68ffce190e6f1bff139a2ca04f30bf3037256110886eb1e63279"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.722Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_result_failed",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "result_failed",
+              "normalized": "result_failed",
+              "category": "failure",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "result_failed",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "result_failed",
+          "normalized": "result_failed",
+          "category": "failure",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-result_failed",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"result_failed\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "f728c6183855b08b6914a018640f7d3bab2e682389df64f21202651a822dbda8",
+          "normalized_event_sha256": "49c388350db79d0c5c757f2cd9b59a53de9ff6663477f400872762cda9f8a1e4",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7ff8d6c34f43369ca33ad1d98e42e310b0a8b5f4f08be9641dabaca3e1795c35"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.723Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_result_store_failed",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "result_store_failed",
+              "normalized": "result_store_failed",
+              "category": "failure",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "result_store_failed",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "result_store_failed",
+          "normalized": "result_store_failed",
+          "category": "failure",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-result_store_failed",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"result_store_failed\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "45fd5644d6639b7674aded322d7c0998669eb55899e8abe6c66c99c9f479af84",
+          "normalized_event_sha256": "e2a8221d10c24b1c18f7f6cb26a67fbbec0767f5e016f4a5e5b49a300591cb3f",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "940faa7985543eda3d14c5c030e7cb002bb2d95fe61e504f0c4526c9dc19776b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.723Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_incomplete",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "incomplete",
+              "normalized": "incomplete",
+              "category": "incomplete",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "incomplete",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "incomplete",
+          "normalized": "incomplete",
+          "category": "incomplete",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-incomplete",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"incomplete\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "44dc4a159bec00905a143112c6696f90060ada6dcf1bf1bc4d5c06818e8c2d55",
+          "normalized_event_sha256": "77eb1196bbf86fa4065064ad16c0d8e2d4af0207fb835a7dc1558c48747ed1ee",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "6eded906737218fd9d95e5f05b593c8b52af275c6de969a195c1a8dff70e3c3a"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.723Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_skipped",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "skipped",
+              "normalized": "skipped",
+              "category": "skipped",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "skipped",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "skipped",
+          "normalized": "skipped",
+          "category": "skipped",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-skipped",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"skipped\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "3f31b9ef62da1b023515158e09f0fbacd1f3750135080e93408e6d19dec3f70d",
+          "normalized_event_sha256": "83cf8608d0a0c05ff6712409aed5d469117ee8eb7c226f8cb8b463e057f78258",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "944d07734a3e7233864dd188184e3baabf3f718bc031fb8807417576004798b4"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.723Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "producer_unknown",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "producer_outcome_hold",
+            "message": "Producer outcome cannot advance this handoff.",
+            "observed": {
+              "raw": "unknown",
+              "normalized": "unknown",
+              "category": "unknown",
+              "producer_claim_only": true
+            }
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "unknown",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "unknown",
+          "normalized": "unknown",
+          "category": "unknown",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-STATUS-unknown",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"unknown\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "f3ecd6e5858ce90c6301ed78e2c0d1e20b474ba599eb5d9379e3366ad6b4dd83",
+          "normalized_event_sha256": "5b326e3d41ee548317ac75518fa143c7a2aaeb9a8ec25a4a8bb27e433de5f3fc",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "95f1f3383aa177b3876cf15d3f15e2efeef4cbe00650a08f0f06ef48189405d1"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.723Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "missing_provenance",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "missing_trace_id",
+            "message": "Producer trace_id is required; wrapper or local diagnostic values cannot replace it.",
+            "observed": []
+          }
+        ],
+        "event": {
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-MISSING-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": null,
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"avot-engine-runner\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"started\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "d00592b6393cafd947e1a6b8c888f2ddd28c5bd640f400553466de08081f9be0",
+          "normalized_event_sha256": "7c83a68643215f3739f08ad237d3f8851fc97f062f92ecb58ca09c13942e61da",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "0ac562f6f20c0422a20d2e7b26c38f8a37827897aefdf87664fdbd0023122b08"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.724Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "tyme_missing_receiver",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "hold",
+        "issues": [
+          {
+            "code": "missing_receiver",
+            "message": "Tyme-Lab has no declared receiver contract in the reviewed workflow set.",
+            "observed": null
+          }
+        ],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-TYME-001",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "Tyme-Lab",
+            "repository": "sovereign-codex/Tyme-Lab",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\"target\":\"Tyme-Lab\",\"trace_id\":\"fixture-trace-001\",\"workflow\":\"fixture-dispatch\",\"repo\":\"sovereign-codex/AVOT-ARCHIVIST\",\"status\":\"started\",\"timestamp\":\"2026-10-18T04:00:00Z\",\"payload\":{\"operation\":\"inspect_contract_fixture\",\"message\":\"Synthetic local input. No receiver is contacted.\",\"nested_extension\":{\"preserve\":true}},\"governance\":{\"authority_effect\":\"none\",\"mutation_allowed\":false,\"canon_posture\":\"noncanonical\"},\"runtime_packet\":{\"packet_version\":\"review-fixture/1\",\"packet_id\":\"fixture-packet-001\",\"synthetic\":true,\"open_conditions\":[\"Receiver execution is unobserved.\"]},\"extension\":{\"keep_this_field\":[1,2,3]}}",
+          "raw_sha256": "b16c9e51de993f9fd14b1db8a5b3b3ce6f191ce840ee9af56173e49d02602d37",
+          "normalized_event_sha256": "6dbc0c9b8ead296589a96702635b8aaaf40f8b4be0948a37c45810ee13c44ef8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "Tyme-Lab",
+            "targetRepo": "sovereign-codex/Tyme-Lab",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "9fc3da318e9fe0279bf7646004a555ed6b5c1a941a23d9e8aed96cb287efc35a",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "f1e1b57dcbb75a6d96785e8d9a9748f0b6afdf4d11992c3b88623af8e0129712"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.724Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "recorded_request_count": 0
+    },
+    {
+      "id": "fake_http_response",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "transport_rejected",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-RESPONSE-http",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        },
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.724Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "rejected",
+          "http_status": 403,
+          "outcome_unknown": false,
+          "simulated_response": {
+            "type": "http",
+            "status": 403
+          }
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "repeated_result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "duplicate",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-RESPONSE-http",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-2",
+          "observed_at": "2026-10-18T04:50:00.724Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ],
+        "prior_observation": {
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "disposition": "transport_rejected",
+          "observation": {
+            "diagnostic_id": "local-review-1",
+            "observed_at": "2026-10-18T04:50:00.724Z",
+            "clock_mode": "system_observation"
+          },
+          "transport": {
+            "mode": "fake",
+            "status": "rejected",
+            "http_status": 403,
+            "outcome_unknown": false,
+            "simulated_response": {
+              "type": "http",
+              "status": 403
+            }
+          },
+          "producer_outcome": {
+            "raw": "started",
+            "normalized": "started",
+            "category": "progress",
+            "producer_claim_only": true
+          }
+        }
+      },
+      "recorded_request_count": 1
+    },
+    {
+      "id": "fake_error_response",
+      "result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "transport_error",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-RESPONSE-error",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": {
+          "repository": "sovereign-codex/Codex-control-center",
+          "body": {
+            "event_type": "engine_handoff",
+            "client_payload": {
+              "target": "avot-engine-runner",
+              "event": {
+                "trace_id": "fixture-trace-001",
+                "workflow": "fixture-dispatch",
+                "repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "status": "started",
+                "timestamp": "2026-10-18T04:00:00Z",
+                "payload": {
+                  "operation": "inspect_contract_fixture",
+                  "message": "Synthetic local input. No receiver is contacted.",
+                  "nested_extension": {
+                    "preserve": true
+                  }
+                },
+                "governance": {
+                  "authority_effect": "none",
+                  "mutation_allowed": false,
+                  "canon_posture": "noncanonical"
+                },
+                "runtime_packet": {
+                  "packet_version": "review-fixture/1",
+                  "packet_id": "fixture-packet-001",
+                  "synthetic": true,
+                  "open_conditions": [
+                    "Receiver execution is unobserved."
+                  ]
+                },
+                "extension": {
+                  "keep_this_field": [
+                    1,
+                    2,
+                    3
+                  ]
+                },
+                "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+                "source_workflow": "fixture-dispatch",
+                "source_event": "legacy",
+                "target_repo": "sovereign-codex/AVOT-engine",
+                "target_stage": "avot_execution",
+                "receiving_event_type": "avot_execution"
+              }
+            }
+          }
+        },
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-1",
+          "observed_at": "2026-10-18T04:50:00.725Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "error",
+          "http_status": null,
+          "outcome_unknown": true,
+          "simulated_response": {
+            "type": "error",
+            "message": "Synthetic uncertain transport outcome."
+          }
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ]
+      },
+      "repeated_result": {
+        "contract_version": "control-center-handoff-review/1",
+        "standing": "noncanonical_local_review",
+        "disposition": "duplicate",
+        "issues": [],
+        "event": {
+          "trace_id": "fixture-trace-001",
+          "workflow": "fixture-dispatch",
+          "repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "status": "started",
+          "timestamp": "2026-10-18T04:00:00Z",
+          "payload": {
+            "operation": "inspect_contract_fixture",
+            "message": "Synthetic local input. No receiver is contacted.",
+            "nested_extension": {
+              "preserve": true
+            }
+          },
+          "governance": {
+            "authority_effect": "none",
+            "mutation_allowed": false,
+            "canon_posture": "noncanonical"
+          },
+          "runtime_packet": {
+            "packet_version": "review-fixture/1",
+            "packet_id": "fixture-packet-001",
+            "synthetic": true,
+            "open_conditions": [
+              "Receiver execution is unobserved."
+            ]
+          },
+          "extension": {
+            "keep_this_field": [
+              1,
+              2,
+              3
+            ]
+          },
+          "source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "source_workflow": "fixture-dispatch",
+          "source_event": "legacy",
+          "target_repo": "sovereign-codex/AVOT-engine",
+          "target_stage": "avot_execution",
+          "receiving_event_type": "avot_execution"
+        },
+        "producer_outcome": {
+          "raw": "started",
+          "normalized": "started",
+          "category": "progress",
+          "producer_claim_only": true
+        },
+        "provenance": {
+          "request_id": "DEMO-RESPONSE-error",
+          "declared_source_repo": "sovereign-codex/AVOT-ARCHIVIST",
+          "declared_source_workflow": "fixture-dispatch",
+          "trace_id": "fixture-trace-001",
+          "authenticated": false,
+          "request_id_origin": "caller_supplied_local_review_identity"
+        },
+        "routing": {
+          "next_stage": "cross-repo-dispatcher",
+          "internal_event_type": "engine_handoff",
+          "immediate_repository": "sovereign-codex/Codex-control-center",
+          "destination": {
+            "target": "avot-engine-runner",
+            "repository": "sovereign-codex/AVOT-engine",
+            "event_type": "avot_execution",
+            "standing": "review_fixture_declaration",
+            "live_receiver_verified": false
+          }
+        },
+        "request": null,
+        "evidence": {
+          "raw_json": "{\n  \"target\": \"avot-engine-runner\",\n  \"trace_id\": \"fixture-trace-001\",\n  \"workflow\": \"fixture-dispatch\",\n  \"repo\": \"sovereign-codex/AVOT-ARCHIVIST\",\n  \"status\": \"started\",\n  \"timestamp\": \"2026-10-18T04:00:00Z\",\n  \"payload\": {\n    \"operation\": \"inspect_contract_fixture\",\n    \"message\": \"Synthetic local input. No receiver is contacted.\",\n    \"nested_extension\": { \"preserve\": true }\n  },\n  \"governance\": {\n    \"authority_effect\": \"none\",\n    \"mutation_allowed\": false,\n    \"canon_posture\": \"noncanonical\"\n  },\n  \"runtime_packet\": {\n    \"packet_version\": \"review-fixture/1\",\n    \"packet_id\": \"fixture-packet-001\",\n    \"synthetic\": true,\n    \"open_conditions\": [\"Receiver execution is unobserved.\"]\n  },\n  \"extension\": { \"keep_this_field\": [1, 2, 3] }\n}\n",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "normalized_event_sha256": "e465841e633e3466e894eb0b23eb7e879c09afd9c0ef5af39f6087f02c364aa8",
+          "route_decision": {
+            "stage": "cross-repo-dispatcher",
+            "target": "avot-engine-runner",
+            "targetRepo": "sovereign-codex/AVOT-engine",
+            "receivingEventType": "avot_execution"
+          },
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "ingress_event_type": "route-event",
+          "source_event_origin": "legacy_profile_annotation",
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b"
+        },
+        "observation": {
+          "diagnostic_id": "local-review-2",
+          "observed_at": "2026-10-18T04:50:00.725Z",
+          "clock_mode": "system_observation"
+        },
+        "transport": {
+          "mode": "fake",
+          "status": "not_attempted",
+          "http_status": null,
+          "outcome_unknown": false
+        },
+        "execution": {
+          "status": "unverified",
+          "completed": false,
+          "completion_claim": false,
+          "receiver_run_id": null,
+          "artifact_id": null
+        },
+        "limits": [
+          "local_review_only",
+          "declared_producer_not_authenticated",
+          "in_memory_single_instance_ledger",
+          "no_live_dispatch",
+          "no_receiver_execution_evidence",
+          "no_institutional_acceptance"
+        ],
+        "prior_observation": {
+          "request_fingerprint": "7dd1fbc697e5aea1bce8e99fdf3d07d243fd0fd1fe0485f1420c848a7676c50b",
+          "raw_sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+          "route_decision_sha256": "1f65d2daa5d6b2bf4e244b8490c8365f882fc7783653d9438fc562a1bd33ca56",
+          "disposition": "transport_error",
+          "observation": {
+            "diagnostic_id": "local-review-1",
+            "observed_at": "2026-10-18T04:50:00.725Z",
+            "clock_mode": "system_observation"
+          },
+          "transport": {
+            "mode": "fake",
+            "status": "error",
+            "http_status": null,
+            "outcome_unknown": true,
+            "simulated_response": {
+              "type": "error",
+              "message": "Synthetic uncertain transport outcome."
+            }
+          },
+          "producer_outcome": {
+            "raw": "started",
+            "normalized": "started",
+            "category": "progress",
+            "producer_claim_only": true
+          }
+        }
+      },
+      "recorded_request_count": 1
+    }
+  ]
+}

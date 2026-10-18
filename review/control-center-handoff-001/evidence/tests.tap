@@ -1,0 +1,274 @@
+TAP version 13
+# Subtest: [legacy_shapes] direct and wrapped inputs preserve one normalized event and distinct raw evidence
+ok 1 - [legacy_shapes] direct and wrapped inputs preserve one normalized event and distinct raw evidence
+  ---
+  duration_ms: 12.871612
+  type: 'test'
+  ...
+# Subtest: [legacy_shapes] wrapper-only rich fields and wrapper extensions survive the recorded request
+ok 2 - [legacy_shapes] wrapper-only rich fields and wrapper extensions survive the recorded request
+  ---
+  duration_ms: 2.568566
+  type: 'test'
+  ...
+# Subtest: [legacy_shapes] canonical producer aliases agree with legacy identity without manufacturing authentication
+ok 3 - [legacy_shapes] canonical producer aliases agree with legacy identity without manufacturing authentication
+  ---
+  duration_ms: 3.412676
+  type: 'test'
+  ...
+# Subtest: [internal_event] records exactly the internal engine_handoff request while preserving final destination
+ok 4 - [internal_event] records exactly the internal engine_handoff request while preserving final destination
+  ---
+  duration_ms: 3.794936
+  type: 'test'
+  ...
+# Subtest: [internal_event] unsupported ingress or stage does not silently select the accepted contract
+ok 5 - [internal_event] unsupported ingress or stage does not silently select the accepted contract
+  ---
+  duration_ms: 4.226986
+  type: 'test'
+  ...
+# Subtest: [conflicting_target] contradictory route declarations hold and preserve their original evidence
+ok 6 - [conflicting_target] contradictory route declarations hold and preserve their original evidence
+  ---
+  duration_ms: 7.042163
+  type: 'test'
+  ...
+# Subtest: [conflicting_target] missing target cannot be inferred from the route stage alone
+ok 7 - [conflicting_target] missing target cannot be inferred from the route stage alone
+  ---
+  duration_ms: 1.429036
+  type: 'test'
+  ...
+# Subtest: [conflicting_target] conflicting rich wrapper and event data is held rather than overwritten
+ok 8 - [conflicting_target] conflicting rich wrapper and event data is held rather than overwritten
+  ---
+  duration_ms: 6.593978
+  type: 'test'
+  ...
+# Subtest: [conflicting_target] identical double declarations of rich data do not create a false conflict
+ok 9 - [conflicting_target] identical double declarations of rich data do not create a false conflict
+  ---
+  duration_ms: 2.313187
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] absent, null, or blank required producer fields hold without local substitution
+ok 10 - [missing_provenance] absent, null, or blank required producer fields hold without local substitution
+  ---
+  duration_ms: 13.211319
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] caller request identity is required and never replaced by a diagnostic identity
+ok 11 - [missing_provenance] caller request identity is required and never replaced by a diagnostic identity
+  ---
+  duration_ms: 4.119724
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] disagreeing canonical and legacy producer identities are explicit holds
+ok 12 - [missing_provenance] disagreeing canonical and legacy producer identities are explicit holds
+  ---
+  duration_ms: 2.381507
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] invalid or timezone-free timestamps do not gain authority through Date.parse coercion
+ok 13 - [missing_provenance] invalid or timezone-free timestamps do not gain authority through Date.parse coercion
+  ---
+  duration_ms: 3.28165
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] malformed JSON and non-object roots are held before fake transport
+ok 14 - [missing_provenance] malformed JSON and non-object roots are held before fake transport
+  ---
+  duration_ms: 1.753322
+  type: 'test'
+  ...
+# Subtest: [missing_provenance] duplicate JSON keys are rejected at the root, nested, and escaped-name boundaries
+ok 15 - [missing_provenance] duplicate JSON keys are rejected at the root, nested, and escaped-name boundaries
+  ---
+  duration_ms: 0.652952
+  type: 'test'
+  ...
+# Subtest: [failure_status] failure-bearing labels never normalize to progress or completion
+ok 16 - [failure_status] failure-bearing labels never normalize to progress or completion
+  ---
+  duration_ms: 5.11164
+  type: 'test'
+  ...
+# Subtest: [non_success] incomplete, partial, skipped, blocked, and unknown outcomes remain non-success
+ok 17 - [non_success] incomplete, partial, skipped, blocked, and unknown outcomes remain non-success
+  ---
+  duration_ms: 3.853586
+  type: 'test'
+  ...
+# Subtest: [non_success] non-string status values are held without truthy coercion
+ok 18 - [non_success] non-string status values are held without truthy coercion
+  ---
+  duration_ms: 1.794375
+  type: 'test'
+  ...
+# Subtest: [non_success] an exact producer completion report does not become verified receiver completion
+ok 19 - [non_success] an exact producer completion report does not become verified receiver completion
+  ---
+  duration_ms: 1.367685
+  type: 'test'
+  ...
+# Subtest: [identity_collision] same request identity with changed rich content collides without a second request
+ok 20 - [identity_collision] same request identity with changed rich content collides without a second request
+  ---
+  duration_ms: 3.019199
+  type: 'test'
+  ...
+# Subtest: [identity_collision] byte changes collide even when parsed JSON values are equivalent
+ok 21 - [identity_collision] byte changes collide even when parsed JSON values are equivalent
+  ---
+  duration_ms: 1.320038
+  type: 'test'
+  ...
+# Subtest: [identity_collision] route decision and ingress are included in the request identity binding
+ok 22 - [identity_collision] route decision and ingress are included in the request identity binding
+  ---
+  duration_ms: 2.278074
+  type: 'test'
+  ...
+# Subtest: [duplicate] identical repeats are explicit local duplicates and keep the prior observation
+ok 23 - [duplicate] identical repeats are explicit local duplicates and keep the prior observation
+  ---
+  duration_ms: 1.326552
+  type: 'test'
+  ...
+# Subtest: [duplicate] fake HTTP rejection and fake error are not retried by an identical repeat
+ok 24 - [duplicate] fake HTTP rejection and fake error are not retried by an identical repeat
+  ---
+  duration_ms: 1.501064
+  type: 'test'
+  ...
+# Subtest: [duplicate] a hold with complete declared identity reserves its request without attempting transport
+ok 25 - [duplicate] a hold with complete declared identity reserves its request without attempting transport
+  ---
+  duration_ms: 0.804611
+  type: 'test'
+  ...
+# Subtest: [duplicate] a missing declared producer namespace cannot reserve or fabricate request identity
+ok 26 - [duplicate] a missing declared producer namespace cannot reserve or fabricate request identity
+  ---
+  duration_ms: 1.405644
+  type: 'test'
+  ...
+# Subtest: [duplicate] equal request IDs from distinct declared producer repositories are separate local identities
+ok 27 - [duplicate] equal request IDs from distinct declared producer repositories are separate local identities
+  ---
+  duration_ms: 1.063459
+  type: 'test'
+  ...
+# Subtest: [transport_only] HTTP 204 means fake transport acceptance with no receiver execution or artifact
+ok 28 - [transport_only] HTTP 204 means fake transport acceptance with no receiver execution or artifact
+  ---
+  duration_ms: 0.640623
+  type: 'test'
+  ...
+# Subtest: [transport_only] every other fake HTTP status remains rejected, including other 2xx statuses
+ok 29 - [transport_only] every other fake HTTP status remains rejected, including other 2xx statuses
+  ---
+  duration_ms: 4.551488
+  type: 'test'
+  ...
+# Subtest: [transport_only] fake transport exceptions retain an error outcome without a success label
+ok 30 - [transport_only] fake transport exceptions retain an error outcome without a success label
+  ---
+  duration_ms: 1.010155
+  type: 'test'
+  ...
+# Subtest: [transport_only] returned request snapshots cannot mutate recorded fake transport evidence
+ok 31 - [transport_only] returned request snapshots cannot mutate recorded fake transport evidence
+  ---
+  duration_ms: 1.387524
+  type: 'test'
+  ...
+# Subtest: [missing_receiver] selecting Tyme-Lab holds before even the available fake 204 response
+ok 32 - [missing_receiver] selecting Tyme-Lab holds before even the available fake 204 response
+  ---
+  duration_ms: 2.611966
+  type: 'test'
+  ...
+# Subtest: [missing_receiver] Tyme-Lab as a producer or text value is not mistaken for a selected destination
+ok 33 - [missing_receiver] Tyme-Lab as a producer or text value is not mistaken for a selected destination
+  ---
+  duration_ms: 0.495807
+  type: 'test'
+  ...
+# Subtest: [missing_receiver] another unreviewed destination is held rather than accepted because a map entry exists
+ok 34 - [missing_receiver] another unreviewed destination is held rather than accepted because a map entry exists
+  ---
+  duration_ms: 0.597621
+  type: 'test'
+  ...
+# Subtest: R01: conflicting legacy source cannot survive repo normalization
+ok 35 - R01: conflicting legacy source cannot survive repo normalization
+  ---
+  duration_ms: 1.734656
+  type: 'test'
+  ...
+# Subtest: R02: consistent legacy source is preserved; source alone cannot fill repo
+ok 36 - R02: consistent legacy source is preserved; source alone cannot fill repo
+  ---
+  duration_ms: 1.169932
+  type: 'test'
+  ...
+# Subtest: R03: non-null workflow and AVOT destination selectors require a reviewed meaning
+ok 37 - R03: non-null workflow and AVOT destination selectors require a reviewed meaning
+  ---
+  duration_ms: 1.254771
+  type: 'test'
+  ...
+# Subtest: R04: null workflow and AVOT selectors remain unspecified, preserved values
+ok 38 - R04: null workflow and AVOT selectors remain unspecified, preserved values
+  ---
+  duration_ms: 0.388591
+  type: 'test'
+  ...
+# Subtest: R05: literal lone surrogates are rejected before a misleading byte digest exists
+ok 39 - R05: literal lone surrogates are rejected before a misleading byte digest exists
+  ---
+  duration_ms: 1.474122
+  type: 'test'
+  ...
+# Subtest: R06: escaped surrogate JSON sequences retain distinct exact-byte identities
+ok 40 - R06: escaped surrogate JSON sequences retain distinct exact-byte identities
+  ---
+  duration_ms: 0.925221
+  type: 'test'
+  ...
+# Subtest: R07: well-formed astral Unicode survives request preservation
+ok 41 - R07: well-formed astral Unicode survives request preservation
+  ---
+  duration_ms: 1.043969
+  type: 'test'
+  ...
+# Subtest: R08: nonobject API inputs produce structured holds without fabricated provenance
+ok 42 - R08: nonobject API inputs produce structured holds without fabricated provenance
+  ---
+  duration_ms: 0.686792
+  type: 'test'
+  ...
+# Subtest: R09: an external mutation cannot alter the configured observation clock
+ok 43 - R09: an external mutation cannot alter the configured observation clock
+  ---
+  duration_ms: 0.479921
+  type: 'test'
+  ...
+# Subtest: R10: wrapper-only source_event is held instead of becoming legacy producer evidence
+ok 44 - R10: wrapper-only source_event is held instead of becoming legacy producer evidence
+  ---
+  duration_ms: 2.183322
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 176.878612

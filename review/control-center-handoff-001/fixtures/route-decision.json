@@ -1,0 +1,6 @@
+{
+  "stage": "cross-repo-dispatcher",
+  "target": "avot-engine-runner",
+  "targetRepo": "sovereign-codex/AVOT-engine",
+  "receivingEventType": "avot_execution"
+}

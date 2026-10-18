@@ -1,0 +1,264 @@
+{
+  "schema_version": "1.0",
+  "candidate_id": "CONTROL-CENTER-HANDOFF-001",
+  "standing": "noncanonical_local_test_evidence",
+  "started_at_utc": "2026-10-18T04:50:00.511Z",
+  "completed_at_utc": "2026-10-18T04:50:00.725Z",
+  "baseline_commit": "4a5def9816bdb6c771559f3105558578edd284c1",
+  "node_version": "v24.19.0",
+  "command": [
+    "node",
+    "run-review.mjs"
+  ],
+  "test_api": {
+    "module": "node:test",
+    "method": "run",
+    "isolation": "none",
+    "files": [
+      "tests/acceptance.test.mjs",
+      "tests/review-regressions.test.mjs"
+    ]
+  },
+  "equivalent_test_cli": [
+    "node",
+    "--test",
+    "--test-isolation=none",
+    "--test-reporter=tap",
+    "tests/acceptance.test.mjs",
+    "tests/review-regressions.test.mjs"
+  ],
+  "runner_exit_code": 0,
+  "result": "passed",
+  "counts": {
+    "tests": 44,
+    "pass": 44,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "acceptance_category_counts": {
+    "legacy_shapes": 3,
+    "internal_event": 2,
+    "conflicting_target": 4,
+    "missing_provenance": 6,
+    "failure_status": 1,
+    "non_success": 3,
+    "identity_collision": 3,
+    "duplicate": 5,
+    "transport_only": 4,
+    "missing_receiver": 3
+  },
+  "review_regression_tests": 10,
+  "passing_test_names": [
+    "[legacy_shapes] direct and wrapped inputs preserve one normalized event and distinct raw evidence",
+    "[legacy_shapes] wrapper-only rich fields and wrapper extensions survive the recorded request",
+    "[legacy_shapes] canonical producer aliases agree with legacy identity without manufacturing authentication",
+    "[internal_event] records exactly the internal engine_handoff request while preserving final destination",
+    "[internal_event] unsupported ingress or stage does not silently select the accepted contract",
+    "[conflicting_target] contradictory route declarations hold and preserve their original evidence",
+    "[conflicting_target] missing target cannot be inferred from the route stage alone",
+    "[conflicting_target] conflicting rich wrapper and event data is held rather than overwritten",
+    "[conflicting_target] identical double declarations of rich data do not create a false conflict",
+    "[missing_provenance] absent, null, or blank required producer fields hold without local substitution",
+    "[missing_provenance] caller request identity is required and never replaced by a diagnostic identity",
+    "[missing_provenance] disagreeing canonical and legacy producer identities are explicit holds",
+    "[missing_provenance] invalid or timezone-free timestamps do not gain authority through Date.parse coercion",
+    "[missing_provenance] malformed JSON and non-object roots are held before fake transport",
+    "[missing_provenance] duplicate JSON keys are rejected at the root, nested, and escaped-name boundaries",
+    "[failure_status] failure-bearing labels never normalize to progress or completion",
+    "[non_success] incomplete, partial, skipped, blocked, and unknown outcomes remain non-success",
+    "[non_success] non-string status values are held without truthy coercion",
+    "[non_success] an exact producer completion report does not become verified receiver completion",
+    "[identity_collision] same request identity with changed rich content collides without a second request",
+    "[identity_collision] byte changes collide even when parsed JSON values are equivalent",
+    "[identity_collision] route decision and ingress are included in the request identity binding",
+    "[duplicate] identical repeats are explicit local duplicates and keep the prior observation",
+    "[duplicate] fake HTTP rejection and fake error are not retried by an identical repeat",
+    "[duplicate] a hold with complete declared identity reserves its request without attempting transport",
+    "[duplicate] a missing declared producer namespace cannot reserve or fabricate request identity",
+    "[duplicate] equal request IDs from distinct declared producer repositories are separate local identities",
+    "[transport_only] HTTP 204 means fake transport acceptance with no receiver execution or artifact",
+    "[transport_only] every other fake HTTP status remains rejected, including other 2xx statuses",
+    "[transport_only] fake transport exceptions retain an error outcome without a success label",
+    "[transport_only] returned request snapshots cannot mutate recorded fake transport evidence",
+    "[missing_receiver] selecting Tyme-Lab holds before even the available fake 204 response",
+    "[missing_receiver] Tyme-Lab as a producer or text value is not mistaken for a selected destination",
+    "[missing_receiver] another unreviewed destination is held rather than accepted because a map entry exists",
+    "R01: conflicting legacy source cannot survive repo normalization",
+    "R02: consistent legacy source is preserved; source alone cannot fill repo",
+    "R03: non-null workflow and AVOT destination selectors require a reviewed meaning",
+    "R04: null workflow and AVOT selectors remain unspecified, preserved values",
+    "R05: literal lone surrogates are rejected before a misleading byte digest exists",
+    "R06: escaped surrogate JSON sequences retain distinct exact-byte identities",
+    "R07: well-formed astral Unicode survives request preservation",
+    "R08: nonobject API inputs produce structured holds without fabricated provenance",
+    "R09: an external mutation cannot alter the configured observation clock",
+    "R10: wrapper-only source_event is held instead of becoming legacy producer evidence"
+  ],
+  "baseline_check": {
+    "expected_files": 17,
+    "available_files": 17,
+    "mismatches": 0,
+    "preserved_local_snapshots": 17,
+    "note": "Standalone archives contain candidate files, not repository source copies. Unavailable sources are not claimed as verified.",
+    "files": [
+      {
+        "path": ".github/workflows/Control_center_receiver.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "33aaeb38bce139caee63a001d47600feb4469a367934bd8b35124b9c9e511da8"
+      },
+      {
+        "path": ".github/workflows/avot-executor.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "b17ca4aa75cd6347213842782edbf4d5741a23f31df00bc61be3acd5d67cac83"
+      },
+      {
+        "path": ".github/workflows/control-center-router.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "d9f4c2e9184ffc1ececcaf5ac949d127f30aad283d74621e4456e93bb9d88ed9"
+      },
+      {
+        "path": ".github/workflows/control-center.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "61848bd08a1907d7d64f5a900c995ce4f83b24d25d0d75ead1d54f2d0ef82f59"
+      },
+      {
+        "path": ".github/workflows/cross-repo-dispatch.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "aaaba21ba5f14d2cda3f688ab008e16eed41dd073def86903735c75fdbb73ece"
+      },
+      {
+        "path": ".github/workflows/hall-core-0-conformance.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "4fb6429590175bbbbbeb1d70bf4785674955c01f3b826b7c15ec0c8f676abd46"
+      },
+      {
+        "path": ".github/workflows/result-receiver.yml",
+        "status": "preserved_local_snapshot",
+        "sha256": "2103fdb30c9e10db5873edc2d523a0e5edc581406f7fce26d8c38256fedcef58"
+      },
+      {
+        "path": "WORKFLOW_ROUTING_STANDARD.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "52329c48b2be3e5e8b080874d42cc1ed92463f9bb374a288a1d3a9168dd3a8f7"
+      },
+      {
+        "path": "docs/EVENT_ROUTING_TABLE.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "e235534a59a611bc73740f2585e358bee3c3235e933c8d6f91c0b805a1b29cca"
+      },
+      {
+        "path": "docs/TYME_EXECUTOR_CONTRACT_v1.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "f65d4ca7438f7957b06bcd0930821d6d81b674e40e6765559351b929228d12a1"
+      },
+      {
+        "path": "review/bridge-local-repair-001/README.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "4eff1b6c2462bb52eceb914aa0503314f3905220240f5b5f0d1f59920cc2ccfd"
+      },
+      {
+        "path": "review/bridge-local-repair-001/REPAIR_DESIGN_001.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "7941631353ebb4f81527f16aa29449d8fb7366f746ccb9e715bea0663b1e6326"
+      },
+      {
+        "path": "review/bridge-local-repair-001/REVIEW_SCOPE.md",
+        "status": "preserved_local_snapshot",
+        "sha256": "cd70dabaff5bc645be30da79e96f4e29108c705f751726e41a13401ebed26f61"
+      },
+      {
+        "path": "schemas/routing-envelope.schema.json",
+        "status": "preserved_local_snapshot",
+        "sha256": "30e2eaf0ed0c1ee9d214788e2154ebdd99ca288521bc4cdf2210268726aad602"
+      },
+      {
+        "path": "schemas/trace-contract-v1.json",
+        "status": "preserved_local_snapshot",
+        "sha256": "c4ff9b053a1dff43b6b52bcafd5285688062aa5c922d0412af1e80e621cc5928"
+      },
+      {
+        "path": "services/webhook-router/github-webhook.ts",
+        "status": "preserved_local_snapshot",
+        "sha256": "232c37de44b98b7051b611c6dec48ba38f6b3c076073bfdab67097ace9cf8259"
+      },
+      {
+        "path": "scripts/validate_trace_event.js",
+        "status": "preserved_local_snapshot",
+        "sha256": "56643d52285028c1779b2627b75312129cf71c783b88f8cd6584f4de89819ec2"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "BASELINE.json",
+      "sha256": "08dd0ef10bcde1bced5c1bec128d4d9d854f1006a41cd88aa8d03294cf2e65ba",
+      "bytes": 11880
+    },
+    {
+      "path": "CONTRACT.md",
+      "sha256": "35cb123ee3780ee810cd728b625427cc64329dbc60aa4d20f45194253df1beca",
+      "bytes": 11196
+    },
+    {
+      "path": "README.md",
+      "sha256": "5f714cf17c8bfe93dfc4fe149c24d775ee10ce26867ea5604499807b7f722965",
+      "bytes": 6277
+    },
+    {
+      "path": "candidate/adapter.mjs",
+      "sha256": "8e65db24185911f3e5f945bf6a1a6560c244f0fdc1c963b878302cbc4b464572",
+      "bytes": 20563
+    },
+    {
+      "path": "demo.mjs",
+      "sha256": "3e220faa87d081e26f672e55111e4da47b91eac5d4ef2cc34fe7b539a01ce506",
+      "bytes": 3680
+    },
+    {
+      "path": "fixtures/direct-event.json",
+      "sha256": "a986213fd10784da90ea45c4ccc2683aeab77a640c5b1b648e4267ab4e47738e",
+      "bytes": 752
+    },
+    {
+      "path": "fixtures/nested-event.json",
+      "sha256": "69980013141a7828d53a05dd51fea56d613d76f28f22d426bfe60a7043f5de31",
+      "bytes": 813
+    },
+    {
+      "path": "fixtures/route-decision.json",
+      "sha256": "b3583f3aafc44c8158b8da911e88f2c67ed06843ea0461a4747133348e9bd75d",
+      "bytes": 162
+    },
+    {
+      "path": "run-review.mjs",
+      "sha256": "c53f1e9879a9d9772bcda286879f0737c0b316fa9678aaaf118e45768956fd4c",
+      "bytes": 5808
+    },
+    {
+      "path": "tests/acceptance.test.mjs",
+      "sha256": "464202ee9ca956cd67769e6915380674c4d348e6521500a27b1c198c20a70bdd",
+      "bytes": 24817
+    },
+    {
+      "path": "tests/review-regressions.test.mjs",
+      "sha256": "a2f27a9bda6069098ad48204c2badd0eb2fcff0fe01706d2d9fb7a13b4ccd327",
+      "bytes": 5764
+    }
+  ],
+  "demo_checks": {
+    "normalized_event_digest_equal": true,
+    "raw_digest_distinct": true,
+    "duplicate_and_collision_did_not_add_request": true
+  },
+  "runner_error": null,
+  "limitations": [
+    "Tests exercise the isolated local candidate, not the unchanged GitHub workflows.",
+    "All transport responses are built-in in-memory simulations; no live dispatch is performed.",
+    "Producer identity is declared, not authenticated; credentials and App ID binding are unverified.",
+    "Destination metadata does not establish a live AVOT-engine or Tyme-Lab receiver.",
+    "The ledger is per harness instance, with no durable, cross-instance or remote exactly-once guarantee.",
+    "No receiver run, returned artifact, institutional receipt or promotion is established."
+  ]
+}
