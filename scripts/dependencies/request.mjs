@@ -2,9 +2,17 @@
 import { createHash } from 'node:crypto';
 
 export const CONTRACT_VERSION = 'tyme-dependency/1';
+/** The current installed role is v4; the tracker keeps its legacy select option. */
+export const CARRIER = Object.freeze({
+  role: 'Institutional Intake Bridge',
+  instructions_version: 'v4',
+  legacy_tracker_agent: 'Notion Bridge',
+  review_parent: 'https://app.notion.com/p/3f4c51d54b7581d5a977ed5a23e769ff',
+  runtime_tracker: 'collection://74409f4d-3622-4ecc-82dc-2a52f9bde7e4'
+});
 export const NEEDS = Object.freeze({
-  daily_staging_review: Object.freeze({ owner_role: 'Notion Bridge', artifact_kind: 'daily_staging_review' }),
-  notion_bridge_packet: Object.freeze({ owner_role: 'Notion Bridge', artifact_kind: 'notion_bridge_packet' })
+  daily_staging_review: Object.freeze({ owner_role: CARRIER.role, artifact_kind: 'daily_staging_review', expected_parent: CARRIER.review_parent }),
+  notion_bridge_packet: Object.freeze({ owner_role: CARRIER.role, artifact_kind: 'notion_bridge_packet', expected_parent: CARRIER.runtime_tracker })
 });
 
 const preparedRequests = new WeakSet();
@@ -51,10 +59,15 @@ export function prepareDependencyRequest({ source_packet, need } = {}) {
     expected_lineage_id: source_packet.lineage_id,
     dependency_kind: need,
     requested_owner_role: requirement.owner_role,
+    owner_instructions_version: CARRIER.instructions_version,
+    legacy_tracker_agent: CARRIER.legacy_tracker_agent,
     expected_artifact_kind: requirement.artifact_kind,
+    expected_parent_ref: requirement.expected_parent,
     mode: 'assisted_manual',
-    requested_action: 'Retrieve or restore the same-cycle source artifact through an authorized provider; report missing evidence rather than inventing it.',
-    required_return_fields: ['request_id', 'lineage_id', 'artifact_kind', 'artifact_ref', 'producer_role', 'producer_packet_id', 'actual_executed_at', 'evidence_refs'],
+    scheduler_state: 'unverified',
+    current_objective_and_source_set: 'must_be_separately_authorized_for_any_new_staging',
+    requested_action: 'Read-only reconcile whether attributable same-cycle source evidence already exists under the approved destination. If absent, return a blocked report; do not backdate, manufacture old-cycle records, or change destinations. A new current-cycle review requires a separately authorized objective and source set.',
+    required_return_fields: ['request_id', 'lineage_id', 'artifact_kind', 'artifact_ref', 'parent_ref', 'producer_role', 'producer_packet_id', 'actual_executed_at', 'evidence_refs'],
     downstream_trigger_authorized: false,
     credential_access_authorized: false,
     institutional_effect: 'none'
@@ -72,9 +85,22 @@ export function assessDependencyReturn(prepared, candidate, readback) {
   }
   if (candidate == null) { result.disposition = 'awaiting_provider_return'; return result; }
   const req = prepared.request;
+  // A carrier may correctly refuse when current-cycle authority or historic evidence is absent.
+  // This is a self-reported blocker, NOT proof of source absence or permission to resume.
+  if (candidate && typeof candidate === 'object' && !Array.isArray(candidate) && candidate.outcome === 'blocked') {
+    const reasons = new Set(['historical_evidence_not_found', 'current_objective_unavailable', 'authorized_sources_unavailable', 'source_access_unavailable', 'schedule_state_unverified']);
+    if (candidate.request_id === req.request_id && candidate.lineage_id === req.expected_lineage_id &&
+        candidate.producer_role === req.requested_owner_role && reasons.has(candidate.blocker) &&
+        !Object.hasOwn(candidate, 'artifact_ref')) {
+      result.disposition = 'provider_blocked_unattested';
+      result.issues.push('source_absence_or_authority_block_not_independently_verified');
+    } else result.issues.push('invalid_provider_blocker_claim');
+    return result;
+  }
   if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate) ||
       candidate.request_id !== req.request_id || candidate.lineage_id !== req.expected_lineage_id ||
       candidate.artifact_kind !== req.expected_artifact_kind || candidate.producer_role !== req.requested_owner_role ||
+      candidate.parent_ref !== req.expected_parent_ref ||
       !token(candidate.producer_packet_id) || !notionRef(candidate.artifact_ref) ||
       !timestamp(candidate.actual_executed_at) || (timestamp(candidate.actual_executed_at) && arizonaDate(candidate.actual_executed_at) !== req.expected_lineage_id.slice(-10)) || !Array.isArray(candidate.evidence_refs) ||
       candidate.evidence_refs.length === 0 || !candidate.evidence_refs.every(notionRef)) {
@@ -84,6 +110,7 @@ export function assessDependencyReturn(prepared, candidate, readback) {
   if (!readback || typeof readback !== 'object' || Array.isArray(readback) ||
       readback.request_id !== req.request_id || readback.lineage_id !== candidate.lineage_id ||
       readback.artifact_kind !== candidate.artifact_kind || readback.artifact_ref !== candidate.artifact_ref ||
+      readback.parent_ref !== req.expected_parent_ref ||
       readback.producer_packet_id !== candidate.producer_packet_id ||
       !timestamp(readback.observed_at) || !notionRef(readback.observation_ref) ||
       readback.observation_ref === candidate.artifact_ref) {
