@@ -34,7 +34,7 @@ export function prepareDependencyRequest({ source_packet, need } = {}) {
   else {
     if (!token(source_packet.packet_id)) result.issues.push('invalid_packet_id');
     if (!lineageValid(source_packet.lineage_id)) result.issues.push('invalid_cycle_lineage');
-    if (source_packet.agent_name !== 'Repo Cartographer' || source_packet.execution_state !== 'skipped' || source_packet.handoff_ready !== false) {
+    if (source_packet.agent_name !== 'Repo Cartographer' || source_packet.execution_state !== 'skipped' || ![false, 'false'].includes(source_packet.handoff_ready)) {
       result.issues.push('not_an_observed_cartographer_skip');
     }
     if (!notionRef(source_packet.evidence_ref)) result.issues.push('missing_source_evidence_ref');
