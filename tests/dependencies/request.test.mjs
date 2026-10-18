@@ -60,6 +60,13 @@ test('Notion database Execution State Done cannot substitute for runtime_packet 
   }
 });
 
+test('quoted false in the original Notion runtime packet is accepted without truthy coercion', () => {
+  assert.equal(prepareDependencyRequest({ source_packet: { ...sourcePacket(), handoff_ready: 'false' }, need: 'daily_staging_review' }).disposition, 'proposal_only');
+  for (const value of ['true', true, 'False', '0', null]) {
+    assert.equal(prepareDependencyRequest({ source_packet: { ...sourcePacket(), handoff_ready: value }, need: 'daily_staging_review' }).disposition, 'hold');
+  }
+});
+
 test('only an explicit skipped Cartographer packet with source reference qualifies', () => {
   const mutations = [
     p => { p.agent_name = 'Promotion Reviewer'; },
