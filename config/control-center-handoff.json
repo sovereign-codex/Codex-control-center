@@ -1,0 +1,14 @@
+{
+  "schema_version": "ccc-handoff-policy/1",
+  "enabled": false,
+  "ledger_branch": "main",
+  "producer_bindings": [],
+  "dispatcher_sender_ids": [],
+  "receiver": {
+    "repository": "sovereign-codex/AVOT-engine",
+    "event_type": "avot_execution",
+    "compatible": false,
+    "verified_commit": null,
+    "evidence_ref": null
+  }
+}

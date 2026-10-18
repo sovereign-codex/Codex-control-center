@@ -1,0 +1,194 @@
+{
+  "schema_version": "ccc-handoff-integration-test-results/1",
+  "standing": "disabled_draft_review",
+  "repository": {
+    "name": "sovereign-codex/Codex-control-center",
+    "main_commit": "4a5def9816bdb6c771559f3105558578edd284c1",
+    "base_pull_request": 21,
+    "base_commit": "4ff3b9ab14ecb8582c6129252424ac677ac0f9db",
+    "base_tree": "bf75513216f94a9489871a8f366446f2bb371ed8",
+    "frozen_candidate_files_verified": 16,
+    "other_local_baseline_files_verified": 15
+  },
+  "test_run": {
+    "started_at": "2026-10-18T05:37:45Z",
+    "completed_at": "2026-10-18T05:37:46Z",
+    "timestamp_precision": "one second",
+    "node_version": "v24.19.0",
+    "command": "node --test --test-isolation=none --test-reporter=tap tests/handoff/*.test.mjs",
+    "exit_code": 0,
+    "result": "passed",
+    "tests": 50,
+    "suites": 0,
+    "pass": 50,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 269.416732,
+    "groups": [
+      {
+        "file": "tests/handoff/contract.test.mjs",
+        "tests": 20
+      },
+      {
+        "file": "tests/handoff/executor.test.mjs",
+        "tests": 19
+      },
+      {
+        "file": "tests/handoff/github-service.test.mjs",
+        "tests": 11
+      }
+    ],
+    "recorded_output": {
+      "path": "review/control-center-handoff-integration-001/tests.tap",
+      "bytes": 11690,
+      "sha256": "e78438c01ad1268264910d23d511a02e6e6a8509a159dd086e0ea34f7c5e8eaa",
+      "git_blob_sha": "60ffbcef5e47396eff81be45f9e1f3c0ccdfa626"
+    }
+  },
+  "cli_smoke": {
+    "report": {
+      "path": "review/control-center-handoff-integration-001/CLI_SMOKE.json",
+      "bytes": 5217,
+      "sha256": "68f600e2a8d08bb4819809d880e43855c337efe92e6756102e5eb36864d08fdf",
+      "git_blob_sha": "b9770d112f794171f0a4e7df2d1f68015a9a01d8"
+    },
+    "cases": 4,
+    "passed": 4,
+    "failed": 0,
+    "network_attempts": 0,
+    "expected_exit_code": 1,
+    "ready": false,
+    "event_bytes_preserved": true,
+    "execution_status": "unverified",
+    "completion_claim": false,
+    "tested_source_hashes_rechecked": true
+  },
+  "checked_in_policy": {
+    "enabled": false,
+    "producer_bindings": 0,
+    "dispatcher_sender_ids": 0,
+    "receiver_compatible": false
+  },
+  "independent_review_findings_closed": [
+    "Bound strict JSON nesting before recursive processing; reject malformed/deep policy and outgoing envelopes with structured holds.",
+    "Limit Dispatcher GitHub App transport token to AVOT-engine; use built-in GITHUB_TOKEN for the CCC ledger."
+  ],
+  "validation_scope": [
+    "Pure preparation, explicit request identity, full normalized content and wrapper preservation, strict input bounds, and disabled/unauthorized zero-call holds.",
+    "Create-only claim behavior using injected atomic fake services: competing claims, duplicates, collisions, corrupt evidence, ambiguous writes, and no automatic retry.",
+    "Transport accepted/rejected/uncertain distinctions and separate outcome-persistence failure reporting; execution remains unverified.",
+    "Dispatcher verification against the persisted Router claim and rejection of forged handoff observations or completion evidence.",
+    "GitHub HTTP adapter with injected fetch responses: fixed destinations, canonical bytes, blob verification, create-only writes, bounded reads, and sanitized failures.",
+    "Four CLI prepare/execute paths under the disabled policy with empty credential variables and a forbidden-network guard."
+  ],
+  "evidence_limits": [
+    "No live repository dispatch, credential minting, deployment, or receiver execution was performed.",
+    "Injected services and HTTP responses do not establish live GitHub atomicity, permission scope, sender-to-workflow provenance, or receiver compatibility.",
+    "Repository writers must preserve claim records; Git blob identity and this client do not establish immutable custody or exactly-once remote execution.",
+    "The disabled policy admits no senders and requires later reviewed configuration and receiver/ledger evidence before any live attempt."
+  ],
+  "receiver_source_review": {
+    "repository": "sovereign-codex/AVOT-engine",
+    "commit": "dea4b3f0c05334f8abd33ac4c2abae76b094e6f4",
+    "path": ".github/workflows/avot-engine-receiver.yml",
+    "git_blob_sha": "3b8af8bd9bb7c610e9fd8e0607ebd9810b20aeda",
+    "compatible": false,
+    "workflow_enabled_state_verified": false,
+    "runtime_execution_verified": false,
+    "report": "docs/CONTROL_CENTER_HANDOFF_RECEIVER_REVIEW.md"
+  },
+  "inputs": [
+    {
+      "path": ".github/workflows/control-center-router.yml",
+      "bytes": 1892,
+      "sha256": "9f3c33e67a58c4bf5043edbd4c86cb94cea0ad6ab36e4e6d74ace013d93ed926",
+      "git_blob_sha": "12cee1137514f49c886ecb4aae99bf90673f4545"
+    },
+    {
+      "path": ".github/workflows/cross-repo-dispatch.yml",
+      "bytes": 1905,
+      "sha256": "dd83c411f6d3a403b939a9f749813c6cae37bc9e0aa4e001616c3e1e78c234d1",
+      "git_blob_sha": "0425c0a3d2fbbb92aa005394ca905760d778add9"
+    },
+    {
+      "path": "config/control-center-handoff.json",
+      "bytes": 337,
+      "sha256": "9a10c70b397f03f04e3972dde1cd0cd3df5298854d0b8859962c81c8efc55b09",
+      "git_blob_sha": "febfe44f69ca1c0c02c5394d5edfafb163a939a5"
+    },
+    {
+      "path": "scripts/handoff/normalization.mjs",
+      "bytes": 16751,
+      "sha256": "249facad883a5fa9fd51f89971bc66198e25e623ea514a79f96593bae3f7b30a",
+      "git_blob_sha": "d747c6a2ccca50e06b8ea7981a4137807abb28c9"
+    },
+    {
+      "path": "scripts/handoff/contract.mjs",
+      "bytes": 17258,
+      "sha256": "f99d0a1099a431b933005b80e4b76273a42f939ce7333aca5b7f117d758dd9b9",
+      "git_blob_sha": "85da3d02ed356130c050eca4bced7b0de03fb7ac"
+    },
+    {
+      "path": "scripts/handoff/executor.mjs",
+      "bytes": 11119,
+      "sha256": "e1dcc2a255b95f1f624748c894129986c610a68c78014ab7ab537cd53c497aa9",
+      "git_blob_sha": "2fc00cd59b04a13c68511920f47984b87df833a1"
+    },
+    {
+      "path": "scripts/handoff/github-service.mjs",
+      "bytes": 7410,
+      "sha256": "f951cf24786d94f2c0aa12e8297355e1aa7e9be49d9a31de02f8260f6f43c4a5",
+      "git_blob_sha": "cdecdd7a2da97fb2f87d15374acc8beeeb239c30"
+    },
+    {
+      "path": "scripts/handoff/run.mjs",
+      "bytes": 4191,
+      "sha256": "0acbf28b8d0f86880a2da3e5468b8ed6a6b63c33ebeed49c0528d5ee005e714f",
+      "git_blob_sha": "509ed9eb50fdbdd1c33cbe3e1f10a84fd5a8dc7d"
+    },
+    {
+      "path": "tests/handoff/helpers.mjs",
+      "bytes": 5318,
+      "sha256": "ce2035b03b7e80e233d9c5edc868641fe403c6c1b77bc97edf21d5af5d61e48d",
+      "git_blob_sha": "dd63432dfbddace551b2b6ca74a668ab06646c79"
+    },
+    {
+      "path": "tests/handoff/contract.test.mjs",
+      "bytes": 14700,
+      "sha256": "d215ce2a3581280d37cda9a316558f0da1f4cf2725f66a5a1eedea7810f16bae",
+      "git_blob_sha": "ac8fef2aef8efffb1f80e524f512a41015b7dae3"
+    },
+    {
+      "path": "tests/handoff/executor.test.mjs",
+      "bytes": 15327,
+      "sha256": "649d181a1ceca0390c08b5cca0d16da7dc90fecc0f02ab64f5715313ac1bffa6",
+      "git_blob_sha": "f6609917775be7d121b953ecb38d15592853f763"
+    },
+    {
+      "path": "tests/handoff/github-service.test.mjs",
+      "bytes": 9235,
+      "sha256": "264a268295d27dd5a5e13977e089493c880e863a43564db3c560d14ad46a7d32",
+      "git_blob_sha": "a0b58a25e10a7380a0dcc6d1c4daa5ecf6c14b0c"
+    },
+    {
+      "path": "docs/CONTROL_CENTER_HANDOFF_INTEGRATION_001.md",
+      "bytes": 15591,
+      "sha256": "78ba2fa16f68e6977fba50490adafa4b1c0586394a4c3f0b1b7fec2dc97d4f57",
+      "git_blob_sha": "6997838acf900351d0d1bf64755bab63d565b822"
+    },
+    {
+      "path": "docs/CONTROL_CENTER_HANDOFF_RECEIVER_REVIEW.md",
+      "bytes": 8551,
+      "sha256": "28a0b42cb44381d445700888214795df23c75f83a04fcc691623969e4d8c1824",
+      "git_blob_sha": "3af33a76d1cc5643b1b5d9d6a861117da659a435"
+    },
+    {
+      "path": "review/control-center-handoff-integration-001/README.md",
+      "bytes": 1869,
+      "sha256": "55feb55abc618c88229e7f0b1bb930e51b4f78d0ca4dfaff1fb7f7642a7b6d5c",
+      "git_blob_sha": "e108e16d728c1e9c49518111f058a878e1ee273d"
+    }
+  ]
+}

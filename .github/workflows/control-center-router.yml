@@ -11,193 +11,50 @@ permissions:
 jobs:
   route:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 10
     steps:
-      # -----------------------------
-      # 0. CHECKOUT
-      # -----------------------------
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout event commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
+          ref: ${{ github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
 
-      # -----------------------------
-      # 1. GENERATE GITHUB APP TOKEN
-      # -----------------------------
-      - name: Generate GitHub App Token
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+
+      - name: Prepare and validate handoff policy
+        id: prepare
+        run: node scripts/handoff/run.mjs prepare router
+
+      - name: Create scoped dispatch token
+        if: steps.prepare.outputs.ready == 'true'
         id: app-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
           app-id: ${{ secrets.CODEX_APP_ID }}
           private-key: ${{ secrets.CODEX_APP_PRIVATE_KEY }}
           owner: sovereign-codex
+          repositories: |
+            Codex-control-center
+          permission-contents: write
 
-      # -----------------------------
-      # 2. LOAD EVENT
-      # -----------------------------
-      - name: Load payload
-        id: payload
-        run: |
-          echo '${{ toJson(github.event.client_payload) }}' > event.json
-
-          echo "==== RAW EVENT ===="
-          cat event.json
-
-          # Support BOTH direct payloads and nested payloads
-          if jq -e '.event' event.json >/dev/null 2>&1; then
-            EVENT_PATH=".event"
-          else
-            EVENT_PATH="."
-          fi
-
-          TRACE_ID=$(jq -r "${EVENT_PATH}.trace_id // empty" event.json)
-          WORKFLOW=$(jq -r "${EVENT_PATH}.workflow // empty" event.json)
-          REPO=$(jq -r "${EVENT_PATH}.repo // empty" event.json)
-          STATUS=$(jq -r "${EVENT_PATH}.status // \"unknown\"" event.json)
-          TIMESTAMP=$(jq -r "${EVENT_PATH}.timestamp // empty" event.json)
-
-          SOURCE=$(jq -r '.source // "unknown"' event.json)
-          TARGET=$(jq -r '.target // "none"' event.json)
-
-          echo "trace_id=$TRACE_ID" >> $GITHUB_OUTPUT
-          echo "workflow=$WORKFLOW" >> $GITHUB_OUTPUT
-          echo "repo=$REPO" >> $GITHUB_OUTPUT
-          echo "status=$STATUS" >> $GITHUB_OUTPUT
-          echo "timestamp=$TIMESTAMP" >> $GITHUB_OUTPUT
-          echo "source=$SOURCE" >> $GITHUB_OUTPUT
-          echo "target=$TARGET" >> $GITHUB_OUTPUT
-
-      # -----------------------------
-      # 3. VALIDATION
-      # -----------------------------
-      - name: Validate event
-        run: |
-          if [ -z "${{ steps.payload.outputs.trace_id }}" ] || \
-             [ -z "${{ steps.payload.outputs.workflow }}" ] || \
-             [ -z "${{ steps.payload.outputs.repo }}" ]; then
-            echo "❌ Invalid payload"
-            exit 1
-          fi
-
-          echo "✅ Payload valid"
-
-      # -----------------------------
-      # 4. ROUTE DECISION ENGINE
-      # -----------------------------
-      - name: Determine route
-        id: route
-        run: |
-          WORKFLOW="${{ steps.payload.outputs.workflow }}"
-          STATUS="${{ steps.payload.outputs.status }}"
-
-          TARGET="control-center-result-receiver"
-
-          # FAILURE ROUTING
-          if [[ "$STATUS" == *"fail"* ]] || \
-             [[ "$STATUS" == *"error"* ]]; then
-
-            TARGET="control-center-recovery"
-
-          # ENGINE EVENTS
-          elif [[ "$WORKFLOW" == *"engine"* ]]; then
-
-            TARGET="avot-engine-runner"
-
-          # DISPATCH EVENTS
-          elif [[ "$WORKFLOW" == *"dispatch"* ]]; then
-
-            TARGET="cross-repo-dispatcher"
-
-          # CONTROL CENTER EVENTS
-          elif [[ "$WORKFLOW" == *"control-center"* ]]; then
-
-            TARGET="control-center-result-receiver"
-
-          fi
-
-          echo "target=$TARGET" >> $GITHUB_OUTPUT
-
-          echo "==== ROUTE DECISION ===="
-          echo "Workflow: $WORKFLOW"
-          echo "Status: $STATUS"
-          echo "Target: $TARGET"
-
-      # -----------------------------
-      # 5. SAVE DECISION TRACE
-      # -----------------------------
-      - name: Save decision
-        run: |
-          mkdir -p decisions
-
-          jq -n \
-            --arg trace_id "${{ steps.payload.outputs.trace_id }}" \
-            --arg from "${{ steps.payload.outputs.workflow }}" \
-            --arg to "${{ steps.route.outputs.target }}" \
-            --arg status "${{ steps.payload.outputs.status }}" \
-            --arg timestamp "${{ steps.payload.outputs.timestamp }}" \
-            '{
-              trace_id: $trace_id,
-              from: $from,
-              to: $to,
-              status: $status,
-              decision: "route",
-              timestamp: $timestamp
-            }' > decisions/${{ steps.payload.outputs.trace_id }}.json
-
-          echo "==== SAVED DECISION ===="
-          cat decisions/${{ steps.payload.outputs.trace_id }}.json
-
-      # -----------------------------
-      # 6. FORWARD EVENT
-      # -----------------------------
-      - name: Forward event
+      - name: Revalidate, claim, and dispatch once
+        if: steps.prepare.outputs.ready == 'true'
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          TARGET="${{ steps.route.outputs.target }}"
+          GITHUB_TOKEN: ${{ github.token }}
+          HANDOFF_DISPATCH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: node scripts/handoff/run.mjs execute router
 
-          echo "➡️ Routing to $TARGET"
-
-          BODY=$(jq -n \
-            --arg event_type "$TARGET" \
-            --slurpfile payload event.json \
-            '{
-              event_type: $event_type,
-              client_payload: $payload[0]
-            }')
-
-          echo "==== DISPATCH BODY ===="
-          echo "$BODY"
-
-          RESPONSE=$(curl -s -o response.txt -w "%{http_code}" \
-            -X POST https://api.github.com/repos/sovereign-codex/Codex-control-center/dispatches \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -d "$BODY")
-
-          echo "HTTP Status: $RESPONSE"
-
-          echo "==== RESPONSE ===="
-          cat response.txt
-
-          if [ "$RESPONSE" != "204" ]; then
-            echo "❌ Dispatch failed"
-            exit 1
-          fi
-
-          echo "✅ Dispatch succeeded"
-
-      # -----------------------------
-      # 7. COMMIT DECISION TRACE
-      # -----------------------------
-      - name: Commit decision log
-        run: |
-          git config user.name "codex-bot"
-          git config user.email "actions@github.com"
-
-          git add decisions
-
-          git commit -m "Routing decision for ${{ steps.payload.outputs.trace_id }}" || echo "No changes"
-
-          git pull --rebase origin main || true
-          git push
+      - name: Preserve handoff observations
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: control-center-router-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .handoff-state/router/*.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 30
