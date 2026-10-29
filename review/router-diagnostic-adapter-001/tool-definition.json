@@ -1,0 +1,15 @@
+{
+  "name": "invoke_router_diagnostic_v1",
+  "description": "Attempt one separately authorized synthetic Router disabled-policy diagnostic. Not downstream execution or custom App authentication. Requires a server-side reviewed grant; no automatic retry.",
+  "inputSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["diagnostic_id", "expected_source_revision"],
+    "properties": {
+      "diagnostic_id": {"type": "string", "pattern": "^ccc-thread-diag-v1-[a-z0-9]{8,32}$", "maxLength": 51},
+      "expected_source_revision": {"type": "string", "pattern": "^[0-9a-f]{40}$", "maxLength": 40}
+    }
+  },
+  "annotations": {"readOnlyHint": false, "destructiveHint": true, "idempotentHint": false, "openWorldHint": true},
+  "securitySchemes": [{"type": "oauth2", "scopes": ["router.diagnostic.invoke"]}]
+}

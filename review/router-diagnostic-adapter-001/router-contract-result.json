@@ -1,0 +1,11 @@
+{
+  "kind": "offline_contract_check",
+  "disposition": "hold",
+  "issues": [
+    "policy_disabled",
+    "receiver_unverified",
+    "sender_not_allowed"
+  ],
+  "live_dispatch": false,
+  "downstream_execution": "not_tested"
+}
