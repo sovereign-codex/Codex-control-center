@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Office Codex Roundtrip Return v0",
+  "type": "object",
+  "required": [
+    "roundtrip_id",
+    "request_id",
+    "trace_id",
+    "origin_office_role",
+    "executor",
+    "task",
+    "result",
+    "transport",
+    "review",
+    "standing",
+    "receipt"
+  ],
+  "properties": {
+    "roundtrip_id": { "type": "string" },
+    "request_id": { "type": "string" },
+    "trace_id": { "type": "string" },
+    "origin_office_role": { "type": "string" },
+    "executor": {
+      "type": "object",
+      "required": ["runtime_class", "endpoint_id", "session_or_run_id"],
+      "properties": {
+        "runtime_class": { "enum": ["workspace_agent", "codex_agent"] },
+        "endpoint_id": { "type": "string" },
+        "session_or_run_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "required": ["authority_ceiling"],
+      "properties": {
+        "repository": { "type": ["string", "null"] },
+        "sha": { "type": ["string", "null"], "pattern": "^[a-f0-9]{40}$" },
+        "authority_ceiling": { "const": "READ_ONLY" }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "required": ["summary", "evidence_refs", "assumptions", "uncertainty"],
+      "properties": {
+        "summary": { "type": "string" },
+        "evidence_refs": { "type": "array", "items": { "type": "string" } },
+        "assumptions": { "type": "array", "items": { "type": "string" } },
+        "uncertainty": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "transport": {
+      "type": "object",
+      "required": ["accepted", "runtime_started", "runtime_completed", "result_returned", "evidence_stored"],
+      "properties": {
+        "accepted": { "type": "boolean" },
+        "runtime_started": { "type": "boolean" },
+        "runtime_completed": { "type": "boolean" },
+        "result_returned": { "type": "boolean" },
+        "evidence_stored": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": ["reviewing_office_role", "completed", "verdict"],
+      "properties": {
+        "reviewing_office_role": { "type": "string" },
+        "completed": { "type": "boolean" },
+        "verdict": { "enum": ["PASS", "PARTIAL", "FAIL", "HOLD", "UNREVIEWED"] }
+      },
+      "additionalProperties": false
+    },
+    "standing": {
+      "type": "object",
+      "required": ["claimed_by_executor", "institutional_effect"],
+      "properties": {
+        "claimed_by_executor": { "const": "none" },
+        "institutional_effect": { "const": "none" }
+      },
+      "additionalProperties": false
+    },
+    "receipt": {
+      "type": "object",
+      "required": ["durable_ref", "preserved"],
+      "properties": {
+        "durable_ref": { "type": ["string", "null"] },
+        "preserved": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
