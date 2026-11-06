@@ -1,0 +1,1782 @@
+[
+  {
+    "name": "valid baseline",
+    "expected_valid": true,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "c6c2e5550ae70f988deb3360573d1f5717d5e299b6bd3aadf0bad1dda9dac664"
+    }
+  },
+  {
+    "name": "empty evidence",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "0d4cc5819e20c5ac1175b44cd1efd843d9f2f5cd946adcf9b9921057e79f7e1a"
+    }
+  },
+  {
+    "name": "non-string evidence",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          42
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "c3f12c930a4105f2f54262a27bee5d7725c646cd412c8c6ef634d11afbbac516"
+    }
+  },
+  {
+    "name": "out-of-order lifecycle",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": false,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "2552f399e6add5d1d9c36f790b2613fe59a83598867ddc25e26516c0c120cd08"
+    }
+  },
+  {
+    "name": "review PASS but incomplete",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": false,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "69582fe1cf15377793c009020ac6eebd5fb4e869f837b2d2e79f97a527d2e134"
+    }
+  },
+  {
+    "name": "summary control character",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "x\u0001y",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "bf8684dfccf3546b5fc23513d4ee981e4afc1693c2b571d1a276ba90be879205"
+    }
+  },
+  {
+    "name": "summary length 1025",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "2d3071a3161f4e5b19291da7355f0277aaf019da2fd28ef18b98e58bc10b906f"
+    }
+  },
+  {
+    "name": "identity length 1025",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-e27c812db8e14f0e832038ebe6507577",
+      "content_sha256": "0c71b8b18f5423701e5a1a7aae751ed51a34d540e307d2ac4161a93a56ad7652"
+    }
+  },
+  {
+    "name": "malformed embedded repository custody",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": {
+        "bad": true
+      },
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "0e46fe594a4d90f23618e3bb7fff281293da85f888cce5c7217ff01eec1bb4ae"
+    }
+  },
+  {
+    "name": "malformed embedded Notion readback",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": {
+        "bad": true
+      },
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "f738c5693aa3f8a680b51454d998c82dc848d3aabddd2d148118c4f3be6926f5"
+    }
+  },
+  {
+    "name": "WRITE authority",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "WRITE"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "c0274ecd463bb1ae1caaec7cf29d515a7f9d2e76e978745e786c9e6f7c4967cb"
+    }
+  },
+  {
+    "name": "missing origin",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "f998dfed14005ef1a252fc8b810345c27b7152bf7d0b977afe643e6d735ea293"
+    }
+  },
+  {
+    "name": "unknown runtime",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "other",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "d97ddb3e8a2176385470e6b597f69d2c6ffc4c607a64fbdbbad0c7039d4a9404"
+    }
+  },
+  {
+    "name": "summary length 1024",
+    "expected_valid": true,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "40c83711dde6c49a8c81470c9cbf4bc0bff6ee0fa49a94bc1d08b6780c224dfb"
+    }
+  },
+  {
+    "name": "identity length 1024",
+    "expected_valid": true,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9fc44d1254b65949dbe5fb8b9f56828b",
+      "content_sha256": "6e4fde72a108a81097c456f294a852fac9024ce7c6ca23ec8c3609c270a2e53d"
+    }
+  },
+  {
+    "name": "Unicode summary",
+    "expected_valid": true,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "TYME — remembrance 🌀",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "daf457880861a5f5f8d94731c27ab4c7455764843eb833d303b7cf20ccbf8ce6"
+    }
+  },
+  {
+    "name": "valid-looking embedded repository custody",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": {
+        "repository": "a/b",
+        "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "blob_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "content_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+      },
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "392888611652ad8da619dd7ad57f6237988d32368eb98cbdd10dbf521ec2889e"
+    }
+  },
+  {
+    "name": "valid-looking embedded Notion readback",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": {
+        "page_url": "https://www.notion.so/example",
+        "reconstructed_content_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "independent_readback": true
+      },
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "59c573f8ab42e64ba6119ff861bfa48a8fed18277121aa370f73263ca4533246"
+    }
+  },
+  {
+    "name": "orphan SHA without repository",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": null,
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "89f9e86a5656c558b13f84b5e2743b0187ec854e4e9a39cdb959339580aaa2db"
+    }
+  },
+  {
+    "name": "unknown top field",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "d1c910c597b9e43a07d464f7da9f2bfcb11d3e7dbc648b78ba93860a80e74e26",
+      "extra": true
+    }
+  },
+  {
+    "name": "unknown executor field",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session",
+        "extra": true
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "fed9649e569813e4bcbabdb4d80c62ae030941f508477db37f25cbf6148bd1cd"
+    }
+  },
+  {
+    "name": "authority claim in standing",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "approved",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "1d1ed5d584f6d26bddc17e6597b75d231267648742f28bc90ee530a94182e16b"
+    }
+  },
+  {
+    "name": "review completed UNREVIEWED",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "UNREVIEWED"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "51291f1fbc588ce5dc1f1268e1675e552f93a5bec1dedc40b9ba920c3afa1b11"
+    }
+  },
+  {
+    "name": "consistent unfinished snapshot",
+    "expected_valid": true,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": false,
+        "runtime_started": false,
+        "runtime_completed": false,
+        "result_returned": false,
+        "evidence_stored": false
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": false,
+        "verdict": "UNREVIEWED"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "c814b1be41e34f86b117ac968a22f6ceecce6e59ab679b9c5a389072f503e5d8"
+    }
+  },
+  {
+    "name": "empty assumption string",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [
+          ""
+        ],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "47cd34626ee42d7c6613f807da63347bf28bbde7a97c8e20205e692f4c99783a"
+    }
+  },
+  {
+    "name": "null task",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": null,
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "1b5c914cb6a83aa23922a5e06627887d114dacd1fac62e9f7f6ebe20b05a3667"
+    }
+  },
+  {
+    "name": "whitespace identity",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": " x ",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-775d2485e656eba034d7f1399a965a9b",
+      "content_sha256": "c2192934c4ce47188b838b77ae5fe795fe3001dc7c6746bd22d23986d5472498"
+    }
+  },
+  {
+    "name": "control in evidence",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "a\nb"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "ec42c4f3db42949ce2d27d358f2b5ca6fadc48819d4b9968e5c18fba482bbaf4"
+    }
+  },
+  {
+    "name": "nonboolean lifecycle",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": "true",
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "repository_receipt": null,
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "13cbc74b49d31e165a0a7b7077894ad65735e3c251a7e28fe0b1f3e39637f33f"
+    }
+  },
+  {
+    "name": "missing external-custody placeholder",
+    "expected_valid": false,
+    "receipt": {
+      "receipt_version": "office-codex-receipt/1",
+      "request_id": "DEMO-ROUNDTRIP-001B",
+      "trace_id": "DEMO-TRACE-001B",
+      "correlation_sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "origin_office_role": "Repo Cartographer (synthetic)",
+      "executor": {
+        "runtime_class": "codex_agent",
+        "endpoint_id": "DEMO-no-live-endpoint",
+        "session_or_run_id": "DEMO-no-live-session"
+      },
+      "task": {
+        "repository": "sovereign-codex/Codex-control-center",
+        "sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+        "authority_ceiling": "READ_ONLY"
+      },
+      "transport": {
+        "accepted": true,
+        "runtime_started": true,
+        "runtime_completed": true,
+        "result_returned": true,
+        "evidence_stored": true
+      },
+      "result": {
+        "summary": "Synthetic offline verification fixture. No execution occurred.",
+        "evidence_refs": [
+          "fixture://offline-only"
+        ],
+        "assumptions": [],
+        "uncertainty": [
+          "All lifecycle fields are synthetic."
+        ]
+      },
+      "review": {
+        "reviewing_office_role": "Promotion Reviewer (synthetic)",
+        "completed": true,
+        "verdict": "PASS"
+      },
+      "standing": {
+        "claimed_by_executor": "none",
+        "institutional_effect": "none",
+        "hall_receipt_claimed": false,
+        "canon_claimed": false
+      },
+      "proof_ceiling": {
+        "persistence_is_not_authority": true,
+        "transport_acceptance_is_not_completion": true,
+        "runtime_completion_is_not_review": true,
+        "review_is_not_canon": true
+      },
+      "notion_readback": null,
+      "receipt_id": "ocr1-9c7cf68b17da7f3ed04cbb565643e63c",
+      "content_sha256": "7e20c602b91dea34f290c0356c909e018f47590e0ce61b7a6343e084054b4350"
+    }
+  }
+]

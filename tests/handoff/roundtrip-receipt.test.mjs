@@ -77,7 +77,7 @@ test('rejects institutional effect claim', () => {
   assert.equal(out.issues.some(x => x.code === 'institutional_effect_forbidden'), true);
 });
 
-test('accepts repository custody only with exact identities', () => {
+test('strict profile rejects embedded repository custody even with exact identities', () => {
   const out = buildReceipt({
     ...base,
     repository_receipt: {
@@ -87,10 +87,11 @@ test('accepts repository custody only with exact identities', () => {
       content_sha256: 'f'.repeat(64)
     }
   });
-  assert.equal(out.valid, true);
+  assert.equal(out.valid, false);
+  assert.equal(out.issues.some(x => x.code === 'embedded_custody_forbidden'), true);
 });
 
-test('accepts independent Notion readback only when explicit', () => {
+test('strict profile rejects embedded Notion readback even when explicit', () => {
   const out = buildReceipt({
     ...base,
     notion_readback: {
@@ -99,5 +100,6 @@ test('accepts independent Notion readback only when explicit', () => {
       independent_readback: true
     }
   });
-  assert.equal(out.valid, true);
+  assert.equal(out.valid, false);
+  assert.equal(out.issues.some(x => x.code === 'embedded_custody_forbidden'), true);
 });
