@@ -1,0 +1,78 @@
+{
+  "artifact": "CIT-GITHUB-ROUNDTRIP-002",
+  "candidate_contract": "tyme-community-cit-candidate/0.2",
+  "claims": {
+    "canon_claimed": false,
+    "commit_stores_prepared_examples_only": true,
+    "commons_published": false,
+    "create_only": true,
+    "hall_receipt_claimed": false,
+    "institutional_effect": "none",
+    "public_hall_transport_activated": false,
+    "runtime_actor_identity_established": false,
+    "separate_human_reviewer_verified_identity": false,
+    "two_intelligences_actually_exchanged_messages": false
+  },
+  "intended_branch": "review/cit-github-roundtrip-002-ledger",
+  "note": "This manifest describes the bounded candidate test. A later external readback report must report whether a repository commit actually exists. No independent agent execution is asserted.",
+  "operation": "authorized_create_only_review_branch_persistence_rehearsal",
+  "readback_policy": "Verify exact Git commit SHA, tree entries, Git blob SHA and file SHA-256 independently of this manifest. Do not treat this file as a repository-issued attestation.",
+  "record_bodies_are_unchanged": true,
+  "records": {
+    "message": {
+      "actor_id": "fixture:cit:intelligence-a",
+      "byte_length": 2612,
+      "event_id": "fixture:cit:002:message",
+      "path": "community-ledger/v0/roundtrips/CIT-GITHUB-ROUNDTRIP-002/message.json",
+      "payload_file_sha256": "3d3736d4df111d6483a98d5552b395990e40b2e1bd634e79cad0e7ffc61fe947",
+      "prospective_git_blob_sha1": "b7c135dec95accfd349c62b4d2bcb5f64dbd1870",
+      "standing": "frozen_pretransport_fixture"
+    },
+    "reply": {
+      "actor_id": "fixture:cit:intelligence-b",
+      "byte_length": 3100,
+      "event_id": "fixture:cit:002:reply",
+      "path": "community-ledger/v0/roundtrips/CIT-GITHUB-ROUNDTRIP-002/reply.json",
+      "payload_file_sha256": "080ce2af80abe3f32106b8e7f479ffe181ee76f4e9b1f40f7ce568aff16fe147",
+      "prospective_git_blob_sha1": "8a8be96ef1ab3f69e414cc13cf855143b54f80e9",
+      "standing": "frozen_pretransport_fixture"
+    }
+  },
+  "repository": "sovereign-codex/Codex-control-center",
+  "schema": "tyme-community-git-custody-fixture-manifest/0.1",
+  "source_coordinates": [
+    {
+      "blob_sha": "b6cd45405b83fc399cc84b84963031e89c07a968",
+      "commit_sha": "5342cbaf1098391879a15c7ccca752d3fbc241b8",
+      "path": "contribute/index.html",
+      "ref": "SRC-001",
+      "repository": "sovereign-codex/Codex-interface-",
+      "standing": "inspected_public_source"
+    },
+    {
+      "blob_sha": "3c68933a84f1054f4622d0cd3327d24ae86bbc91",
+      "commit_sha": "0af29cf783e0cf5a515ba2978fcf209a600d1f24",
+      "path": "docs/architecture/ACTOR_AUTHORITY_ENVELOPE_V0.1.md",
+      "ref": "SRC-002",
+      "repository": "sovereign-codex/Tyme-Lab",
+      "standing": "provisional_contract"
+    },
+    {
+      "blob_sha": "6a062e322c5eef7b9d3ac2f529e3f1a6db6923c0",
+      "commit_sha": "c6bde43df8077fe4857e359ef35088e610f0a364",
+      "path": "docs/SOVEREIGN_INFERENCE_CONTRACT_v0.1.md",
+      "ref": "SRC-003",
+      "repository": "sovereign-codex/AVOT-engine",
+      "standing": "experimental_contract"
+    },
+    {
+      "blob_sha": "dfa458c9beea796e7862854dda0db301279f0fc3",
+      "commit_sha": "d1516ac92bb26875036b5d32db3c5e6dd79da314",
+      "path": "docs/OFFICE_CODEX_ROUNDTRIP_001.md",
+      "ref": "SRC-004",
+      "repository": "sovereign-codex/Codex-control-center",
+      "standing": "review_only_unmerged_branch"
+    }
+  ],
+  "source_packet_standing": "frozen_local_fixture_pretransport"
+}
