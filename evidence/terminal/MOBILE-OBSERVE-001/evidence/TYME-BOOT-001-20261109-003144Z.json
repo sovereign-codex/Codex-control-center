@@ -1,0 +1,119 @@
+{
+  "schema": "org.tyme.terminal.boot.receipt",
+  "schema_version": "0.1.0",
+  "receipt_id": "tb001-2ddbf54a70093fc1",
+  "generated_at": "2026-11-09T00:31:44.592Z",
+  "mode": "observe",
+  "runtime": {
+    "kind": "browser",
+    "origin": "https",
+    "network_opt_in": true,
+    "clock_trust": "local_unverified"
+  },
+  "authority": {
+    "level": "read-only",
+    "write_operations_enabled": false,
+    "dispatch_enabled": false,
+    "credentials_loaded": false,
+    "institutional_effect": "none"
+  },
+  "continuity": {
+    "kind": "ephemeral-session",
+    "prior_receipt": {
+      "receipt_id": "tb001-be317a3d28dc235a",
+      "digest": "sha256:6ee08f59b5745ec1423344b19c9b82fcb888c80fd70eda5ff60cf5c49415b3df"
+    }
+  },
+  "observations": [
+    {
+      "id": "hall",
+      "label": "Public Hall",
+      "target": "https://tymehall.org/for-machines/",
+      "status": "observed",
+      "method": "cors_fetch",
+      "checked_at": "2026-11-09T00:31:43.745Z",
+      "http_status": 200,
+      "retrieval_coordinate": "https://tymehall.org/for-machines/",
+      "observed_reference": "sha256:2c0f3d0dcc654105b0838b0682f30caa5d75a46700bdbf653af0d6192ba920fa",
+      "explanation": "Readable HTTP 200 response. Decoded text SHA-256: 2c0f3d0dcc65... (4808 characters). Claims not independently verified."
+    },
+    {
+      "id": "github",
+      "label": "GitHub / Control Center",
+      "target": "https://api.github.com/repos/sovereign-codex/Codex-control-center/commits/main",
+      "status": "observed",
+      "method": "github_api_readback",
+      "checked_at": "2026-11-09T00:31:43.747Z",
+      "http_status": 200,
+      "retrieval_coordinate": "https://api.github.com/repos/sovereign-codex/Codex-control-center/commits/main",
+      "observed_reference": "commit:d8230a2f6fbc8c633c470f8446078f5f8d41abfb",
+      "explanation": "Public main commit SHA observed: d8230a2f6fbc... Not independently checkpointed."
+    },
+    {
+      "id": "office",
+      "label": "Notion Office",
+      "target": null,
+      "status": "unknown",
+      "method": "not_run",
+      "checked_at": null,
+      "http_status": null,
+      "retrieval_coordinate": null,
+      "observed_reference": null,
+      "explanation": "Authenticated Office transport is outside this public browser prototype."
+    },
+    {
+      "id": "avot",
+      "label": "AVOT Runtime",
+      "target": null,
+      "status": "not_established",
+      "method": "not_run",
+      "checked_at": null,
+      "http_status": null,
+      "retrieval_coordinate": null,
+      "observed_reference": null,
+      "explanation": "No runtime activation or dispatch is permitted here."
+    },
+    {
+      "id": "qil",
+      "label": "QIL / Memory",
+      "target": null,
+      "status": "not_established",
+      "method": "not_run",
+      "checked_at": null,
+      "http_status": null,
+      "retrieval_coordinate": null,
+      "observed_reference": null,
+      "explanation": "No independent QIL PIN replay was executed."
+    },
+    {
+      "id": "security",
+      "label": "Security / Authority",
+      "target": null,
+      "status": "unknown",
+      "method": "not_run",
+      "checked_at": null,
+      "http_status": null,
+      "retrieval_coordinate": null,
+      "observed_reference": null,
+      "explanation": "Identity, secrets, and institutional authority were not assessed."
+    }
+  ],
+  "summary": {
+    "unknown": 2,
+    "observed": 2,
+    "incomplete": 0,
+    "not_established": 2
+  },
+  "limitations": [
+    "HTTP response does not establish an end-to-end roundtrip.",
+    "A matching self-contained digest is not a digital signature.",
+    "Browser local clock is not externally attested.",
+    "Notion Office, AVOT, QIL, and authority remain untested or not established."
+  ],
+  "integrity": {
+    "algorithm": "SHA-256",
+    "canonicalization": "tyme-json-sort-v1",
+    "scope": "all-fields-except-integrity",
+    "digest": "sha256:467442f83751d5b1b9d0685b7b2cf304e821a18a98fc17aab53bba6b7035dbc1"
+  }
+}

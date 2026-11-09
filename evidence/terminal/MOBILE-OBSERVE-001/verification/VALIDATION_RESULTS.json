@@ -1,0 +1,88 @@
+{
+  "schema": "org.tyme.terminal.mobile-observe.verification.v0.1",
+  "record_id": "TYME-TERMINAL-BOOT-001/MOBILE-OBSERVE-001",
+  "status": "PASS_BOUNDED",
+  "source_receipt": "TYME-BOOT-001-20261109-003144Z.json",
+  "receipt_id": "tb001-2ddbf54a70093fc1",
+  "receipt_file_sha256": "1bd151682d5c7758fd25d54811e89b3f56412a8e94ba5068d4c138587a8cf144",
+  "receipt_canonical_digest": "sha256:467442f83751d5b1b9d0685b7b2cf304e821a18a98fc17aab53bba6b7035dbc1",
+  "algorithm": "tyme-json-sort-v1",
+  "validator": "tyme_verify.py (copied from TYME-TERMINAL-BOOT-001-v0.2.0.zip)",
+  "validator_results": {
+    "integrity": "PASS",
+    "schema": "PASS",
+    "safety_invariants": "PASS",
+    "receipt_id": "tb001-2ddbf54a70093fc1",
+    "mode": "observe",
+    "runtime": "browser",
+    "digest": "sha256:467442f83751d5b1b9d0685b7b2cf304e821a18a98fc17aab53bba6b7035dbc1",
+    "summary": {
+      "unknown": 2,
+      "observed": 2,
+      "incomplete": 0,
+      "not_established": 2
+    },
+    "source_states": {
+      "hall": "observed",
+      "github": "observed",
+      "office": "unknown",
+      "avot": "not_established",
+      "qil": "not_established",
+      "security": "unknown"
+    },
+    "institutional_effect": "none",
+    "caveat": "Checks structure and local digest only; does not authenticate a signer or verify independent retrieval."
+  },
+  "negative_tests": [
+    {
+      "test": "digest_mismatch_after_payload_change",
+      "result": "REJECTED",
+      "reason": "Digest mismatch"
+    },
+    {
+      "test": "unauthorized_dispatch_even_after_reseal",
+      "result": "REJECTED",
+      "reason": "Authority invariant failed"
+    },
+    {
+      "test": "false_completion_via_summary_even_after_reseal",
+      "result": "REJECTED",
+      "reason": "Summary mismatch"
+    },
+    {
+      "test": "unauthorized_notional_office_readback_even_after_reseal",
+      "result": "REJECTED",
+      "reason": "Unsupported status for office"
+    },
+    {
+      "test": "unsupported_network_evidence_in_wake",
+      "result": "REJECTED",
+      "reason": "Remote attempt in wake: hall"
+    }
+  ],
+  "resealed_untrusted_content_passes_local_check": true,
+  "resealing_explanation": "A self-contained hash cannot attest to the producer or observation; changed content can be validly rehashed without a signature.",
+  "prior_receipt_reference": {
+    "receipt_id": "tb001-be317a3d28dc235a",
+    "digest": "sha256:6ee08f59b5745ec1423344b19c9b82fcb888c80fd70eda5ff60cf5c49415b3df"
+  },
+  "prior_receipt_present_in_packet": false,
+  "independent_github_readback": {
+    "status": "MATCH_COMMIT_OBJECT",
+    "method": "separate GitHub connector fetch by exact SHA",
+    "sha": "d8230a2f6fbc8c633c470f8446078f5f8d41abfb",
+    "url": "https://github.com/sovereign-codex/Codex-control-center/commit/d8230a2f6fbc8c633c470f8446078f5f8d41abfb",
+    "commit_message_first_line": "Merge pull request #22 from sovereign-codex/review/control-center-handoff-integration-001",
+    "does_not_prove": "Historical main branch head at receipt observation time; actor identity; independent GitHub custody"
+  },
+  "hall_response_readback": {
+    "status": "NOT_REPRODUCED",
+    "original_reported_sha256": "sha256:2c0f3d0dcc654105b0838b0682f30caa5d75a46700bdbf653af0d6192ba920fa"
+  },
+  "attestation": {
+    "signature": "none",
+    "independent_witness": "none",
+    "append_only_log": "none",
+    "institutional_effect": "none"
+  }
+}

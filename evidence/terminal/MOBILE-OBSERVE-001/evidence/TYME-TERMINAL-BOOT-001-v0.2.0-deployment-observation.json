@@ -1,0 +1,78 @@
+{
+  "schema": "org.tyme.terminal.boot.deployment-observation.v0.1",
+  "record_id": "TYME-TERMINAL-BOOT-001-v0.2.0-workers-dev-deployment-001",
+  "generated_at_utc": "2026-11-08T23:45:27+00:00",
+  "institutional_effect": "none",
+  "canonical_status": "non-canonical prototype",
+  "target": {
+    "platform": "Cloudflare Workers",
+    "name": "tyme-terminal-boot-001-v02",
+    "url": "https://tyme-terminal-boot-001-v02.shepherdjhagan.workers.dev/",
+    "health_url": "https://tyme-terminal-boot-001-v02.shepherdjhagan.workers.dev/health.json",
+    "custom_domain_modified": false,
+    "prior_workers_modified": false,
+    "credentials_or_bindings_added": false
+  },
+  "asset": {
+    "file_name": "TYME-TERMINAL-BOOT-001-v0.2.0.html",
+    "size_bytes": 49753,
+    "sha256": "e97a8aebe9f7c2d8dba15476c3c816e454c14861608091ad2fb8a50ef6b30b29",
+    "readback_method": "Cloudflare API downloaded script; decoded embedded PAGE HTML; recomputed SHA-256",
+    "readback_exact_match": true
+  },
+  "control_plane_observations": {
+    "worker_upload": "accepted",
+    "deployment_id": "f69599b7-6cf6-4414-b548-311742393622",
+    "version_id": "2e284d1c-c286-406e-8bfc-0edbf3177680",
+    "traffic_percentage": 100,
+    "deployment_created_at_utc": "2026-11-08T23:44:56.577413Z",
+    "workers_dev_route_enabled": true,
+    "previews_enabled": false,
+    "dns_lookup": {
+      "observed_at_utc": "2026-11-08T23:43:46.076Z",
+      "a": [
+        "188.114.96.7",
+        "188.114.97.7"
+      ],
+      "aaaa": [
+        "2a06:98c1:3121::7",
+        "2a06:98c1:3120::7"
+      ],
+      "note": "DNS inspection predates the final one-byte artifact correction but the hostname and enabled route are unchanged."
+    }
+  },
+  "unverified": {
+    "public_http_response": "not verified; external HTTP clients in the assistant environment were blocked or unable to resolve workers.dev",
+    "physical_iphone_safari_execution": "pending user test",
+    "live_network_observation": "not executed",
+    "end_to_end_hall_roundtrip": "not established",
+    "authenticated_actor_identity": "not established"
+  },
+  "ios_acceptance_tests": [
+    {
+      "step": "Open target URL directly in Safari",
+      "expected": "INTERACTIVE ENGINE READY; no preview warning",
+      "status": "pending"
+    },
+    {
+      "step": "Select tyme wake or type tyme wake and Run",
+      "expected": "Command log populated; mode WAKE",
+      "status": "pending"
+    },
+    {
+      "step": "Import sample inspection ZIP",
+      "expected": "Archive inventory; inspect a JSON receipt individually",
+      "status": "pending"
+    },
+    {
+      "step": "Export JSON",
+      "expected": "Save readable receipt to Files",
+      "status": "pending"
+    }
+  ],
+  "attestation": {
+    "signed": false,
+    "independent_observer": false,
+    "basis": "Connected Cloudflare control plane and DNS readback, not independent client HTTP or authority"
+  }
+}

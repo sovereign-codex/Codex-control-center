@@ -1,0 +1,50 @@
+{
+  "schema": "org.tyme.terminal.mobile-observe.custody-candidate-manifest.v0.1",
+  "record_id": "TYME-TERMINAL-BOOT-001/MOBILE-OBSERVE-001",
+  "disposition": "PASS_BOUNDED",
+  "publication": "not published",
+  "canonical": false,
+  "signed": false,
+  "independent_witness": false,
+  "authority": "none",
+  "self_exclusion": "manifest.json is not included in its own file inventory to avoid recursive hashing",
+  "source_receipt_file_sha256": "1bd151682d5c7758fd25d54811e89b3f56412a8e94ba5068d4c138587a8cf144",
+  "source_receipt_canonical_digest": "sha256:467442f83751d5b1b9d0685b7b2cf304e821a18a98fc17aab53bba6b7035dbc1",
+  "files": [
+    {
+      "path": "CUSTODY-CONTRACT.md",
+      "bytes": 2849,
+      "sha256": "d7a996b1581c86dad97aeb4bbf3554f0d7ef5918d8e6951dcbc44dca92a2be3a"
+    },
+    {
+      "path": "MOBILE-OBSERVE-001.md",
+      "bytes": 3696,
+      "sha256": "ecb6139a4d686cbfd4f20da3083f76eff9615f42a11b16c9db3e96e0f47e0c3a"
+    },
+    {
+      "path": "evidence/TYME-BOOT-001-20261109-003144Z.json",
+      "bytes": 3958,
+      "sha256": "1bd151682d5c7758fd25d54811e89b3f56412a8e94ba5068d4c138587a8cf144"
+    },
+    {
+      "path": "evidence/TYME-TERMINAL-BOOT-001-v0.2.0-deployment-observation.json",
+      "bytes": 2893,
+      "sha256": "e5cb514158753f3fe58599198a6666363cc39dbb00a5a4548e9861645dc0771e"
+    },
+    {
+      "path": "verification/VALIDATION_RESULTS.json",
+      "bytes": 3395,
+      "sha256": "fc8c4e20f998ccb99f3282b7fb6d7ad95c62a8549fba3f2eec9592ee4c9f2b88"
+    },
+    {
+      "path": "verification/tyme_verify.py",
+      "bytes": 17601,
+      "sha256": "ec44be42da2925e1fb817e00f123aeb942e31bdf5c68309cbf9c17fa9298acb2"
+    },
+    {
+      "path": "verification/verify_packet.py",
+      "bytes": 1711,
+      "sha256": "267c656ddef60ed6012a5f52ac917db5028c74a21c1d60548cc78fa266ef3a97"
+    }
+  ]
+}
