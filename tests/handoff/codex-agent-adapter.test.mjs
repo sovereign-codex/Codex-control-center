@@ -30,9 +30,11 @@ test('accepted session is not necessarily completed', () => {
   assert.equal(result.runtime_completed, false);
 });
 
-test('completed session is explicitly classified', () => {
+test('reported completed session is classified without verifying task completion', () => {
   const result = classifyCodexSessionResponse({ status: 200, body: { id: 'sess_123', status: 'completed' } });
-  assert.equal(result.completion_verified, true);
+  assert.equal(result.state, 'completed');
+  assert.equal(result.runtime_completed, true);
+  assert.equal(result.completion_verified, false);
 });
 
 test('network ambiguity requires same idempotency key posture', () => {
