@@ -82,7 +82,7 @@ test('accepted 202 cannot imply terminal or successful execution', () => {
 });
 
 test('missing or malformed session identity cannot establish completion', () => {
-  for (const id of [undefined, '', ' ', 'bad\\nid']) {
+  for (const id of [undefined, '', ' ', 'bad\nid']) {
     const result = classifyCodexSessionResponse({ status: 200, body: { id, status: 'completed' } });
     assert.equal(result.runtime_terminal_reported, false);
     assert.equal(result.runtime_success_reported, false);
