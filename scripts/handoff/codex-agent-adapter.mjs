@@ -54,7 +54,7 @@ export function classifyCodexSessionResponse({ status, body = null, network_erro
     // HTTP 204 has no response body; HTTP 202 is acceptance, never terminal evidence.
     const responseBody = status !== 204 && body && typeof body === 'object' && !Array.isArray(body) ? body : null;
     const id = responseBody?.id;
-    const session_id = typeof id === 'string' && id.length > 0 && id.length <= 256 && id.trim() === id && !/[\\u0000-\\u001f\\u007f]/.test(id) ? id : null;
+    const session_id = typeof id === 'string' && id.length > 0 && id.length <= 256 && id.trim() === id && !/[\u0000-\u001f\u007f]/.test(id) ? id : null;
     const state = typeof responseBody?.status === 'string' ? responseBody.status : null;
     const runtime_terminal_reported = status !== 202 && Boolean(session_id) && ['completed', 'failed', 'cancelled'].includes(state);
     const runtime_success_reported = runtime_terminal_reported && state === 'completed';
