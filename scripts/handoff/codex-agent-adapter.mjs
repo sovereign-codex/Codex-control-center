@@ -47,24 +47,34 @@ export function buildCodexSessionRequest({ request_id, correlation_sha256, input
 }
 
 export function classifyCodexSessionResponse({ status, body = null, network_error = null }) {
-  if (network_error) return { transport: 'uncertain', accepted: false, retry_same_idempotency_key_only: true, runtime_started: false, runtime_completed: false, completion_verified: false };
-  if (status >= 200 && status < 300) {
-    const session_id = body && typeof body === 'object' && typeof body.id === 'string' ? body.id : null;
-    const state = body && typeof body === 'object' && typeof body.status === 'string' ? body.status : null;
+  // Transport and provider-reported state are observations, not authenticated completion.
+  const unverified = { runtime_started: false, runtime_completed: false, runtime_terminal_reported: false, runtime_success_reported: false, completion_verified: false };
+  if (network_error) return { transport: 'uncertain', accepted: false, retry_same_idempotency_key_only: true, ...unverified };
+  if (Number.isInteger(status) && status >= 200 && status < 300) {
+    // HTTP 204 has no response body; HTTP 202 is acceptance, never terminal evidence.
+    const responseBody = status !== 204 && body && typeof body === 'object' && !Array.isArray(body) ? body : null;
+    const id = responseBody?.id;
+    const session_id = typeof id === 'string' && id.length > 0 && id.length <= 256 && id.trim() === id && !/[\\u0000-\\u001f\\u007f]/.test(id) ? id : null;
+    const state = typeof responseBody?.status === 'string' ? responseBody.status : null;
+    const runtime_terminal_reported = status !== 202 && Boolean(session_id) && ['completed', 'failed', 'cancelled'].includes(state);
+    const runtime_success_reported = runtime_terminal_reported && state === 'completed';
     return {
       transport: 'accepted',
       accepted: true,
       session_id,
       state,
       runtime_started: Boolean(session_id),
-      runtime_completed: status !== 202 && Boolean(session_id) && ['completed', 'failed', 'cancelled'].includes(state),
-      // Response classification does not authenticate a task or its source revision.
+      // Backward-compatible name now restricted to provider-reported successful outcome.
+      // Neither this field nor the reported fields authenticate execution.
+      runtime_completed: runtime_success_reported,
+      runtime_terminal_reported,
+      runtime_success_reported,
       completion_verified: false
     };
   }
-  if ([400, 401, 403, 404, 409, 422].includes(status)) return { transport: 'rejected', accepted: false, status, runtime_started: false, runtime_completed: false, completion_verified: false };
-  if (Number.isInteger(status) && status >= 500) return { transport: 'uncertain', accepted: false, status, retry_same_idempotency_key_only: true, runtime_started: false, runtime_completed: false, completion_verified: false };
-  return { transport: 'rejected', accepted: false, status, runtime_started: false, runtime_completed: false, completion_verified: false };
+  if ([400, 401, 403, 404, 409, 422].includes(status)) return { transport: 'rejected', accepted: false, status, ...unverified };
+  if (Number.isInteger(status) && status >= 500) return { transport: 'uncertain', accepted: false, status, retry_same_idempotency_key_only: true, ...unverified };
+  return { transport: 'rejected', accepted: false, status, ...unverified };
 }
 
 /**

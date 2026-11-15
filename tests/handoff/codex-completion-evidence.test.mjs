@@ -183,3 +183,30 @@ test('checking evidence does not mutate retained assignment or observation', () 
   assert.equal(JSON.stringify({ expected, evidence }), before);
 });
 
+
+test('synthetic failed or cancelled completion cannot pass evidence consistency', () => {
+  for (const status of ['failed', 'cancelled']) {
+    rejected(check({ evidence: { ...evidence, status } }));
+    const response = adapter.classifyCodexSessionResponse({ status: 200, body: { id: expected.session_id, status } });
+    assert.equal(response.runtime_terminal_reported, true);
+    assert.equal(response.runtime_completed, false);
+    assert.equal(response.completion_verified, false);
+  }
+});
+
+test('naked lifecycle completion event has no completion or authority attestation', () => {
+  const event = adapter.classifyCodexLifecycleEvent({ type: 'agent.turn.completed' });
+  assert.equal(event.state, 'completed');
+  assert.notEqual(event.completion_verified, true);
+  rejected(check({ evidence: { type: 'agent.turn.completed' } }));
+});
+
+test('no response classification can promote verified completion', () => {
+  for (const status of [200, 201, 202, 204, 401, 500]) {
+    for (const outcome of ['completed', 'failed', 'cancelled']) {
+      const result = adapter.classifyCodexSessionResponse({ status, body: { id: expected.session_id, status: outcome } });
+      assert.equal(result.completion_verified, false);
+      assert.equal(result.runtime_completed, status !== 202 && status !== 204 && status < 300 && outcome === 'completed');
+    }
+  }
+});

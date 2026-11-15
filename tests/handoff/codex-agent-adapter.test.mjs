@@ -47,3 +47,57 @@ test('lifecycle events distinguish completion from failure', () => {
   assert.equal(classifyCodexLifecycleEvent({ type: 'agent.turn.completed' }).state, 'completed');
   assert.equal(classifyCodexLifecycleEvent({ type: 'agent.turn.failed' }).state, 'failed');
 });
+
+test('terminal failure does not equal successful completion', () => {
+  const result = classifyCodexSessionResponse({ status: 200, body: { id: 'sess_123', status: 'failed' } });
+  assert.equal(result.runtime_terminal_reported, true);
+  assert.equal(result.runtime_success_reported, false);
+  assert.equal(result.runtime_completed, false);
+  assert.equal(result.completion_verified, false);
+});
+
+test('terminal cancellation does not equal successful completion', () => {
+  const result = classifyCodexSessionResponse({ status: 200, body: { id: 'sess_123', status: 'cancelled' } });
+  assert.equal(result.runtime_terminal_reported, true);
+  assert.equal(result.runtime_success_reported, false);
+  assert.equal(result.runtime_completed, false);
+  assert.equal(result.completion_verified, false);
+});
+
+test('reported completed is distinguishable from authenticated completion', () => {
+  const result = classifyCodexSessionResponse({ status: 200, body: { id: 'sess_123', status: 'completed' } });
+  assert.equal(result.runtime_terminal_reported, true);
+  assert.equal(result.runtime_success_reported, true);
+  assert.equal(result.runtime_completed, true);
+  assert.equal(result.completion_verified, false);
+});
+
+test('accepted 202 cannot imply terminal or successful execution', () => {
+  const result = classifyCodexSessionResponse({ status: 202, body: { id: 'sess_123', status: 'completed' } });
+  assert.equal(result.accepted, true);
+  assert.equal(result.runtime_terminal_reported, false);
+  assert.equal(result.runtime_success_reported, false);
+  assert.equal(result.runtime_completed, false);
+  assert.equal(result.completion_verified, false);
+});
+
+test('missing or malformed session identity cannot establish completion', () => {
+  for (const id of [undefined, '', ' ', 'bad\\nid']) {
+    const result = classifyCodexSessionResponse({ status: 200, body: { id, status: 'completed' } });
+    assert.equal(result.runtime_terminal_reported, false);
+    assert.equal(result.runtime_success_reported, false);
+    assert.equal(result.runtime_completed, false);
+    assert.equal(result.completion_verified, false);
+  }
+});
+
+test('204 response ignores synthetic completion payload', () => {
+  const result = classifyCodexSessionResponse({ status: 204, body: { id: 'sess_123', status: 'completed' } });
+  assert.equal(result.accepted, true);
+  assert.equal(result.session_id, null);
+  assert.equal(result.runtime_started, false);
+  assert.equal(result.runtime_terminal_reported, false);
+  assert.equal(result.runtime_success_reported, false);
+  assert.equal(result.runtime_completed, false);
+  assert.equal(result.completion_verified, false);
+});

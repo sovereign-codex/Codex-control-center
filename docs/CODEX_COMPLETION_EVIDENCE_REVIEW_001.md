@@ -113,3 +113,19 @@ node --test --test-isolation=none tests/handoff/*.test.mjs
 No new test makes a provider call or executes an agent. Review the local patch
 before any repository adoption. Passing these tests authorizes no live proof.
 
+
+## Consumer-audit follow-up — terminal versus successful outcome (2026-11-14)
+
+This narrow candidate incorporates the findings of TYME-CONSUMER-AUDIT-001.
+The response classifier now separates two **provider-reported**, non-authenticated states:
+
+- `runtime_terminal_reported`: a non-202/non-204 successful transport response with a valid session ID and state `completed`, `failed` or `cancelled`.
+- `runtime_success_reported`: the same evidence, but only state `completed`.
+- Legacy `runtime_completed` is retained as an alias of `runtime_success_reported`, **not** as an authenticated-completion signal. This narrows previous behavior for failed/cancelled sessions and is a compatibility change that needs reviewer acceptance.
+- HTTP 202 and 204 cannot infer terminal/successful execution from response-body strings. HTTP 204 ignores any supplied synthetic body.
+
+Every branch of this classifier continues to return `completion_verified: false`; matching normalized task evidence in `checkCodexCompletionEvidence` does not make that value true. Bare lifecycle events remain unauthenticated labels. No live consumer, provider attestation, event-to-receipt promotion, or replay ledger is added.
+
+The pre-existing `tyme-receipt-semantics/1` serialization, frozen receipts, stage booleans, external custody contracts, guarded handoff policy and authority ceilings remain untouched. In particular, `transport.runtime_completed` in a receipt is structurally checked; it must not be populated by trusting this adapter's `runtime_completed` field. A future consumer must separately authenticate provider observation, task/source identity, results and applicable review.
+
+New negative cases cover failed/cancelled terminal outcomes, reported completed state without authenticated completion, async acceptance, absent/malformed session identity, no-content responses, bare lifecycle events and nonpromotion across transport-status combinations. Execute the full suite on the exact candidate commit and retain independent review before merging.
